@@ -1,1 +1,45 @@
-<p>header works!</p>
+<div class="flex__start flex-col w-full shadow-sm">
+  <app-top-header />
+  <div class="w-full container flex items-center justify-between px-8 py-3">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img
+        ngOptimizedImage
+        src="assets/logo.svg"
+        alt="SecureGuard Logo"
+        width="120"
+        height="32"
+        class="mr-2"
+      />
+      <span class="text-2xl font-semibold text-green-700 font-cursive"
+        >T-Assurance</span
+      >
+    </div>
+    <!-- Menu -->
+    <nav class="flex-1 flex justify-center">
+      <ul class="flex space-x-8 text-gray-600 text-base ">
+        @for (item of menuItems(); track item) {
+          <li>
+            <a
+              [href]="item.link"
+              class="font-medium hover:text-primary"
+              >{{ item.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+    <!-- Actions -->
+    <div class="flex items-center space-x-4">
+      <a href="/login" class="text-gray-700 hover:text-green-700 font-medium"
+        >Login</a
+      >
+      <a
+        href="/get-quote"
+        class="bg-green-700 text-white px-5 py-2 rounded font-semibold hover:bg-green-800 transition-colors"
+      >
+        Get Quote
+      </a>
+    </div>
+  </div>
+</div>

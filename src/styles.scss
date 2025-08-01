@@ -3,10 +3,12 @@
 @import "remixicon/fonts/remixicon.css";
 @import "@fontsource/golos-text"; // Defaults to weight 400
 @import "@fontsource/golos-text/400.css"; // Specify weight
+
 @plugin "tailwindcss-primeui";
 @plugin "tailwind-scrollbar";
 @plugin "tailwind-scrollbar-hide";
-@custom-variant dark (&:where(.dark, .dark *));
+
+@variant dark (&:where(.dark, .dark *));
 
 @layer components, utilities, base, theme;
 @layer reset, primeng;
@@ -16,9 +18,9 @@
     --breakpoint-xl: 1300px;
     --color-primary: #009a5e;
     --color-secondary: #004f4c;
-    --color-third: #EBEFF0;
-    --color-fourth: #6F6F6F;
-    --color-fifth: #FFFFFF33;
+    --color-third: #ebeff0;
+    --color-fourth: #6f6f6f;
+    --color-fifth: #ffffff33;
     --color-light: #ffffff;
     --color-dark: #000000;
     --font-main: "Golos Text", sans-serif;
@@ -32,7 +34,35 @@
 }
 @layer components {
 }
+
 @layer utilities {
+  .flex__middle {
+    @apply flex justify-center items-center;
+  }
+
+  .flex__start {
+    @apply flex justify-start items-center;
+  }
+
+  .flexStartItem {
+    @apply flex justify-center items-start;
+  }
+
+  .flex__between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex__evenly {
+    @apply flex justify-evenly items-center;
+  }
+
+  .flex__around {
+    @apply flex justify-around items-center;
+  }
+
+  .flex__end {
+    @apply flex justify-end items-center;
+  }
 }
 
 @layer reset, primeng;
