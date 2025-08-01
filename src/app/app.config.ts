@@ -1,12 +1,33 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+  provideZonelessChangeDetection, isDevMode,
+} from '@angular/core';
+import { provideRouter, withViewTransitions } from '@angular/router';
+import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
+import { MyPreset } from './core/theme/my-preset';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes)
-  ]
+    provideRouter(routes,withViewTransitions()),
+    providePrimeNG({
+      theme: {
+        preset: MyPreset,
+        options: {
+          darkModeSelector: '.my-app-dark',
+        },
+      },
+    }),
+     provideHttpClient(withFetch(), withInterceptors([])), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
+  ],
 };

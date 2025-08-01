@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+@import 'remixicon/fonts/remixicon.css';
+@plugin "tailwindcss-primeui";
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+
+@layer components, utilities, base, themes;
+@layer components {
+}
+@layer utilities {
+}
+@layer base {
+}
+@layer themes {
+}
+
+@layer reset, primeng;
+
+
+@layer primeng {
+}
+
+@layer reset {
+
+}
