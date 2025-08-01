@@ -1,25 +1,44 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
-@import 'remixicon/fonts/remixicon.css';
+@import "remixicon/fonts/remixicon.css";
+@import "@fontsource/golos-text"; // Defaults to weight 400
+@import "@fontsource/golos-text/400.css"; // Specify weight
 @plugin "tailwindcss-primeui";
-@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+@plugin "tailwind-scrollbar";
+@plugin "tailwind-scrollbar-hide";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@layer components, utilities, base, themes;
+@layer components, utilities, base, theme;
+@layer reset, primeng;
+
+@layer theme {
+  :root {
+    --breakpoint-xl: 1300px;
+    --color-primary: #009a5e;
+    --color-secondary: #004f4c;
+    --color-third: #EBEFF0;
+    --color-fourth: #6F6F6F;
+    --color-fifth: #FFFFFF33;
+    --color-light: #ffffff;
+    --color-dark: #000000;
+    --font-main: "Golos Text", sans-serif;
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Golos Text", sans-serif;
+  }
+}
 @layer components {
 }
 @layer utilities {
 }
-@layer base {
-}
-@layer themes {
-}
 
 @layer reset, primeng;
-
 
 @layer primeng {
 }
 
 @layer reset {
-
 }
