@@ -7,7 +7,6 @@
     "ng": "ng",
     "start": "ng serve --port=4600 --host=0.0.0.0",
     "build": "ng build",
-    "postbuild": "shx mkdir -p www && shx cp -r dist/fe-insurance/browser/* www/ && shx rm -rf dist/fe-insurance/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prettier": "prettier --check .",
