@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ng serve --port=4600 --host=0.0.0.0",
     "build": "ng build",
-    "postbuild": "powershell -Command \"Move-Item -Path www\\browser\\* -Destination www -Force; Remove-Item -Path www\\browser -Recurse -Force\"",
+"postbuild": "shx mv www/browser/* www/ && shx rm -rf www/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prettier": "prettier --check .",
@@ -63,6 +63,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
+    "shx": "^0.4.0",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.2"
   }
