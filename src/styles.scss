@@ -1,35 +1,44 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "primeicons/primeicons.css";
 @import "remixicon/fonts/remixicon.css";
-@import "@fontsource/golos-text"; // Defaults to weight 400
-@import "@fontsource/golos-text/400.css"; // Specify weight
+@import "@fontsource/open-sans";
+// Import Open Sans font weights (chỉ có từ 300-800)
+@import '@fontsource/open-sans/300.css'; // Light
+@import '@fontsource/open-sans/400.css'; // Regular
+@import '@fontsource/open-sans/500.css'; // Medium
+@import '@fontsource/open-sans/600.css'; // Semibold
+@import '@fontsource/open-sans/700.css'; // Bold
+@import '@fontsource/open-sans/800.css'; // Extra Bold
 
-@plugin "tailwindcss-primeui";
-@plugin "tailwind-scrollbar";
-@plugin "tailwind-scrollbar-hide";
+// Import Open Sans italic variants
+@import '@fontsource/open-sans/300-italic.css';
+@import '@fontsource/open-sans/400-italic.css';
+@import '@fontsource/open-sans/500-italic.css';
+@import '@fontsource/open-sans/600-italic.css';
+@import '@fontsource/open-sans/700-italic.css';
+@import '@fontsource/open-sans/800-italic.css';
 
-@variant dark (&:where(.dark, .dark *));
 
-@layer components, utilities, base, theme;
+@layer tailwind-base, primeng, tailwind-utilities;
+
 @layer reset, primeng;
 
-@layer theme {
-  :root {
-    --breakpoint-xl: 1300px;
-    --color-primary: #009a5e;
-    --color-secondary: #004f4c;
-    --color-third: #ebeff0;
-    --color-fourth: #6f6f6f;
-    --color-fifth: #ffffff33;
-    --color-light: #ffffff;
-    --color-dark: #000000;
-    --font-main: "Golos Text", sans-serif;
-  }
+@layer tailwind-base {
+  @tailwind base;
 }
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+
 
 @layer base {
   body {
-    font-family: "Golos Text", sans-serif;
+    font-family: "Open Sans", sans-serif;
   }
 }
 @layer components {

@@ -1,7 +1,6 @@
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
   provideZonelessChangeDetection, isDevMode,
 } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
@@ -21,7 +20,11 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: MyPreset,
         options: {
-          darkModeSelector: '.my-app-dark',
+          darkModeSelector: '.dark',
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities',
+          },
         },
       },
     }),

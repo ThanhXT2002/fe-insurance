@@ -1,5 +1,5 @@
 {
-  "tailwindCSS.experimental.configFile": null,
+  "tailwindCSS.experimental.configFile": "src/styles.scss",
   "tailwindCSS.rootFontSize": 16,
   "tailwindCSS.suggestions": true,
   "tailwindCSS.validate": true,
