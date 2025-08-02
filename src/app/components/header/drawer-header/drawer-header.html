@@ -5,57 +5,80 @@
   <i class="ri-menu-3-line text-2xl"></i>
 </button>
 
-<p-drawer
-[(visible)]="isShowMenu"
-styleClass="h-[800px]"
- position="top">
- <ng-template #header>
-   <app-logo [isShowName]="true"/>
- </ng-template>
- <ng-template #content>
+<p-drawer [(visible)]="isShowMenu" styleClass="h-screen" position="top">
+  <ng-template #header>
+    <app-logo [isShowName]="true" />
+  </ng-template>
+  <ng-template #content>
     <nav class="flex flex-col space-y-5">
       <ul class="flex flex-col space-y-2">
         @for (item of MenuItems; track item) {
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <div class="flex items-center space-x-2">
-              <i [class]="item.icon + ' text-xl icon'" *ngIf="item.icon"></i>
-              <a
-                [routerLink]="item.link"
-                (click)="toggleMenu()"
-                *ngIf="item.link === '/'; else otherTab"
-                class="item-link"
-              >
-                {{ item.label }}
-              </a>
-              <ng-template #otherTab>
-                <a
-                  [routerLink]="item.link"
-                   (click)="toggleMenu()"
-                  class="item-link"
-                >
-                  {{ item.label }}
-                </a>
-              </ng-template>
-            </div>
-            <!-- Hiển thị menu cấp 2 nếu có -->
-            <ul *ngIf="item.children?.length" class="ml-6 mt-1 flex flex-col space-y-1.5">
-              @for (child of item.children; track child) {
-                <li class="flex items-center space-x-2">
-                  <span class="w-1 h-1 bg-primary rounded-full inline-block"></span>
-                  <a [routerLink]="child.link"
-                   (click)="toggleMenu()" routerLinkActive="active" class="item-link text-base">
-                    {{ child.label }}
+          <li>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                @if(item.icon) {
+                 <i [class]="item.icon + ' text-xl' + (isCurrentRoute(item.link) ? ' text-primary' : '')"></i>
+                }
+                @if (item.link === "/") {
+                  <a
+                    [routerLink]="item.link"
+                    (click)="toggleMenu()"
+                    class="item-link"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                  >
+                    {{ item.label }}
                   </a>
-                </li>
-              }
-            </ul>
+                } @else {
+                  <a
+                    [routerLink]="item.link"
+                    (click)="toggleMenu()"
+                    class="item-link"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                  >
+                    {{ item.label }}
+                  </a>
+                }
+              </div>
+             @if(item.children?.length){
+              <button class="h-5 aspect-square" (click)="toggleOpen(item.id)">
+                 <i [class]="isOpen[item.id] ? 'ri-arrow-down-s-line text-2xl text-fourth' : 'ri-arrow-right-s-line text-2xl text-fourth'"></i>
+              </button>
+             }
+            </div>
+
+            <!-- Hiển thị menu cấp 2 nếu có -->
+            @if (item.children?.length) {
+              <ul
+                class="ml-6 mt-1 flex flex-col space-y-1.5 overflow-hidden transition-all duration-300 ease-in-out"
+                [style.maxHeight]="isOpen[item.id] ? '500px' : '0px'"
+                [style.opacity]="isOpen[item.id] ? '1' : '0.2'"
+                [style.transform]="isOpen[item.id] ? 'translateY(0)' : 'translateY(-8px)'"
+                [class.pointer-events-none]="!isOpen[item.id]"
+              >
+                @for (child of item.children; track child) {
+                  <li class="flex items-center space-x-2">
+                    <span class="w-1 h-1 bg-primary rounded-full inline-block"></span>
+                    <a
+                      [routerLink]="child.link"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                      (click)="toggleMenu()"
+                      routerLinkActive="active"
+                      class="item-link text-base"
+                    >
+                      {{ child.label }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
           </li>
         }
       </ul>
     </nav>
- </ng-template>
+  </ng-template>
 </p-drawer>
-
 
 <p-drawer
   [(visible)]="isShowContact"
@@ -63,8 +86,10 @@ styleClass="h-[800px]"
   position="right"
   styleClass="max-w-[340px] bg-white p-6"
 >
-  <button (click)="isShowContact=false" class="absolute top-3 right-3 text-secondary
-  bg-green-100 hover:bg-secondary rounded-full w-10 aspect-square group">
+  <button
+    (click)="isShowContact = false"
+    class="absolute top-3 right-3 text-secondary bg-green-100 hover:bg-secondary rounded-full w-10 aspect-square group"
+  >
     <i class="ri-close-line text-2xl group-hover:text-white"></i>
   </button>
   <div class="flex flex-col items-center justify-between space-y-6">
@@ -86,15 +111,20 @@ styleClass="h-[800px]"
     <div class="flex flex-col items-center w-full">
       <i class="ri-map-pin-line text-4xl text-green-600 mb-2"></i>
       <div class="title">Địa chỉ</div>
-      <div class="text-gray-500 text-sm text-center">123 Nguyễn Thị Minh Khai, Quận 1, TP.HCM</div>
+      <div class="text-gray-500 text-sm text-center">
+        123 Nguyễn Thị Minh Khai, Quận 1, TP.HCM
+      </div>
     </div>
     <hr class="w-full border-gray-200" />
     <!-- Social -->
     <div class="flex flex-col items-center w-full">
-      <div class="font-semibold text-base text-secondary my-2">Kết nối với chúng tôi</div>
+      <div class="font-semibold text-base text-secondary my-2">
+        Kết nối với chúng tôi
+      </div>
       <app-social-media-icon
-      [iconSize]="'text-3xl'"
-      spaceClass="space-x-5 mt-2" />
+        [iconSize]="'text-3xl'"
+        spaceClass="space-x-5 mt-2"
+      />
     </div>
   </div>
 </p-drawer>

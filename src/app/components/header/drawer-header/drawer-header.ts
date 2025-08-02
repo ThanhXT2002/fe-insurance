@@ -9,8 +9,8 @@ import {
 import { AppMenuItem } from '../../../core/interfaces/menu.interface';
 import { DrawerModule } from 'primeng/drawer';
 import { Logo } from "../../logo/logo";
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { SocialMediaIcon } from "../../social-media-icon/social-media-icon";
 
 @Component({
@@ -20,7 +20,8 @@ import { SocialMediaIcon } from "../../social-media-icon/social-media-icon";
   styleUrl: './drawer-header.scss',
 })
 export class DrawerHeader implements OnChanges {
-  private breakpointObserver = inject(BreakpointObserver)
+  private breakpointObserver = inject(BreakpointObserver);
+  private router = inject(Router);
   isShowMenu :boolean = false;
   isShowContact: boolean = false;
   isMobile: boolean = false;
@@ -52,4 +53,15 @@ export class DrawerHeader implements OnChanges {
       this.isShowContact = !this.isShowContact;
     }
   }
+
+  isOpen: Record<number, boolean> = {};
+
+  toggleOpen(id: number) {
+    console.log('Toggling:', id);
+    this.isOpen[id] = !this.isOpen[id];
+  }
+
+  isCurrentRoute(route: string): boolean {
+  return this.router.url === route;
+}
 }
