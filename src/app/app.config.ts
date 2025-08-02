@@ -5,6 +5,8 @@ import {
 } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 import { routes } from './app.routes';
 import { MyPreset } from './core/theme/my-preset';
@@ -28,6 +30,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    provideAnimations(),
      provideHttpClient(withFetch(), withInterceptors([])), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'

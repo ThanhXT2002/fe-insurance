@@ -1,1 +1,19 @@
-<p>social-media-icon works!</p>
+<div class="flex__end" [ngClass]="spaceClass + ' ' + colorClass">
+  @for (item of icons; track item) {
+    @if (item.link) {
+      <a [href]="item.link" target="_blank" rel="noopener" class="flex items-center">
+        <i [ngClass]="item.icon + ' ' + iconSize"></i>
+        @if (item.text) {
+          <span class="ml-1">{{ item.text }}</span>
+        }
+      </a>
+    } @else {
+      <span class="flex items-center">
+        <i [ngClass]="item.icon + ' ' + iconSize"></i>
+        @if (item.text) {
+          <span class="ml-1">{{ item.text }}</span>
+        }
+      </span>
+    }
+  }
+</div>

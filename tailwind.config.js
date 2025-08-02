@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#009a5e",
-        secondary: "#c0c0c0",
+        secondary: "#004F4C",
         third: "#ebeff0",
         fourth: "#6f6f6f",
         fifth: "#ffffff33",
@@ -22,6 +22,7 @@ module.exports = {
       fontFamily: {
         'sans': ['Open Sans', 'sans-serif'], // Đặt làm font mặc định
         'opensans': ['Open Sans', 'sans-serif'],
+        'ptserif': ['PT Serif', 'serif'],
       }
     },
   },

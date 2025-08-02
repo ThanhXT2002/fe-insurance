@@ -1,1 +1,11 @@
-<p>logo works!</p>
+<div class="flex items-center">
+  <img
+    ngOptimizedImage
+    [src]="imgSrc"
+    alt="Logo"
+    class="mr-2 w-10 md:w-12 aspect-square"
+  />
+  @if (isShowName) {
+    <span class="font-ptserif text-3xl font-bold text-green-700">XTBH</span>
+  }
+</div>

@@ -1,25 +1,35 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { TopHeader } from "./top-header/top-header";
+import { Logo } from "../logo/logo";
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DrawerHeader } from "./drawer-header/drawer-header";
+import { MenuService } from '../../core/services/menu';
+import { AppMenuItem } from '../../core/interfaces/menu.interface';
 
-type MenuItem = {
-  label: string;
-  link: string;
-};
+
 
 @Component({
   selector: 'app-header',
-  imports: [TopHeader],
+  imports: [TopHeader, Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
-  readonly menuItems = signal<MenuItem[]>(
-    [
-      { label: 'Home', link: '/' },
-      { label: 'About Us', link: '/about' },
-      { label: 'Products', link: '/products' },
-      { label: 'Blogs', link: '/blogs' },
-      { label: 'Contact Us', link: '/contact' }
-    ]
-  );
+export class Header implements OnInit {
+
+  private readonly menuService = inject(MenuService)
+  readonly menuItems = signal<AppMenuItem[]>([]);
+
+  constructor() {
+  effect(() => {
+    this.menuService.getMenu().subscribe((items: AppMenuItem[]) => {
+      this.menuItems.set(items);
+      console.log('Menu items:', items); // Log ở đây sẽ luôn có dữ liệu
+    });
+  });
+}
+
+  ngOnInit() {
+    console.log(this.menuItems())
+  }
 }

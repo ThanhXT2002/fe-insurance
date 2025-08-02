@@ -20,6 +20,11 @@
 @import '@fontsource/open-sans/700-italic.css';
 @import '@fontsource/open-sans/800-italic.css';
 
+@import '@fontsource/pt-serif/400.css'; // Regular
+@import '@fontsource/pt-serif/700.css'; // Bold
+@import '@fontsource/pt-serif/400-italic.css'; // Regular Italic (nếu cần)
+@import '@fontsource/pt-serif/700-italic.css'; // Bold Italic (nếu cần)
+
 
 @layer tailwind-base, primeng, tailwind-utilities;
 
@@ -39,6 +44,10 @@
 @layer base {
   body {
     font-family: "Open Sans", sans-serif;
+  }
+
+  .container{
+    @apply lg:px-8
   }
 }
 @layer components {

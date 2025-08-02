@@ -1,0 +1,180 @@
+[
+  {
+    "id": 0,
+    "label": "Trang chủ",
+    "icon": "ri-home-4-line",
+    "link": "/",
+    "isBlank": false,
+    "note": "Trang chính"
+  },
+  {
+    "id": 1,
+    "label": "Giới thiệu",
+    "icon": "ri-information-line",
+    "link": "/about",
+    "isBlank": false,
+    "note": "Thông tin về công ty"
+  },
+  {
+    "id": 2,
+    "label": "Sản phẩm",
+    "icon": "ri-shopping-bag-3-line",
+    "link": "/products",
+    "isBlank": false,
+    "note": "Danh sách sản phẩm",
+    "children": [
+      {
+        "id": 201,
+        "label": "Bảo hiểm sức khỏe",
+        "icon": "ri-heart-pulse-line",
+        "link": "/products/health",
+        "isBlank": false,
+        "note": "Bảo vệ sức khỏe toàn diện"
+      },
+      {
+        "id": 202,
+        "label": "Bảo hiểm nhân thọ",
+        "icon": "ri-user-heart-line",
+        "link": "/products/life",
+        "isBlank": false,
+        "note": "Bảo vệ tài chính cho gia đình"
+      },
+      {
+        "id": 203,
+        "label": "Bảo hiểm doanh nghiệp",
+        "icon": "ri-building-line",
+        "link": "/products/business",
+        "isBlank": false,
+        "note": "Bảo vệ doanh nghiệp khỏi rủi ro"
+      },
+      {
+        "id": 204,
+        "label": "Bảo hiểm nhà ở",
+        "icon": "ri-home-3-line",
+        "link": "/products/home",
+        "isBlank": false,
+        "note": "Bảo vệ tài sản nhà ở"
+      },
+      {
+        "id": 205,
+        "label": "Bảo hiểm thú cưng",
+        "icon": "ri-bear-smile-line",
+        "link": "/products/pet",
+        "isBlank": false,
+        "note": "Chăm sóc thú cưng"
+      },
+      {
+        "id": 206,
+        "label": "Bảo hiểm an ninh mạng",
+        "icon": "ri-shield-keyhole-line",
+        "link": "/products/cybersecurity",
+        "isBlank": false,
+        "note": "Bảo vệ dữ liệu số"
+      },
+      {
+        "id": 207,
+        "label": "Bảo hiểm cháy nổ",
+        "icon": "ri-fire-line",
+        "link": "/products/fire-explosion",
+        "isBlank": false,
+        "note": "Bảo vệ khỏi cháy nổ"
+      },
+      {
+        "id": 208,
+        "label": "Bảo hiểm tài sản",
+        "icon": "ri-bank-line",
+        "link": "/products/property",
+        "isBlank": false,
+        "note": "Bảo vệ tài sản cố định"
+      },
+      {
+        "id": 209,
+        "label": "Bảo hiểm hàng hóa",
+        "icon": "ri-truck-line",
+        "link": "/products/cargo",
+        "isBlank": false,
+        "note": "Bảo vệ hàng hóa vận chuyển"
+      },
+      {
+        "id": 210,
+        "label": "Bảo hiểm tàu thuyền",
+        "icon": "ri-ship-line",
+        "link": "/products/vessel",
+        "isBlank": false,
+        "note": "Bảo vệ phương tiện đường thủy"
+      },
+      {
+        "id": 211,
+        "label": "Bảo hiểm rủi ro xây dựng và lắp đặt",
+        "icon": "ri-tools-line",
+        "link": "/products/construction-installation",
+        "isBlank": false,
+        "note": "Bảo vệ công trình xây dựng"
+      },
+      {
+        "id": 212,
+        "label": "Bảo hiểm vật chất xe ô tô",
+        "icon": "ri-car-line",
+        "link": "/products/auto-physical",
+        "isBlank": false,
+        "note": "Bảo vệ xe ô tô khỏi hư hại"
+      },
+      {
+        "id": 213,
+        "label": "Bảo hiểm trách nhiệm dân sự ô tô",
+        "icon": "ri-shield-car-line",
+        "link": "/products/auto-civil",
+        "isBlank": false,
+        "note": "Trách nhiệm dân sự xe ô tô"
+      },
+      {
+        "id": 214,
+        "label": "Bảo hiểm trách nhiệm dân sự xe máy",
+        "icon": "ri-motorbike-line",
+        "link": "/products/motorcycle-civil",
+        "isBlank": false,
+        "note": "Trách nhiệm dân sự xe máy"
+      },
+      {
+        "id": 215,
+        "label": "Bảo hiểm du lịch quốc tế",
+        "icon": "ri-earth-line",
+        "link": "/products/global-travel",
+        "isBlank": false,
+        "note": "Bảo hiểm du lịch nước ngoài"
+      },
+      {
+        "id": 216,
+        "label": "Bảo hiểm du lịch trong nước",
+        "icon": "ri-map-pin-line",
+        "link": "/products/domestic-travel",
+        "isBlank": false,
+        "note": "Bảo hiểm du lịch nội địa"
+      },
+      {
+        "id": 217,
+        "label": "Bảo hiểm tai nạn con người",
+        "icon": "ri-user-add-line",
+        "link": "/products/personal-accident",
+        "isBlank": false,
+        "note": "Bảo hiểm tai nạn cá nhân"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "label": "Bài viết",
+    "icon": "ri-article-line",
+    "link": "/blogs",
+    "isBlank": false,
+    "note": "Tin tức, bài viết"
+  },
+  {
+    "id": 4,
+    "label": "Liên hệ",
+    "icon": "ri-contacts-line",
+    "link": "/contact",
+    "isBlank": false,
+    "note": "Thông tin liên hệ"
+  }
+]
