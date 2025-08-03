@@ -1,5 +1,5 @@
 .btn-common {
-  @apply relative overflow-hidden flex items-center gap-3 px-5 py-3 lg:px-8 lg:py-4 rounded-lg font-medium lg:text-lg transition-all duration-300 transform hover:scale-105;
+  @apply relative overflow-hidden flex items-center gap-3 px-5 py-3 lg:px-8 lg:py-4 rounded-lg font-medium lg:text-lg transition-all duration-300 transform ;
   z-index: 1;
 
   // Hiệu ứng overlay đơn giản từ giữa ra hai bên
