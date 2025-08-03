@@ -1,0 +1,29 @@
+<div class="group"
+[class]="flexClass + ' ' + gapClass + ' ' + flexDirection"
+>
+  <div
+    class="icon-box aspect-square rounded-full backdrop-blur-sm flex__middle flex-shrink-0  transition-colors duration-300"
+    [class]="bgColor + ' ' + bgWidth "
+    [style.--hover-bg-color]="resolvedHoverColor"
+  >
+    <i class="z-10 relative" [class]="icon + ' ' + iconColor + ' ' + iconSize"></i>
+  </div>
+  @if(title || description){
+      <div >
+    @if (title) {
+      <h3
+        class=""
+        [class]="titleFont + ' ' + titleColor + ' ' + titleSize"
+      >
+        {{ title }}
+      </h3>
+    }
+    @if(description) {
+      <p [class]="descriptionClass"
+      >{{description}}</p>
+    }
+
+  </div>
+  }
+
+</div>

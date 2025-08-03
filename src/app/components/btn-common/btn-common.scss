@@ -29,7 +29,7 @@
 }
 
 .btn-primary {
-  @apply bg-primary text-whiteColor shadow-lg hover:shadow-xl;
+  @apply bg-primary border-2 border-primary text-whiteColor shadow-lg hover:shadow-xl;
 
   &::before {
     background: #004F4C;

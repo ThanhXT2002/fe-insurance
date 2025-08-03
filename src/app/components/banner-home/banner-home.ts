@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BtnCommon } from "../btn-common/btn-common";
+import { IconBoxWrapper } from "../icon-box-wrapper/icon-box-wrapper";
 
 @Component({
   selector: 'app-banner-home',
-  imports: [CommonModule, BtnCommon],
+  imports: [CommonModule, BtnCommon, IconBoxWrapper],
   templateUrl: './banner-home.html',
   styleUrl: './banner-home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -23,6 +23,7 @@
     <div class="hero-content">
       <h1 class="hero-title">
         Giải pháp
+        <br class="hidden md:block" />
         <span class="highlight-text"> Bảo hiểm toàn diện</span>
         <br />
         cho mọi giai đoạn cuộc sống
@@ -50,27 +51,19 @@
 
       <!-- Features -->
       <div class="features">
-        <div class="feature-item">
-          <!-- SVG Icon 1 -->
-          <div class="feature-icon">
-            <i class="ri-user-community-line text-2xl"></i>
-          </div>
-          <div class="feature-text">
-            <h3>Tư vấn chuyên nghiệp</h3>
-            <p>Từ các chuyên gia am hiểu</p>
-          </div>
-        </div>
+        <app-icon-box-wrapper
+        icon="ri-user-community-line"
+        title="Đội ngũ tư vấn chuyên nghiệp"
+        description="Từ các chuyên gia am hiểu"
+        hoverBgColor="secondary"
+        />
 
-        <div class="feature-item">
-          <!-- SVG Icon 2 -->
-          <div class="feature-icon">
-            <i class="ri-user-heart-line text-2xl"></i>
-          </div>
-          <div class="feature-text">
-            <h3>Giải quyết bồi thường nhanh chóng</h3>
-            <p>Hỗ trợ 24/7</p>
-          </div>
-        </div>
+        <app-icon-box-wrapper
+        icon="ri-user-heart-line"
+        iconSize="text-2xl"
+        title="Giải quyết bồi thường nhanh chóng"
+        description="Hỗ trợ 24/7"
+        />
       </div>
     </div>
   </div>

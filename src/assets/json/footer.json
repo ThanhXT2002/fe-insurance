@@ -163,15 +163,7 @@
       "link": "/privacy-policy",
       "isBlank": false,
       "note": "Chính sách bảo vệ thông tin"
-    },
-    {
-      "id": 303,
-      "label": "Chính sách Cookie",
-      "icon": "ri-database-line",
-      "link": "/cookie-policy",
-      "isBlank": false,
-      "note": "Chính sách sử dụng Cookie"
     }
   ],
-  "copyright": "© 2024 XTBH. All rights reserved. Development by Tran Xuan Thanh"
+  "copyright": "© 2024 XTBH. All rights reserved."
 }
