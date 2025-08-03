@@ -1,0 +1,203 @@
+// Banner Home Styles
+.banner-home {
+  @apply relative overflow-hidden;
+  height: calc(100vh - var(--header-height));
+}
+
+// Video Background
+.video-background {
+  @apply absolute inset-0 w-full h-full;
+  z-index: 1;
+}
+
+.background-video {
+  @apply w-full h-full object-cover;
+  height: calc(100vh - var(--header-height));
+}
+
+.video-overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 79, 76, 0.8) 0%,
+    rgba(0, 154, 94, 0.7) 50%,
+    rgba(0, 79, 76, 0.8) 100%
+  );
+  z-index: 2;
+}
+
+// Content
+.banner-content {
+  @apply relative h-[calc(100vh-var(--header-height))] flex items-center;
+  z-index: 10;
+}
+
+// Hero Content
+.hero-content {
+  @apply text-whiteColor;
+}
+
+.hero-title {
+  @apply text-2xl md:text-3xl lg:text-5xl font-medium  mb-6;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.highlight-text {
+  @apply  font-bold;
+  background-clip: text;
+}
+
+.hero-description {
+  @apply text-sm md:text-base leading-relaxed mb-8 ;
+  max-width: 600px;
+}
+
+// CTA Buttons
+.cta-buttons {
+  @apply flex flex-col sm:flex-row gap-4 mb-12;
+}
+
+.btn-primary, .btn-secondary {
+  @apply flex items-center gap-3 px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 transform hover:scale-105;
+}
+
+.btn-primary {
+  @apply bg-primary text-whiteColor shadow-lg hover:shadow-xl hover:bg-greenDark;
+}
+
+.btn-secondary {
+  @apply bg-whiteColor/10 text-whiteColor backdrop-blur-sm border-2 border-whiteColor/30 hover:bg-whiteColor/20 hover:border-whiteColor/50;
+}
+
+// Features
+.features {
+  @apply grid sm:grid-cols-2 gap-6;
+}
+
+.feature-item {
+  @apply flex items-start gap-4;
+}
+
+.feature-icon {
+  @apply w-12 h-12 rounded-full bg-primary backdrop-blur-sm flex items-center justify-center  flex-shrink-0;
+}
+
+.feature-icon svg {
+  @apply w-6 h-6;
+}
+
+.feature-text h3 {
+  @apply font-bold text-whiteColor mb-1;
+}
+
+.feature-text p {
+  @apply text-silverColor text-sm;
+}
+
+// Hero Image
+.hero-image {
+  @apply hidden lg:flex justify-center items-center;
+}
+
+.image-placeholder {
+  @apply relative w-full max-w-md h-96 rounded-2xl bg-whiteColor/10 backdrop-blur-sm border border-whiteColor/20 flex items-center justify-center;
+}
+
+.floating-elements {
+  @apply relative w-full h-full;
+}
+
+.element {
+  @apply absolute w-16 h-16 rounded-full bg-primary/20 backdrop-blur-lg flex items-center justify-center text-primary border-2 border-whiteColor/30;
+  animation: float 3s ease-in-out infinite;
+}
+
+.element i {
+  @apply text-2xl;
+}
+
+.element-1 {
+  @apply top-8 left-8;
+  animation-delay: 0s;
+}
+
+.element-2 {
+  @apply top-1/2 right-8 -translate-y-1/2;
+  animation-delay: 1s;
+}
+
+.element-3 {
+  @apply bottom-8 left-1/2 -translate-x-1/2;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+// Responsive Design
+@media (min-width: 1024px) {
+  .banner-home {
+    height: 700px;
+  }
+
+  .background-video {
+    height: 700px;
+  }
+
+  .banner-content {
+    height: 700px;
+  }
+}
+
+
+
+// Animation for scroll reveal (optional)
+@media (prefers-reduced-motion: no-preference) {
+  .hero-content {
+    animation: slideInLeft 1s ease-out;
+  }
+
+  .hero-image {
+    animation: slideInRight 1s ease-out 0.3s both;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .video-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 79, 76, 0.8) 50%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
+}

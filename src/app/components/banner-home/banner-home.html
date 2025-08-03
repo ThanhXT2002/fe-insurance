@@ -1,0 +1,77 @@
+<section class="banner-home">
+  <!-- Video Background -->
+  <div class="video-background">
+    <video
+      #bgVideo
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      class="background-video"
+    >
+      <source src="./assets/videos/banner-home.mp4" type="video/mp4" />
+      <!-- Fallback cho trình duyệt không hỗ trợ -->
+      Your browser does not support the video tag.
+    </video>
+    <!-- Video Overlay -->
+    <div class="video-overlay"></div>
+  </div>
+
+  <!-- Content Container -->
+  <div class="banner-content container-layer">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Giải pháp
+        <span class="highlight-text"> Bảo hiểm toàn diện</span>
+        <br />
+        cho mọi giai đoạn cuộc sống
+      </h1>
+
+      <p class="hero-description">
+        Chúng tôi cung cấp một loạt các gói bảo hiểm được thiết kế riêng để đáp
+        ứng nhu cầu độc đáo của bạn. Hãy để chúng tôi giúp bạn tìm ra sự bảo vệ
+        phù hợp, để bạn có thể sống với sự an tâm.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="cta-buttons">
+        <app-btn-common
+          [icon]="'ri-user-voice-line'"
+          [text]="'Nhận báo giá miễn phí'"
+          type="primary"
+        ></app-btn-common>
+        <app-btn-common
+          [icon]="'ri-phone-line'"
+          [text]="'Tư vấn ngay'"
+          type="secondary"
+        ></app-btn-common>
+      </div>
+
+      <!-- Features -->
+      <div class="features">
+        <div class="feature-item">
+          <!-- SVG Icon 1 -->
+          <div class="feature-icon">
+            <i class="ri-user-community-line text-2xl"></i>
+          </div>
+          <div class="feature-text">
+            <h3>Tư vấn chuyên nghiệp</h3>
+            <p>Từ các chuyên gia am hiểu</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <!-- SVG Icon 2 -->
+          <div class="feature-icon">
+            <i class="ri-user-heart-line text-2xl"></i>
+          </div>
+          <div class="feature-text">
+            <h3>Giải quyết bồi thường nhanh chóng</h3>
+            <p>Hỗ trợ 24/7</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

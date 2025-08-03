@@ -28,6 +28,11 @@
 
 @layer tailwind-base, primeng, tailwind-utilities;
 
+// Global CSS Custom Properties
+:root {
+  --header-height: 52px;
+}
+
 @layer reset, primeng;
 
 @layer tailwind-base {
@@ -46,8 +51,8 @@
     font-family: "Open Sans", sans-serif;
   }
 
-  .container{
-    @apply px-3 md:px-5 lg:px-8 mx-auto;
+  .container-layer{
+    @apply max-w-7xl px-3 md:px-5 lg:px-3  mx-auto;
   }
 }
 @layer components {

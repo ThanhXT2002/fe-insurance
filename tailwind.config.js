@@ -5,6 +5,15 @@ module.exports = {
   content: ["./src/**/*.{html,ts,scss}"],
   theme: {
     extend: {
+      spacing: {
+        'header': '52px', // Có thể dùng như h-header, top-header, etc.
+      },
+      height: {
+        'screen-minus-header': 'calc(100vh - 52px)', // Có thể dùng như h-screen-minus-header
+      },
+      maxWidth: {
+        '7xl': '1300px', // Override default 7xl (1280px) to 1300px
+      },
       colors: {
         primary: "#009a5e",
         secondary: "#004F4C",

@@ -13,6 +13,19 @@
 
   <!-- Main content -->
   <div class="content-wrapper">
+    <!-- Illustration -->
+    <div class="illustration">
+      <div class="insurance-icon">
+        <div class="shield-container">
+          <div class="shield">
+            <i class="ri-shield-check-line"></i>
+          </div>
+          <div class="pulse-ring ring-1"></div>
+          <div class="pulse-ring ring-2"></div>
+          <div class="pulse-ring ring-3"></div>
+        </div>
+      </div>
+    </div>
     <div class="error-content">
       <!-- 3D 404 Number -->
       <div class="error-number">
@@ -36,7 +49,7 @@
       <!-- Action buttons -->
       <div class="error-actions">
         <a [routerLink]="'/'" class="btn-home">
-          <i class="ri-home-line"></i>
+         <i class="ri-home-4-line"></i>
           <span>Về trang chủ</span>
         </a>
         <button class="btn-back" (click)="goBack()">
@@ -46,49 +59,6 @@
       </div>
     </div>
 
-    <!-- Illustration -->
-    <div class="illustration">
-      <div class="insurance-icon">
-        <div class="shield-container">
-          <div class="shield">
-            <i class="ri-shield-check-line"></i>
-          </div>
-          <div class="pulse-ring ring-1"></div>
-          <div class="pulse-ring ring-2"></div>
-          <div class="pulse-ring ring-3"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Suggestions -->
-  <div class="suggestions">
-    <h3 class="suggestions-title">Có thể bạn đang tìm kiếm:</h3>
-    <div class="suggestions-grid">
-      <a [routerLink]="'/products'" class="suggestion-card">
-        <div class="suggestion-icon">
-          <i class="ri-shopping-bag-3-line"></i>
-        </div>
-        <span>Sản phẩm bảo hiểm</span>
-      </a>
-      <a [routerLink]="'/about'" class="suggestion-card">
-        <div class="suggestion-icon">
-          <i class="ri-information-line"></i>
-        </div>
-        <span>Giới thiệu</span>
-      </a>
-      <a [routerLink]="'/contact'" class="suggestion-card">
-        <div class="suggestion-icon">
-          <i class="ri-contacts-line"></i>
-        </div>
-        <span>Liên hệ</span>
-      </a>
-      <a [routerLink]="'/blogs'" class="suggestion-card">
-        <div class="suggestion-icon">
-          <i class="ri-article-line"></i>
-        </div>
-        <span>Bài viết</span>
-      </a>
-    </div>
   </div>
 </div>

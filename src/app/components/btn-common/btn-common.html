@@ -1,1 +1,11 @@
-<p>btn-common works!</p>
+<button
+  class="btn-common {{ typeClass }} {{ extraClass || '' }}"
+  [attr.aria-label]="ariaLabel"
+  [disabled]="disabled"
+>
+  <ng-container *ngIf="icon">
+    <i [class]="icon"></i>
+  </ng-container>
+  <span *ngIf="text">{{ text }}</span>
+  <ng-content></ng-content>
+</button>
