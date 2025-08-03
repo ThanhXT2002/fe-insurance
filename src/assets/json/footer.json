@@ -1,0 +1,177 @@
+{
+  "company": {
+    "name": "SecureGuard Insurance",
+    "description": "Bảo vệ những điều quan trọng nhất đối với bạn bằng các giải pháp bảo hiểm toàn diện và cam kết không ngừng về sự xuất sắc.",
+    "socialLinks": [
+      {
+        "id": 1,
+        "label": "Facebook",
+        "icon": "ri-facebook-fill",
+        "link": "https://facebook.com/secureguard",
+        "isBlank": true,
+        "note": "Trang Facebook chính thức"
+      },
+      {
+        "id": 2,
+        "label": "Instagram",
+        "icon": "ri-instagram-fill",
+        "link": "https://instagram.com/secureguard",
+        "isBlank": true,
+        "note": "Trang Instagram chính thức"
+      },
+
+      {
+        "id": 3,
+        "label": "Messenger",
+        "icon": "ri-messenger-line",
+        "link": "https://messenger.com/company/secureguard",
+        "isBlank": true,
+        "note": "Trang Messenger chính thức"
+      },
+      {
+        "id": 4,
+        "label": "Twitter",
+        "icon": "ri-twitter-x-line",
+        "link": "https://twitter.com/secureguard",
+        "isBlank": true,
+        "note": "Trang Twitter chính thức"
+      }
+    ]
+  },
+  "quickLinks": [
+    {
+      "id": 101,
+      "label": "Trang chủ",
+      "icon": "ri-home-line",
+      "link": "/",
+      "isBlank": false,
+      "note": "Trang chính"
+    },
+    {
+      "id": 102,
+      "label": "Giới thiệu",
+      "icon": "ri-information-line",
+      "link": "/about",
+      "isBlank": false,
+      "note": "Thông tin về công ty"
+    },
+    {
+      "id": 103,
+      "label": "Sản phẩm",
+      "icon": "ri-shopping-bag-line",
+      "link": "/products",
+      "isBlank": false,
+      "note": "Danh sách sản phẩm"
+    },
+    {
+      "id": 104,
+      "label": "Bài viết",
+      "icon": "ri-article-line",
+      "link": "/blogs",
+      "isBlank": false,
+      "note": "Tin tức, bài viết"
+    },
+    {
+      "id": 105,
+      "label": "Liên hệ",
+      "icon": "ri-contacts-line",
+      "link": "/contact",
+      "isBlank": false,
+      "note": "Thông tin liên hệ"
+    },
+    {
+      "id": 106,
+      "label": "Bồi thường",
+      "icon": "ri-file-shield-line",
+      "link": "/claims",
+      "isBlank": false,
+      "note": "Dịch vụ bồi thường"
+    }
+  ],
+  "insuranceProducts": [
+    {
+      "id": 201,
+      "label": "Bảo hiểm sức khỏe",
+      "icon": "ri-heart-pulse-line",
+      "link": "/products/health",
+      "isBlank": false,
+      "note": "Bảo vệ sức khỏe toàn diện"
+    },
+    {
+      "id": 202,
+      "label": "Bảo hiểm nhân thọ",
+      "icon": "ri-user-heart-line",
+      "link": "/products/life",
+      "isBlank": false,
+      "note": "Bảo vệ tài chính cho gia đình"
+    },
+    {
+      "id": 203,
+      "label": "Bảo hiểm doanh nghiệp",
+      "icon": "ri-building-line",
+      "link": "/products/business",
+      "isBlank": false,
+      "note": "Bảo vệ doanh nghiệp khỏi rủi ro"
+    },
+    {
+      "id": 204,
+      "label": "Bảo hiểm nhà ở",
+      "icon": "ri-home-3-line",
+      "link": "/products/home",
+      "isBlank": false,
+      "note": "Bảo vệ tài sản nhà ở"
+    },
+    {
+      "id": 205,
+      "label": "Bảo hiểm ô tô",
+      "icon": "ri-car-line",
+      "link": "/products/auto",
+      "isBlank": false,
+      "note": "Bảo vệ phương tiện"
+    },
+    {
+      "id": 206,
+      "label": "Bảo hiểm du lịch",
+      "icon": "ri-earth-line",
+      "link": "/products/travel",
+      "isBlank": false,
+      "note": "Bảo hiểm du lịch an toàn"
+    }
+  ],
+  "contactInfo": {
+    "address": {
+      "street": "123 Đường Bảo Hiểm",
+      "city": "Hà Nội",
+      "country": "Việt Nam"
+    },
+    "phone": "1800-BAO-HIEM",
+    "email": "info@secureguard.vn"
+  },
+  "legalLinks": [
+    {
+      "id": 301,
+      "label": "Điều khoản dịch vụ",
+      "icon": "ri-file-text-line",
+      "link": "/terms-of-service",
+      "isBlank": false,
+      "note": "Điều khoản sử dụng dịch vụ"
+    },
+    {
+      "id": 302,
+      "label": "Chính sách bảo mật",
+      "icon": "ri-shield-line",
+      "link": "/privacy-policy",
+      "isBlank": false,
+      "note": "Chính sách bảo vệ thông tin"
+    },
+    {
+      "id": 303,
+      "label": "Chính sách Cookie",
+      "icon": "ri-database-line",
+      "link": "/cookie-policy",
+      "isBlank": false,
+      "note": "Chính sách sử dụng Cookie"
+    }
+  ],
+  "copyright": "© 2024 XTBH. All rights reserved. Development by Tran Xuan Thanh"
+}

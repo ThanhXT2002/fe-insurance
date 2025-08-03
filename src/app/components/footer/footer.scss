@@ -1,0 +1,82 @@
+// Footer utility classes
+.footer-container {
+  @apply bg-secondary  text-whiteColor pt-16 pb-8 ;
+}
+
+
+
+.footer-grid {
+  @apply grid md:grid-cols-2 lg:grid-cols-4 gap-8;
+}
+
+.footer-section-title {
+  @apply text-xl font-bold mb-6;
+}
+
+.footer-description {
+  @apply text-silverColor mb-6 leading-relaxed;
+}
+
+.footer-social-container {
+  @apply flex space-x-4;
+}
+
+.footer-social-icon {
+  @apply w-10 h-10 bg-fifth rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer;
+}
+
+.footer-nav-list {
+  @apply space-y-3;
+}
+
+.footer-nav-link {
+  @apply text-silverColor hover:text-whiteColor transition-colors;
+}
+
+.footer-contact-container {
+  @apply space-y-4;
+}
+
+.footer-contact-item {
+  @apply flex items-start space-x-3;
+}
+
+.footer-contact-item-center {
+  @apply flex items-center space-x-3;
+}
+
+.footer-contact-icon-container {
+  @apply w-5 h-5 flex items-center justify-center mt-1;
+}
+
+.footer-contact-icon-container-center {
+  @apply w-5 h-5 flex items-center justify-center;
+}
+
+.footer-contact-icon {
+  @apply text-primary;
+}
+
+.footer-contact-text {
+  @apply text-silverColor;
+}
+
+.footer-bottom {
+  @apply border-t border-fourth/30 mt-12 pt-8;
+}
+
+.footer-bottom-content {
+  @apply flex flex-col lg:flex-row justify-between items-center;
+}
+
+.footer-copyright {
+  @apply text-silverColor text-sm;
+}
+
+.footer-links-container {
+  @apply w-full md:w-auto flex flex-col items-start justify-start  md:flex-row space-y-3 md:space-y-0 md:space-x-6 mt-4 lg:mt-0;
+}
+
+.footer-link {
+  @apply text-silverColor hover:text-whiteColor text-sm transition-colors;
+}

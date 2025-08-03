@@ -47,7 +47,7 @@
   }
 
   .container{
-    @apply lg:px-8
+    @apply px-3 md:px-5 lg:px-8 mx-auto;
   }
 }
 @layer components {

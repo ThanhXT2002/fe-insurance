@@ -1,88 +1,109 @@
-<footer class="bg-secondary text-whiteColor py-16">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid md:grid-cols-4 gap-8">
-      <div>
-        <div class="flex items-center mb-6">
-          <span class="text-2xl text-primary font-opensans font-semibold">SecureGuard</span>
-        </div>
-        <p class="text-silverColor mb-6 leading-relaxed">
-          Protecting what matters most to you with comprehensive insurance solutions and unwavering commitment to excellence.
-        </p>
-        <div class="flex space-x-4">
-          <div class="w-10 h-10 bg-fifth rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer">
-            <i class="ri-facebook-fill text-lg"></i>
+<footer class="footer-container">
+  <div class="container">
+    @if (footerData(); as data) {
+      <div class="footer-grid">
+        <!-- Company Info Section -->
+        <div>
+          <div class="flex items-center mb-6">
+            <app-logo [isShowName]="true" width="w-11 lg:w-14"/>
           </div>
-          <div class="w-10 h-10 bg-fifth rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer">
-            <i class="ri-twitter-fill text-lg"></i>
-          </div>
-          <div class="w-10 h-10 bg-fifth rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer">
-            <i class="ri-linkedin-fill text-lg"></i>
-          </div>
-          <div class="w-10 h-10 bg-fifth rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer">
-            <i class="ri-instagram-fill text-lg"></i>
+          <p class="footer-description">
+            {{ data.company.description }}
+          </p>
+          <div class="footer-social-container">
+            @for (social of data.company.socialLinks; track social.id) {
+              <div class="footer-social-icon"
+                   (click)="openExternalLink(social)"
+                   [title]="social.note">
+                <i [class]="social.icon + ' text-lg'"></i>
+              </div>
+            }
           </div>
         </div>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold mb-6">Quick Links</h3>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Home</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">About Us</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Products</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Blogs</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Contact Us</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Claims</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold mb-6">Insurance Products</h3>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Health Insurance</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Life Insurance</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Business Insurance</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Home Insurance</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Auto Insurance</a></li>
-          <li><a href="#" class="text-silverColor hover:text-whiteColor transition-colors">Travel Insurance</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold mb-6">Contact Info</h3>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-3">
-            <div class="w-5 h-5 flex items-center justify-center mt-1">
-              <i class="ri-map-pin-line text-primary"></i>
+
+        <!-- Quick Links Section -->
+        <div class="lg:pl-20">
+          <h3 class="footer-section-title">Liên kết nhanh</h3>
+          <ul class="footer-nav-list">
+            @for (link of data.quickLinks; track link.id) {
+              <li>
+                <a [routerLink]="link.link"
+                   class="footer-nav-link"
+                   [title]="link.note">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Insurance Products Section -->
+        <div class="lg:pl-20">
+          <h3 class="footer-section-title">Sản phẩm bảo hiểm</h3>
+          <ul class="footer-nav-list">
+            @for (product of data.insuranceProducts; track product.id) {
+              <li>
+                <a [routerLink]="product.link"
+                   class="footer-nav-link"
+                   [title]="product.note">
+                  {{ product.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Contact Info Section -->
+        <div class="lg:pl-20">
+          <h3 class="footer-section-title">Thông tin liên hệ</h3>
+          <div class="footer-contact-container">
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon-container">
+                <i class="ri-map-pin-line footer-contact-icon"></i>
+              </div>
+              <div class="footer-contact-text">
+                <p>{{ data.contactInfo.address.street }}</p>
+                <p>{{ data.contactInfo.address.city }}, {{ data.contactInfo.address.country }}</p>
+              </div>
             </div>
-            <div class="text-silverColor">
-              <p>123 Insurance Plaza</p>
-              <p>New York, NY 10001</p>
+            <div class="footer-contact-item-center">
+              <div class="footer-contact-icon-container-center">
+                <i class="ri-phone-line footer-contact-icon"></i>
+              </div>
+              <span class="footer-contact-text">{{ data.contactInfo.phone }}</span>
             </div>
-          </div>
-          <div class="flex items-center space-x-3">
-            <div class="w-5 h-5 flex items-center justify-center">
-              <i class="ri-phone-line text-primary"></i>
+            <div class="footer-contact-item-center">
+              <div class="footer-contact-icon-container-center">
+                <i class="ri-mail-line footer-contact-icon"></i>
+              </div>
+              <span class="footer-contact-text">{{ data.contactInfo.email }}</span>
             </div>
-            <span class="text-silverColor">1-800-SECURE-1</span>
-          </div>
-          <div class="flex items-center space-x-3">
-            <div class="w-5 h-5 flex items-center justify-center">
-              <i class="ri-mail-line text-primary"></i>
-            </div>
-            <span class="text-silverColor">info@secureguard.com</span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="border-t border-fourth/30 mt-12 pt-8">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-silverColor text-sm">
-          © 2024 SecureGuard Insurance. All rights reserved.
-        </p>
-        <div class="flex space-x-6 mt-4 md:mt-0">
-          <a href="#" class="text-silverColor hover:text-whiteColor text-sm transition-colors">Terms of Service</a>
-          <a href="#" class="text-silverColor hover:text-whiteColor text-sm transition-colors">Privacy Policy</a>
-          <a href="#" class="text-silverColor hover:text-whiteColor text-sm transition-colors">Cookie Policy</a>
+
+      <!-- Footer Bottom Section -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-content">
+          <p class="footer-copyright">
+            {{ data.copyright }}
+          </p>
+          <div class="footer-links-container">
+            @for (legal of data.legalLinks; track legal.id) {
+              <a [routerLink]="legal.link"
+                 class="footer-link"
+                 [title]="legal.note">
+                {{ legal.label }}
+              </a>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    } @else {
+      <!-- Loading state -->
+      <div class="flex justify-center items-center py-8">
+        <div class="text-silverColor">Đang tải thông tin...</div>
+      </div>
+    }
   </div>
 </footer>
