@@ -2,33 +2,22 @@
   @apply relative overflow-hidden flex items-center gap-3 px-5 py-3 lg:px-8 lg:py-4 rounded-lg font-medium lg:text-lg transition-all duration-300 transform hover:scale-105;
   z-index: 1;
 
-  // Hiệu ứng overlay từ giữa ra hai bên
-  &::before,
-  &::after {
+  // Hiệu ứng overlay đơn giản từ giữa ra hai bên
+  &::before {
     content: '';
     position: absolute;
     top: 0;
-    width: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     z-index: -1;
-    transition: width 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   }
 
-  &::before {
-    left: 50%;
-    border-top-left-radius: inherit;
-    border-bottom-left-radius: inherit;
-  }
-
-  &::after {
-    right: 50%;
-    border-top-right-radius: inherit;
-    border-bottom-right-radius: inherit;
-  }
-
-  &:hover::before,
-  &:hover::after {
-    width: 50%;
+  &:hover::before {
+    transform: scaleX(1);
   }
 
   // Đảm bảo content luôn ở trên
@@ -42,9 +31,8 @@
 .btn-primary {
   @apply bg-primary text-whiteColor shadow-lg hover:shadow-xl;
 
-  &::before,
-  &::after {
-    background: #2a9d8f;
+  &::before {
+    background: #004F4C;
   }
 
   &:hover {
@@ -55,8 +43,7 @@
 .btn-secondary {
   @apply bg-whiteColor/10 text-whiteColor backdrop-blur-sm border-2 border-whiteColor/30 hover:border-whiteColor/50;
 
-  &::before,
-  &::after {
+  &::before {
     background: rgba(255,255,255,0.25);
   }
 
@@ -68,8 +55,7 @@
 .btn-black {
   @apply bg-blackLight text-whiteColor;
 
-  &::before,
-  &::after {
+  &::before {
     background: #495057;
   }
 
@@ -81,8 +67,7 @@
 .btn-white {
   @apply bg-whiteColor text-primary border border-primary;
 
-  &::before,
-  &::after {
+  &::before {
     background: #f8f9fa;
   }
 
