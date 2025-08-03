@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">XTBH</string>
+    <string name="title_activity_main">XTBH</string>
+    <string name="package_name">xtbh.tranxuanthanhtxt.app</string>
+    <string name="custom_url_scheme">xtbh.tranxuanthanhtxt.app</string>
+</resources>
