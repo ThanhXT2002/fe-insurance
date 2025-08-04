@@ -10,9 +10,18 @@ module.exports = {
       },
       height: {
         'screen-minus-header': 'calc(100vh - 52px)', // Có thể dùng như h-screen-minus-header
+        'nav-header': '52px', // Dùng cho các phần tử cần chiều
+      },
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',  // Dành cho 2K+
+        '5xl': '3840px',  // Dành cho 4K
       },
       maxWidth: {
         '7xl': '1300px', // Override default 7xl (1280px) to 1300px
+        '8xl': '1600px',
+        '9xl': '1920px',
+        '10xl': '2560px',
       },
       colors: {
         primary: "#009a5e",

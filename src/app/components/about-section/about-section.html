@@ -1,4 +1,4 @@
-<section class="py-20 lg:py-0 bg-whiteSmoke min-h-screen flex__between">
+<section class="py-20 lg:py-0   h-full lg:h-[calc(100vh-var(--header-height))] 4xl:h-[700px] flex__between">
   <div class="container-layer">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <!-- Image Section -->
@@ -11,7 +11,7 @@
             src="/assets/images/about-image.webp"
             alt="Gia đình hạnh phúc được bảo vệ bởi bảo hiểm"
 
-            class="w-full md:w-[520px] md:h-[600px]  mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover">
+            class="w-full md:w-[480] md:h-[520px]  mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover">
           </div>
 
           <!-- Floating Testimonial Card -->
@@ -40,13 +40,13 @@
       <div class="flex flex-col">
         <!-- Section Title -->
         <div class="mb-6">
-          <div class="text-primary  font-semibold  uppercase tracking-wide mb-2 flex__start gap-x-2 text-xs">
-            <i class="ri-circle-fill text-[8px]"></i>
-            VỀ CHÚNG TÔI
-          </div>
-          <h2 class="text-4xl lg:text-5xl font-bold text-secondary mb-6 !leading-tight">
-            Giải pháp bảo hiểm
-            <span class="text-primary">toàn diện</span>
+          <app-section-label
+          text="Về chúng tôi"
+          />
+
+          <h2 class="text-3xl md:text-4xl  font-medium text-secondary lg:mb-6 !leading-tight">
+            Giải pháp
+            <span class="font-bold"> Bảo hiểm toàn diện</span>
             cho mọi nhu cầu
           </h2>
         </div>
@@ -100,7 +100,7 @@
           </div>
 
           <!-- Statistics -->
-          <div class="bg-gray-200 rounded-t-3xl rounded-e-3xl  py-10 px-8 ">
+          <div class="bg-third rounded-t-3xl rounded-e-3xl  py-10 px-8 ">
             <div class="text-start">
               <div class="text-3xl font-bold text-primary mb-1.5">100<span class="text-lg">%</span></div>
               <div class="text-fourth text-xs uppercase tracking-wide font-semibold">Tỷ lệ thành công</div>

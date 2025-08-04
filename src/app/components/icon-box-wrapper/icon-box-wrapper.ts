@@ -26,6 +26,9 @@ export class IconBoxWrapper {
   @Input() descriptionClass: string = 'text-sm text-silverColor';
   @Input() isShowText: boolean = true;
 
+  @Input() iconSrc:string = '';
+  @Input() iconImgClass:string = '';
+
   // Mapping tên màu Tailwind sang hex/rgb
   private colorMap: { [key: string]: string } = {
     'primary': '#009a5e',
