@@ -1,26 +1,24 @@
-<section class="bg-whiteSmoke min-h-screen flex__between">
+<section class="py-20 lg:py-0 bg-whiteSmoke min-h-screen flex__between">
   <div class="container-layer">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <!-- Image Section -->
-      <div class="order-1 lg:order-1 relative">
-        <div class="relative w-[540px]  flex__middle">
+      <div class="relative flex__middle">
+        <div class="relative  flex__middle">
           <!-- Main Image -->
           <div class="rounded-t-full p-2 border border-gray-200">
             <img
-            ngSrc="/assets/images/about-image.webp"
+            NgOptimizedImage
+            src="/assets/images/about-image.webp"
             alt="Gia đình hạnh phúc được bảo vệ bởi bảo hiểm"
-            width="520"
-            height="700"
-            priority
-            class="w-full max-w-md mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover">
+
+            class="w-full md:w-[520px] md:h-[600px]  mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover">
           </div>
 
           <!-- Floating Testimonial Card -->
            <app-testimonial-card/>
-          
 
           <!-- Fast Claims Processing Badge -->
-          <div class="animate-move-x absolute top-6 right-6 bg-white rounded-xlg p-2 rounded-lg shadow-sm border border-gray-200">
+          <div class="animate-move-x absolute top-6 right-14 lg:right-6 bg-white rounded-xlg p-2 rounded-lg shadow-sm border border-gray-200">
             <div class="flex items-center gap-3">
               <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <img
@@ -39,14 +37,14 @@
       </div>
 
       <!-- Content Section -->
-      <div class="order-2 lg:order-2">
+      <div class="flex flex-col">
         <!-- Section Title -->
         <div class="mb-6">
           <div class="text-primary  font-semibold  uppercase tracking-wide mb-2 flex__start gap-x-2 text-xs">
             <i class="ri-circle-fill text-[8px]"></i>
             VỀ CHÚNG TÔI
           </div>
-          <h2 class="text-4xl lg:text-5xl font-bold text-secondary mb-6 leading-tight">
+          <h2 class="text-4xl lg:text-5xl font-bold text-secondary mb-6 !leading-tight">
             Giải pháp bảo hiểm
             <span class="text-primary">toàn diện</span>
             cho mọi nhu cầu
@@ -54,19 +52,19 @@
         </div>
 
         <!-- Description -->
-        <p class="text-lg text-fourth mb-8 leading-relaxed">
+        <p class="text-sm text-fourth mb-8 leading-relaxed">
           Chúng tôi cung cấp một loạt các gói bảo hiểm được thiết kế riêng để đáp ứng nhu cầu độc đáo của bạn.
           Hãy để chúng tôi giúp bạn tìm ra sự bảo vệ phù hợp, để bạn có thể sống với sự an tâm.
         </p>
 
-        <div class="grid lg:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-2 gap-8">
           <!-- Features List -->
           <div class="space-y-4">
             <div class="flex items-center gap-3">
               <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
                 <img src="assets/icons/check.svg" alt="icon_check">
               </div>
-              <span class="text-fourth font-medium text-sm">Phương pháp tiếp cận tập trung vào khách hàng</span>
+              <span class="text-fourth font-medium text-sm">Tập trung vào khách hàng</span>
             </div>
 
             <div class="flex items-center gap-3">
@@ -87,30 +85,35 @@
               <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
                 <img src="assets/icons/check.svg" alt="icon_check">
               </div>
-              <span class="text-fourth font-medium text-sm">Bảo hiểm bệnh hiểm nghèo toàn diện</span>
+              <span class="text-fourth font-medium text-sm">Bảo hiểm toàn diện mọi như cầu</span>
             </div>
+
+
+          <div class="pt-6">
+            <app-btn-common
+            [text]="'Tìm hiểu thêm'"
+            type="primary"
+            extraClass="!p-3"
+          ></app-btn-common>
+          </div>
+
           </div>
 
           <!-- Statistics -->
-          <div class="bg-third rounded-xl p-6 space-y-6">
-            <div class="text-center">
-              <div class="text-3xl font-bold text-primary mb-1">100<span class="text-lg">%</span></div>
-              <div class="text-fourth text-sm uppercase tracking-wide">Tỷ lệ thành công</div>
+          <div class="bg-gray-200 rounded-t-3xl rounded-e-3xl  py-10 px-8 ">
+            <div class="text-start">
+              <div class="text-3xl font-bold text-primary mb-1.5">100<span class="text-lg">%</span></div>
+              <div class="text-fourth text-xs uppercase tracking-wide font-semibold">Tỷ lệ thành công</div>
             </div>
-            <div class="text-center">
-              <div class="text-3xl font-bold text-primary mb-1">3256<span class="text-lg">+</span></div>
-              <div class="text-fourth text-sm uppercase tracking-wide">Khách hàng hài lòng</div>
+            <hr class="border-white  my-4">
+            <div class="text-start">
+              <div class="text-3xl font-bold text-primary mb-1.5">3256<span class="text-lg">+</span></div>
+              <div class="text-fourth text-sm uppercase tracking-wide font-semibold">Khách hàng hài lòng</div>
             </div>
           </div>
         </div>
 
-        <!-- CTA Button -->
-        <div class="mt-8">
-          <app-btn-common
-            [text]="'Tìm hiểu thêm'"
-            type="primary"
-          ></app-btn-common>
-        </div>
+
       </div>
     </div>
   </div>
