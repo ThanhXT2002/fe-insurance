@@ -1,13 +1,13 @@
 <section
-  class="xl:h-[calc(100vh-var(--header-height))] 4xl:h-[700px] flex__start flex-col bg-third px-3 bgUrlCustom"
+  class="xl:h-[calc(100vh-var(--header-height))] 4xl:h-[750px] flex__start flex-col bg-third px-3 bgUrlCustom"
 >
   <div class="container-layer flex__middle flex-col">
-    <div class="mt-16">
+    <div class="mt-16 4xl:mt-20">
       <app-section-label text="Dịch vụ" />
     </div>
 
     <h2
-      class="text-3xl md:text-4xl font-medium text-secondary mb-3 lg:mb-5 !leading-tight text-center"
+      class="text-3xl md:text-4xl font-medium text-secondary mb-3 lg:mb-5 4xl:mb-7 !leading-tight text-center"
     >
       Dịch vụ
       <span class="font-bold">Bảo hiểm</span>
@@ -15,11 +15,12 @@
       toàn diện
     </h2>
 
-    <p class="text-fourth text-sm">
+    <p class="text-fourth text-sm mb">
       Các dịch vụ bảo hiểm toàn diện của chúng tôi được thiết kế để mang lại cho
       bạn sự an tâm, bất kể nhu cầu của bạn là gì
     </p>
-
-    <app-product-list/>
+    <div class="mt-20 4xl:mt-24 w-full">
+       <app-product-list/>
+    </div>
   </div>
 </section>

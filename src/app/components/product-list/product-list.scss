@@ -1,3 +1,72 @@
+// Product card hover effects
+.product-card {
+  // Smooth transition for all properties
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Enhanced hover effects
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+}
+
+// Gradient overlay with dynamic rounded animation
+@keyframes slideUpWithRounded {
+  0% {
+    transform: translateY(100%);
+    border-radius: 8999px 8999px 1rem 0; // rounded-t-full rounded-e-2xl
+    background: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
+  }
+  50% {
+    transform: translateY(1%);
+    border-radius: 3rem 3rem 1rem 0; // intermediate rounded
+  }
+  100% {
+    transform: translateY(0);
+    border-radius: 1rem 1rem 1rem 0; // rounded-t-2xl rounded-e-2xl
+  }
+}
+
+.gradient-overlay {
+  // Initially hidden below with no background
+  transform: translateY(100%);
+  background: transparent;
+
+  .product-card:hover & {
+    animation: slideUpWithRounded 0.7s ease-out forwards;
+    --tw-gradient-from: #009a5e;
+    --tw-gradient-via: rgba(0, 154, 94, 0.9);
+    --tw-gradient-to: #004F4C;
+  }
+}// Icon animation enhancements
+.product-card:hover {
+  .fa-arrow-right {
+    transform: rotate(0deg) scale(1.1);
+  }
+}
+
+// Custom button hover state
+.custom-btn {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .product-card:hover &::after {
+    width: 100%;
+  }
+}
+
 .custom-btn:hover .fa-arrow-right {
   transform: rotate(0deg);
 }
