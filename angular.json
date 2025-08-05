@@ -15,12 +15,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-        "builder": "@angular/build:application",
-        "options": {
-          "browser": "src/main.ts",
-          "tsConfig": "tsconfig.app.json",
-          "inlineStyleLanguage": "scss",
-          "assets": [
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
               {
                 "glob": "**/*",
                 "input": "src/assets",
@@ -32,11 +32,11 @@
                 "output": "."
               }
             ],
-          "styles": [
-            "src/styles.scss",
-            "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
-          ]
-        },
+            "styles": [
+              "src/styles.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+            ]
+          },
           "configurations": {
             "production": {
               "budgets": [
@@ -80,6 +80,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -88,9 +89,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           }
         }
       }

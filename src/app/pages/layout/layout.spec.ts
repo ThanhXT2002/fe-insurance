@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 import { Layout } from './layout';
 
 describe('Layout', () => {
@@ -8,7 +9,16 @@ describe('Layout', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Layout]
+      imports: [HttpClientTestingModule, Layout],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: {},
+            snapshot: { params: {} }
+          }
+        }
+      ]
     })
     .compileComponents();
 

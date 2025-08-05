@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { NotFound } from './not-found';
 
@@ -8,7 +10,16 @@ describe('NotFound', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotFound]
+      imports: [HttpClientTestingModule, NotFound],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: {},
+            snapshot: { params: {} }
+          }
+        }
+      ]
     })
     .compileComponents();
 

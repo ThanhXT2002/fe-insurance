@@ -1,46 +1,25 @@
-<section class="lg:h-[calc(100vh-var(--header-height))] 4xl:h-[700px] flex__start flex-col bg-third px-3">
+<section
+  class="lg:h-[calc(100vh-var(--header-height))] 4xl:h-[700px] flex__start flex-col bg-third px-3"
+>
   <div class="container-layer flex__middle flex-col">
     <div class="mt-16">
       <app-section-label text="Dịch vụ" />
     </div>
 
-    <h2 class="text-3xl md:text-4xl  font-medium text-secondary mb-3 lg:mb-5 !leading-tight text-center">
-            Dịch vụ
-            <span class="font-bold">bảo hiểm</span>
-            <br class="lg:hidden" />
-            toàn diện
-          </h2>
+    <h2
+      class="text-3xl md:text-4xl font-medium text-secondary mb-3 lg:mb-5 !leading-tight text-center"
+    >
+      Dịch vụ
+      <span class="font-bold">bảo hiểm</span>
+      <br class="lg:hidden" />
+      toàn diện
+    </h2>
 
     <p class="text-fourth text-sm">
-      Các dịch vụ bảo hiểm toàn diện của chúng tôi được thiết kế để mang lại cho bạn sự an tâm, bất kể nhu cầu của bạn là gì
+      Các dịch vụ bảo hiểm toàn diện của chúng tôi được thiết kế để mang lại cho
+      bạn sự an tâm, bất kể nhu cầu của bạn là gì
     </p>
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4 mt-16 group">
-
-      <div class="bg-white rounded-t-2xl rounded-e-2xl shadow-md p-5 md:p-7 lg:p-10 lg:py-9 ">
-
-        <app-icon-box-wrapper
-          iconSrc="assets/icons/health-insurance.svg"
-          iconImgClass="group-hover:invert"
-          bgWidth="w-[60px] lg:w-[70px]"
-          title="Bảo hiểm sức khỏe"
-          description="Bảo vệ sức khỏe của bạn và gia đình với các gói bảo hiểm toàn diện"
-          flexClass="flex "
-          flexDirection="flex-col"
-          titleSize="text-lg"
-          titleColor="text-secondary"
-          gapClass="gap-6"
-          hoverBgColor="whiteColor"
-          descriptionClass="text-fourth text-sm leading-relaxed mt-3"
-        />
-        <hr class="border-gray-200 my-7">
-
-        <button class="text-primary font-bold  group">
-          Learn More <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0  transition-all duration-300 ease-in-out"></i>
-        </button>
-
-      </div>
-    </div>
+    <app-product-list/>
   </div>
 </section>
-

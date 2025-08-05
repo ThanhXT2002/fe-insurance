@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { TopHeader } from './top-header';
 
@@ -8,7 +9,16 @@ describe('TopHeader', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopHeader]
+      imports: [TopHeader],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: {},
+            snapshot: { params: {} }
+          }
+        }
+      ]
     })
     .compileComponents();
 
