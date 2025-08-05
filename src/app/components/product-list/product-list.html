@@ -1,6 +1,6 @@
 <div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mt-16">
   @for(item of limitedProducts(); track item.id) {
-    <div class="bg-white rounded-t-2xl rounded-e-2xl shadow-sm p-5 md:p-7 lg:p-10 lg:py-9">
+    <div class="bg-white rounded-t-2xl rounded-e-2xl shadow-sm drop-shadow-lg p-5 md:p-7 lg:p-10 lg:py-9">
       <app-icon-box-wrapper
         [iconSrc]="item.icon"
         iconImgClass="group-hover:invert"
@@ -17,7 +17,7 @@
       >
         <hr class="border-gray-200 my-7" />
 
-        <button class="text-primary font-bold custom-btn">
+        <button class="text-primary font-bold custom-btn ">
           Chi tiết
           <i
             class="fa-solid fa-arrow-right -rotate-45 group-button-hover:rotate-0 transition-all duration-300 ease-in-out"
