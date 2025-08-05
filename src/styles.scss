@@ -5,26 +5,25 @@
 @import "remixicon/fonts/remixicon.css";
 @import "@fontsource/open-sans";
 // Import Open Sans font weights (chỉ có từ 300-800)
-@import '@fontsource/open-sans/300.css'; // Light
-@import '@fontsource/open-sans/400.css'; // Regular
-@import '@fontsource/open-sans/500.css'; // Medium
-@import '@fontsource/open-sans/600.css'; // Semibold
-@import '@fontsource/open-sans/700.css'; // Bold
-@import '@fontsource/open-sans/800.css'; // Extra Bold
+@import "@fontsource/open-sans/300.css"; // Light
+@import "@fontsource/open-sans/400.css"; // Regular
+@import "@fontsource/open-sans/500.css"; // Medium
+@import "@fontsource/open-sans/600.css"; // Semibold
+@import "@fontsource/open-sans/700.css"; // Bold
+@import "@fontsource/open-sans/800.css"; // Extra Bold
 
 // Import Open Sans italic variants
-@import '@fontsource/open-sans/300-italic.css';
-@import '@fontsource/open-sans/400-italic.css';
-@import '@fontsource/open-sans/500-italic.css';
-@import '@fontsource/open-sans/600-italic.css';
-@import '@fontsource/open-sans/700-italic.css';
-@import '@fontsource/open-sans/800-italic.css';
+@import "@fontsource/open-sans/300-italic.css";
+@import "@fontsource/open-sans/400-italic.css";
+@import "@fontsource/open-sans/500-italic.css";
+@import "@fontsource/open-sans/600-italic.css";
+@import "@fontsource/open-sans/700-italic.css";
+@import "@fontsource/open-sans/800-italic.css";
 
-@import '@fontsource/pt-serif/400.css'; // Regular
-@import '@fontsource/pt-serif/700.css'; // Bold
-@import '@fontsource/pt-serif/400-italic.css'; // Regular Italic (nếu cần)
-@import '@fontsource/pt-serif/700-italic.css'; // Bold Italic (nếu cần)
-
+@import "@fontsource/pt-serif/400.css"; // Regular
+@import "@fontsource/pt-serif/700.css"; // Bold
+@import "@fontsource/pt-serif/400-italic.css"; // Regular Italic (nếu cần)
+@import "@fontsource/pt-serif/700-italic.css"; // Bold Italic (nếu cần)
 
 @layer tailwind-base, primeng, tailwind-utilities;
 
@@ -44,18 +43,66 @@
   @tailwind utilities;
 }
 
-
-
 @layer base {
   body {
     font-family: "Open Sans", sans-serif;
   }
 
-  .container-layer{
+  .container-layer {
     @apply max-w-7xl px-3 md:px-5 lg:px-3  mx-auto;
   }
 }
 @layer components {
+  @keyframes overlay-reveal {
+    0% {
+      width: 0;
+      opacity: 1;
+    }
+    50% {
+      width: 200%;
+      opacity: 1;
+    }
+    100% {
+      width: 200%;
+      opacity: 0;
+    }
+  }
+
+  // Image hover effect với overlay trắng trong suốt
+  .image-hover-effect {
+    @apply relative overflow-hidden transition-all duration-300 ease-in-out;
+
+    // Overlay trắng trong suốt - mở ra từ giữa theo đường chéo 45°, sau đó mờ dần và biến mất
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 200%; // Cao hơn để đảm bảo che hết khi xoay
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 2;
+      transform: translate(-50%, -50%) rotate(45deg);
+      opacity: 0;
+    }
+
+    &:hover::before {
+      animation: overlay-reveal 1s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+      // Animation sẽ tự động mở ra rồi mờ dần biến mất
+    }
+
+    // Image bên trong
+    img {
+      @apply transition-all duration-300 ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    &:hover img {
+      @apply brightness-110;
+      filter: brightness(1.1) contrast(1.02);
+    }
+  }
 }
 
 @layer utilities {
