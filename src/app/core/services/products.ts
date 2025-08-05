@@ -6,7 +6,7 @@ import { ProductItem } from '../interfaces/product.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsSerive {
+export class ProductsService {
   // Signal lưu trữ toàn bộ danh sách sản phẩm
   private readonly productsSignal = signal<ProductItem[] | null>(null);
 
@@ -16,7 +16,9 @@ export class ProductsSerive {
     return products ? [...products].sort((a, b) => a.priority - b.priority).slice(0, 4) : [];
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchProducts(); // Tự động gọi fetchProducts khi khởi tạo service
+  }
 
   /**
    * Lấy danh sách sản phẩm từ file json và lưu vào signal
@@ -38,7 +40,7 @@ export class ProductsSerive {
   /**
    * Trả về observable danh sách sản phẩm (nếu cần dùng dạng observable)
    */
-  getProductLists$(): Observable<ProductItem[] | null> {
+  getProductLists$(): Observable<ProductItem[]> {
     return this.http.get<ProductItem[]>('assets/json/products.json');
   }
 

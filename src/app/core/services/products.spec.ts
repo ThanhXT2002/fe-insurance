@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ProductsSerive } from './products';
+import { ProductsService } from './products';
 import { ProductItem } from '../interfaces/product.interface';
 import { ProductStatus } from '../interfaces/product.interface';
 
-describe('ProductsSerive', () => {
-  let service: ProductsSerive;
+describe('ProductsService', () => {
+  let service: ProductsService;
   let httpMock: HttpTestingController;
 
   const mockProducts: ProductItem[] = [
@@ -19,9 +19,9 @@ describe('ProductsSerive', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ProductsSerive]
+      providers: [ProductsService]
     });
-    service = TestBed.inject(ProductsSerive);
+    service = TestBed.inject(ProductsService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -62,7 +62,7 @@ describe('ProductsSerive', () => {
   });
 
   it('should return observable from getProductLists$', (done) => {
-    service.getProductLists$().subscribe((data) => {
+    service.getProductLists$().subscribe((data:any) => {
       expect(data).toEqual(mockProducts);
       done();
     });
