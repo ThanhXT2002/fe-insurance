@@ -14,4 +14,50 @@
   animation: move-x 5s ease-in-out infinite;
 }
 
+// Image hover effect với overlay trắng trong suốt
+.image-hover-effect {
+  @apply relative overflow-hidden transition-all duration-300 ease-in-out cursor-pointer;
+
+  // Overlay trắng trong suốt - mở ra từ giữa theo hai phía lên trên và xuống dưới
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4);
+    z-index: 2;
+    transform: translateY(-50%);
+    transition: height 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  &:hover::before {
+    height: 100%;
+    // Không có transition ngược lại - overlay sẽ ở lại
+  }
+
+  // Image bên trong
+  img {
+    @apply transition-all duration-300 ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover img {
+    @apply brightness-110;
+    filter: brightness(1.1) contrast(1.02);
+  }
+}
+
+// Border container effect
+.image-border {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply border-primary/30;
+    box-shadow: 0 0 20px rgba(0, 154, 94, 0.15);
+  }
+}
+
 

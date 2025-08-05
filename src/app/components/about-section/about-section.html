@@ -2,23 +2,22 @@
   <div class="container-layer">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <!-- Image Section -->
-      <div class="relative flex__start">
-        <div class="relative  flex__middle">
+      <div class="relative  flex__middle">
           <!-- Main Image -->
-          <div class="rounded-t-full p-2 border border-gray-200">
+          <div class="image-hover-effect image-border rounded-t-full p-2 border border-gray-200">
             <img
             NgOptimizedImage
             src="/assets/images/about-image.webp"
             alt="Gia đình hạnh phúc được bảo vệ bởi bảo hiểm"
 
-            class="w-full md:w-[480] md:h-[520px]  mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover">
+            class="w-full md:w-[480] md:h-[520px]  mx-auto lg:mx-0 rounded-t-full shadow-xl object-cover ">
           </div>
 
           <!-- Floating Testimonial Card -->
-           <app-testimonial-card/>
+           <app-testimonial-card class="z-10"/>
 
           <!-- Fast Claims Processing Badge -->
-          <div class="animate-move-x absolute top-6 right-14 lg:right-6 bg-white rounded-xlg p-2 rounded-lg shadow-sm border border-gray-200">
+          <div class="animate-move-x absolute z-10 top-6 right-14 lg:right-6 bg-white rounded-xlg p-2 rounded-lg shadow-sm border border-gray-200">
             <div class="flex items-center gap-3">
               <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <img
@@ -34,7 +33,6 @@
             </div>
           </div>
         </div>
-      </div>
 
       <!-- Content Section -->
       <div class="flex flex-col">
