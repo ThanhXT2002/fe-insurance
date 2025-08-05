@@ -1,0 +1,13 @@
+<div class="grid lg:grid-cols-2  gap-x-6 gap-y-10">
+
+  @for(item of featureList; track $index){
+     <div>
+      <app-icon-box-wrapper
+        [iconSrc]="item.icon"
+        [title]="item.label"
+        titleColor="text-secondary capitalize"
+      />
+     </div>
+  }
+
+</div>

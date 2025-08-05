@@ -1,0 +1,21 @@
+<div [class]="introClass">
+  @if (title) {
+    <app-section-label text="{{ title }}" />
+  }
+
+  @if (firstText) {
+    <h2
+      class="text-3xl md:text-4xl font-medium text-secondary lg:mb-6 !leading-tight"
+    >
+      {{ firstText }}
+      <span class="font-bold">{{ highlightText }}</span>
+      {{ lastText }}
+    </h2>
+  }
+
+  @if (description) {
+    <p class="text-sm text-justify text-fourth mb-8 leading-relaxed">
+      {{ description }}
+    </p>
+  }
+</div>

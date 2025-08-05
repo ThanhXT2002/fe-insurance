@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { BannerHome } from "../../components/banner-home/banner-home";
 import { AboutSection } from "../../components/about-section/about-section";
 import { ServiceSection } from "../../components/service-section/service-section";
+import { WhyChooseUs } from "../../components/why-choose-us/why-choose-us";
 
 @Component({
   selector: 'app-home',
-  imports: [BannerHome, AboutSection, ServiceSection],
+  imports: [BannerHome, AboutSection, ServiceSection, WhyChooseUs],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
