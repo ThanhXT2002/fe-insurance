@@ -15,7 +15,8 @@
   }
 
   @if (description) {
-    <p class="text-sm text-justify text-fourth mb-8 leading-relaxed">
+    <p class="text-sm  text-fourth mb-8 leading-relaxed"
+    [class]="descriptionClass">
       {{ description }}
     </p>
   }

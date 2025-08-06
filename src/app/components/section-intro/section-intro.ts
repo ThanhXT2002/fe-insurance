@@ -17,4 +17,5 @@ export class SectionIntro {
   @Input() description:string = '';
   @Input() introClass:string = '';
   @Input() textClass:string = '';
+  @Input() descriptionClass:string = 'text-justify';
 }

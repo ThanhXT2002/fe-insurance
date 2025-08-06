@@ -1,3 +1,63 @@
-<div>
-
-</div>
+<section class="py-16 4xl:py-20 flex__start flex-col">
+  <div class="container-layer flex__middle flex-col">
+    <div class="">
+      <app-section-intro
+        title="Đặc điểm nổi bật của chúng tôi"
+        firstText="Khám phá"
+        highlightText="các tính năng nổi bật"
+        lastText="của bảo hiểm"
+        description="Khám phá các tính năng nổi bật của các gói bảo hiểm, được thiết kế để bảo vệ toàn diện, linh hoạt và dịch vụ tận tâm."
+        introClass="flex__middle flex-col text-center max-w-4xl"
+        descriptionClass="text-center"
+      />
+    </div>
+    <div class="md:my-5 w-full">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center gap-6"
+      >
+        @for (item of listFeatures; track $index) {
+          <div
+            class="flex__middle flex-col px-9 md:border-r border-gray-200"
+            [ngClass]="{
+              'md:border-r': !($index === 1),
+              'lg:border-r': true,
+              'last:border-none': true,
+            }"
+          >
+            <app-icon-box-wrapper
+              [iconSrc]="item.icon"
+              iconSize="w-7"
+              bgWidth="w-[50px] lg:w-[60px]"
+              [title]="item.title"
+              titleSize="text-center text-secondary"
+              [description]="item.description"
+              flexClass="flex justify-center items-center"
+              flexDirection="flex-col"
+              gapClass="gap-6"
+              descriptionClass="text-fourth text-center text-xs leading-relaxed mt-3 transition-colors duration-300"
+            >
+            </app-icon-box-wrapper>
+          </div>
+        }
+      </div>
+    </div>
+    <br />
+    <div class="grid grid-cols-3 lg:grid-cols-6 md:gap-5 gap-y-10">
+      @for (item of featureNummberList; track $index) {
+        <div
+          class="flex__middle flex-col md:px-10"
+          [ngClass]="{
+            'md:border-r': !($index === 2),
+            'lg:border-r': true,
+            'last:border-none': true,
+          }"
+        >
+          <span class="text-2xl font-bold text-primary">
+            {{ item.number }}
+          </span>
+          <span class="text-xs text-fourth text-center">{{ item.description }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
