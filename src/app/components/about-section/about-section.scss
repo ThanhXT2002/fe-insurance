@@ -1,18 +1,4 @@
-@keyframes move-x {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(60px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 
-.animate-move-x {
-  animation: move-x 5s ease-in-out infinite;
-}
 
 
 

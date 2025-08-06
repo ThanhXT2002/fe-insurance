@@ -1,1 +1,40 @@
-<p>insurance-hero-section works!</p>
+<section
+  class="py-20 h-full lg:h-[calc(100vh-var(--header-height))] 4xl:h-[900px] flex__between bg-secondary bgUrlCustom"
+>
+  <div class="container-layer">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div class=" relative w-full h-96 md:h-[30rem] lg:h-full">
+          <div class="bg-[#337270] w-1/3 aspect-square rounded-t-3xl rounded-e-3xl"></div>
+          <div class="absolute top-5 left-5">
+            <img src="assets/images/cta-box-image.webp"
+              class="rounded-t-3xl rounded-e-3xl">
+
+          </div>
+          <div class="absolute z-10 bottom-5 left-64 md:left-96 lg:-bottom-20 ">
+            <img src="assets/icons/cta-contact-circle.svg "
+              class="slow-spin">
+          </div>
+      </div>
+      <div>
+        <app-section-intro
+          firstText="Điều quan trọng nhất:"
+          highlightText="nhận báo giá bảo hiểm miễn phí ngay hôm nay!"
+          description="Dù bạn cần bảo hiểm nhà ở, sức khỏe, xe hơi hay doanh nghiệp, chúng tôi đều có giải pháp phù hợp cho bạn. Nhận báo giá bảo hiểm miễn phí ngay hôm nay và tận hưởng sự an tâm với các gói bảo hiểm toàn diện, đáng tin cậy, được thiết kế riêng cho nhu cầu của bạn."
+          descriptionClass="text-white"
+          textClass="text-white"
+        />
+
+        <div class="flex__start">
+          <app-btn-common
+            [text]="'Nhận báo giá miễn phí'"
+            type="white"
+            extraClass=""
+          />
+          <div class="animate-move-x ml-5 lg:ml-20">
+            <img src="assets/icons/arrow-cta-btn.svg" class=" " alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

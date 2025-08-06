@@ -53,6 +53,23 @@
   }
 }
 @layer components {
+
+  @keyframes move-x {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(60px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-move-x {
+  animation: move-x 5s ease-in-out infinite;
+}
+
   .bgUrlCustom {
     @apply bg-[url('/assets/images/section-bg-shape.svg')]  bg-bottom bg-no-repeat bg-contain;
   }
@@ -137,6 +154,11 @@
   .flex__end {
     @apply flex justify-end items-center;
   }
+
+  .rounded-common{
+  @apply rounded-t-3xl rounded-e-3xl;
+}
+
 }
 
 @layer reset, primeng;

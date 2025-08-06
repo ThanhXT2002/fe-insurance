@@ -1,5 +1,5 @@
 .btn-common {
-  @apply relative overflow-hidden flex items-center gap-3 px-5 py-3 lg:px-8 lg:py-4 rounded-lg font-medium lg:text-lg transition-all duration-300 transform ;
+  @apply relative overflow-hidden flex items-center gap-3 px-5 py-3 lg:px-8 lg:py-4 rounded-t-2xl rounded-e-2xl font-medium lg:text-lg transition-all duration-300 transform ;
   z-index: 1;
 
   // Hiệu ứng overlay mở ra từ giữa theo đường chéo 45°, lên góc trái trên và xuống góc phải dưới
@@ -64,13 +64,13 @@
 }
 
 .btn-white {
-  @apply bg-whiteColor text-primary border border-primary;
+  @apply bg-whiteColor text-primary border border-white;
 
   &::before {
-    background: #f8f9fa;
+    @apply bg-secondary;
   }
 
   &:hover {
-    color: #009a5e;
+    @apply text-white;
   }
 }

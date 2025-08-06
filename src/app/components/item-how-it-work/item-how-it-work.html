@@ -1,22 +1,26 @@
 <div class="relative">
   @if (isShowTopImg && !isMobile) {
-    <div class="h-[170px] w-full flex__end ">
-      <img src="assets/icons/how-work-box-arrow-2.svg" class="hidden lg:block" alt="" />
+    <div class="h-[170px] w-full flex__end">
+      <img
+        src="assets/icons/how-work-box-arrow-2.svg"
+        class="hidden lg:block"
+        alt=""
+      />
     </div>
   }
 
-  @if (index === "04" && !isMobile ) {
+  @if (index === "04" && !isMobile) {
     <div class="h-[170px] w-[170px]">
-      <img src="assets/icons/how-work-box-arrow-2.svg"
-
-       class=" rotate-180 lg:hidden" alt="" />
+      <img
+        src="assets/icons/how-work-box-arrow-2.svg"
+        class="rotate-180 lg:hidden"
+        alt=""
+      />
     </div>
   }
-
-
 
   <div
-    class="p-10 rounded-t-3xl rounded-e-3xl bg-white drop-shadow-md"
+    class="p-10 rounded-t-3xl rounded-e-3xl bg-white drop-shadow-md  group"
     [ngClass]="isPositionTop ? 'pt-14' : 'pb-14'"
   >
     <img [src]="icon" alt="" />
@@ -27,7 +31,7 @@
     </p>
 
     <div
-      class="absolute left-1/2 -translate-x-1/2 w-12 aspect-square font-bold border-8 border-third rounded-full flex__middle bg-primary text-white"
+      class="absolute left-1/2 -translate-x-1/2 w-12 aspect-square font-bold border-8 border-third rounded-full flex__middle bg-primary text-white group-hover:bg-secondary transition-all duration-300"
       [ngClass]="
         isPositionTop ? '-bottom-5 md:bottom-auto md:-top-6 ' : '-bottom-5'
       "

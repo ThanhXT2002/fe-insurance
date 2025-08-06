@@ -1,0 +1,63 @@
+<div class="pb-20 ">
+  <div class="container-layer flex__middle flex-col">
+    <app-section-intro
+        title="Kế hoạch giá bảo hiểm"
+        firstText="Các gói bảo hiểm với mức giá"
+        highlightText="hợp lý"
+        lastText="phù hợp với mọi ngân sách"
+        introClass="flex__middle flex-col text-center max-w-4xl"
+      />
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3  gap-14 md:gap-10 mt-5 md:mt-20">
+        @for (plan of pricingPlans; track plan.id) {
+          <div class="relative shadow-lg drop-shadow-lg bg-white rounded-common p-10 hover:bg-secondary hover:text-white transition-all duration-300 group cursor-pointer transform hover:scale-105 flex flex-col w-full h-full">
+
+            <!-- Popular Badge -->
+            @if (plan.isPopular) {
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span class="bg-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Phổ biến nhất
+                </span>
+              </div>
+            }
+
+            <!-- Price Section -->
+            <div class="bg-primary group-hover:bg-white rounded-common text-white group-hover:text-primary text-4xl font-bold p-5 transition-all duration-300">
+              {{ plan.price }} <span class="ml-2 font-normal text-xl">{{ plan.period }}</span>
+            </div>
+
+            <!-- Plan Name -->
+            <h3 class="text-lg font-bold text-primary group-hover:text-white my-5 transition-colors duration-300">
+              {{ plan.name }}
+            </h3>
+
+            <!-- Features List - Flex grow để chiếm hết không gian -->
+            <div class="space-y-4 flex-grow">
+              @for (feature of plan.features; track $index) {
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                    <img src="assets/icons/check.svg" alt="icon_check" class="group-hover:filter group-hover:brightness-0 group-hover:invert transition-all duration-300">
+                  </div>
+                  <span class="text-fourth group-hover:text-white font-medium text-sm transition-colors duration-300">
+                    {{ feature }}
+                  </span>
+                </div>
+              }
+            </div>
+
+            <hr class="border border-gray-200 group-hover:border-white/30 my-5 transition-colors duration-300">
+
+            <!-- CTA Button - Sẽ luôn ở dưới cùng -->
+            <div class="mt-auto">
+              <app-btn-common
+                [text]="plan.buttonText"
+                [type]="plan.isPopular ? 'black' : 'primary'"
+                extraClass="!p-3 transition-all duration-300 "
+              ></app-btn-common>
+            </div>
+
+          </div>
+        }
+      </div>
+  </div>
+</div>

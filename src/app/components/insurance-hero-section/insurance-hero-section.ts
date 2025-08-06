@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { BtnCommon } from "../btn-common/btn-common";
+import { SectionIntro } from "../section-intro/section-intro";
 
 @Component({
   selector: 'app-insurance-hero-section',
-  imports: [],
+  imports: [BtnCommon, SectionIntro],
   templateUrl: './insurance-hero-section.html',
   styleUrl: './insurance-hero-section.scss'
 })
