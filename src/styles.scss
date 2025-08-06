@@ -53,6 +53,10 @@
   }
 }
 @layer components {
+  .bgUrlCustom {
+    @apply bg-[url('/assets/images/section-bg-shape.svg')]  bg-bottom bg-no-repeat bg-contain;
+  }
+
   @keyframes overlay-reveal {
     0% {
       width: 0;

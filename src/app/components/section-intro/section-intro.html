@@ -6,6 +6,7 @@
   @if (firstText) {
     <h2
       class="text-3xl md:text-4xl font-medium text-secondary mb-6 !leading-tight"
+      [class]="textClass"
     >
       {{ firstText }}
       <span class="font-bold">{{ highlightText }}</span>

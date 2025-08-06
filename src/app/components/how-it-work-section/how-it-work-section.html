@@ -1,0 +1,35 @@
+<!-- xl:h-[calc(100vh-var(--header-height))] 4xl:h-[750px] -->
+
+<section
+  class="py-16 4xl:py-20 flex__start flex-col bg-third bgUrlCustom"
+>
+  <div class="container-layer flex__middle flex-col">
+    <div class="md:mb-5">
+      <app-section-intro
+        title="Quy trình hoat động"
+        firstText="Quy trình bảo hiểm của chúng tôi"
+        highlightText="đơn giản với vài bước dễ dàng"
+        lastText="để bạn được bảo vệ"
+        description="Các dịch vụ bảo hiểm toàn diện của chúng tôi được thiết kế để mang lại cho bạn sự an tâm, bất kể nhu cầu của bạn là gì."
+        introClass="flex__middle flex-col text-center max-w-4xl"
+        />
+    </div>
+    <div class=" w-full">
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 space-y-3">
+        @for (item of howItWorkItems; track item.index) {
+    <app-item-how-it-work
+      [icon]="item.icon"
+      [title]="item.title"
+      [description]="item.description"
+      [index]="item.index"
+      [isPositionTop]="item.isPositionTop"
+      [isShowBottomImg]="item.isShowBottomImg"
+      [isShowTopImg]="item.isShowTopImg"
+    />
+  }
+       </div>
+    </div>
+  </div>
+</section>
+
+

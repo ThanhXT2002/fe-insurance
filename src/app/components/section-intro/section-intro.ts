@@ -16,4 +16,5 @@ export class SectionIntro {
   @Input() lastText:string = '';
   @Input() description:string = '';
   @Input() introClass:string = '';
+  @Input() textClass:string = '';
 }
