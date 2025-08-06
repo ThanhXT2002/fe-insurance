@@ -1,0 +1,77 @@
+<section class="py-20 bg-gray-100">
+  <div class="container-layer flex__middle flex-col">
+    <app-section-intro
+      title="Đội ngũ hỗ trợ của chúng tôi"
+      firstText="Chúng tôi "
+      highlightText="luôn sẵn sàng hỗ trợ 24/7."
+      description="Khám phá các tính năng nổi bật của các gói bảo hiểm của chúng tôi, được thiết kế để mang đến cho bạn sự bảo vệ toàn diện, các lựa chọn linh hoạt và dịch vụ đặc biệt"
+      introClass="flex__middle flex-col text-center max-w-4xl"
+      descriptionClass="text-center"
+    />
+
+    <!-- Team Photos -->
+    <div class="flex justify-center items-center mt-10 mb-16">
+      <div class="flex -space-x-5">
+        @for (member of teamMembers; track member.id) {
+          <div class="image-hover-effect rounded-full">
+            <img
+              [src]="member.avatar"
+              [alt]="member.name"
+              class="w-14 md:w-20 lg:w-28 aspect-square rounded-full border-4 border-white shadow-lg object-cover transition-transform duration-300"
+            />
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div
+      class="flex flex-col md:flex-row justify-center items-center gap-8 lg:gap-16"
+    >
+      <app-icon-box-wrapper
+      flexBoxContainer="flex__middle flex-row-reverse gap-x-7"
+        [icon]="'fa-solid fa-phone-volume'"
+        [bgColor]="'bg-primary'"
+        [bgWidth]="'w-16'"
+        [iconColor]="'text-white'"
+        [iconSize]="'text-2xl'"
+        [hoverBgColor]="'secondary'"
+        [isShowText]="false"
+        flexClass="flex flex-row items-center"
+      >
+        <div class="text-right">
+          <p class="text-fourth text-sm mb-1">Gọi cho chúng tôi:</p>
+          <a
+            href="tel:+84788852684"
+            class="text-lg font-bold text-secondary transition-colors duration-300"
+          >
+            +84 788 852 684
+          </a>
+        </div></app-icon-box-wrapper
+      >
+      <div class="hidden md:block h-16 w-[1px] border-l-2 border-white"></div>
+
+      <!-- Email Contact -->
+      <app-icon-box-wrapper
+      flexBoxContainer="flex__middle gap-x-7"
+        [icon]="'fa-solid fa-envelope'"
+        [bgColor]="'bg-primary'"
+        [bgWidth]="'w-16'"
+        [iconColor]="'text-white'"
+        [iconSize]="'text-2xl'"
+        [hoverBgColor]="'secondary'"
+        [isShowText]="false"
+      >
+        <div class="text-left">
+          <p class="text-fourth text-sm mb-1">Email cho chúng tôi:</p>
+          <a
+            href="mailto:xtbh&#64;baohiem.vn"
+            class="text-lg font-bold text-secondary transition-colors duration-300"
+          >
+            xtbh&#64;baohiem.vn
+          </a>
+        </div>
+      </app-icon-box-wrapper>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+.custom-accordion {
+
+  p-accordion-panel{
+    border:none
+  }
+
+  p-accordion-header {
+    // border: 1px solid #e5e7eb ;
+    border-bottom-left-radius: 0 !important;
+  }
+
+--p-accordion-header-first-border-width: 1px;
+
+  --p-accordion-header-border-radius: 12px 12px 12px 0;
+  --p-accordion-header-first-top-border-radius: 12px;
+  --p-accordion-header-last-bottom-border-radius: 12px;
+
+
+
+
+  --p-accordion-header-background: white;
+  --p-accordion-header-active-background: #004F4C;
+
+  --p-accordion-header-color: #004F4C;
+  --p-accordion-header-active-color: white;
+
+   --p-accordion-content-background: #004F4C;
+  --p-accordion-content-color: white;
+  --p-accordion-content-padding: 1.5rem;
+
+
+
+
+  // --p-accordion-panel-border-width: 1px;
+
+  // --p-accordion-panel-border-color: #e5e7eb;
+
+  // // Thay đổi background và màu sắc header
+  // --p-accordion-header-background: #004F4C;
+  // --p-accordion-header-color: white;
+  // --p-accordion-header-hover-background: rgba(0, 79, 76, 0.9);
+  // --p-accordion-header-active-background: #003d39;
+
+  // // Thay đổi border radius
+
+
+  // // Thay đổi padding header
+  // --p-accordion-header-padding: 1.5rem;
+
+  // // Thay đổi background và màu sắc content
+
+
+  // // Thay đổi màu icon toggle
+  // --p-accordion-header-toggle-icon-color: white;
+  // --p-accordion-header-toggle-icon-hover-color: #e5e7eb;
+
+  // Thêm khoảng cách giữa các panel
+
+  .p-accordion-panel {
+    @apply mb-4; // Sử dụng Tailwind spacing
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+}
+
+

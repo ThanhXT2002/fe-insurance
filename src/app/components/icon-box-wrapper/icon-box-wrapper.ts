@@ -9,6 +9,7 @@ import { Component, Input, computed, signal } from '@angular/core';
   styleUrl: './icon-box-wrapper.scss'
 })
 export class IconBoxWrapper {
+  @Input() flexBoxContainer: string = '';
   @Input() gapClass: string = 'gap-4';
   @Input() flexClass: string = "flex__start";
   @Input() flexDirection: string = "flex-row";

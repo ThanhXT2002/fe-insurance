@@ -7,10 +7,12 @@ import { HowItWorkSection } from "../../components/how-it-work-section/how-it-wo
 import { OurFeatureSection } from "../../components/our-feature-section/our-feature-section";
 import { InsuranceHeroSection } from "../../components/insurance-hero-section/insurance-hero-section";
 import { PricingPlanSection } from "../../components/pricing-plan-section/pricing-plan-section";
+import { OurSupportTeamSection } from "../../components/our-support-team-section/our-support-team-section";
+import { FaqsSection } from "../../components/faqs-section/faqs-section";
 
 @Component({
   selector: 'app-home',
-  imports: [BannerHome, AboutSection, ServiceSection, WhyChooseUs, HowItWorkSection, OurFeatureSection, InsuranceHeroSection, PricingPlanSection],
+  imports: [BannerHome, AboutSection, ServiceSection, WhyChooseUs, HowItWorkSection, OurFeatureSection, InsuranceHeroSection, PricingPlanSection, OurSupportTeamSection, FaqsSection],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
