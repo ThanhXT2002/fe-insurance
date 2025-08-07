@@ -3,27 +3,7 @@
 @tailwind utilities;
 @import "primeicons/primeicons.css";
 @import "remixicon/fonts/remixicon.css";
-@import "@fontsource/open-sans";
-// Import Open Sans font weights (chỉ có từ 300-800)
-@import "@fontsource/open-sans/300.css"; // Light
-@import "@fontsource/open-sans/400.css"; // Regular
-@import "@fontsource/open-sans/500.css"; // Medium
-@import "@fontsource/open-sans/600.css"; // Semibold
-@import "@fontsource/open-sans/700.css"; // Bold
-@import "@fontsource/open-sans/800.css"; // Extra Bold
 
-// Import Open Sans italic variants
-@import "@fontsource/open-sans/300-italic.css";
-@import "@fontsource/open-sans/400-italic.css";
-@import "@fontsource/open-sans/500-italic.css";
-@import "@fontsource/open-sans/600-italic.css";
-@import "@fontsource/open-sans/700-italic.css";
-@import "@fontsource/open-sans/800-italic.css";
-
-@import "@fontsource/pt-serif/400.css"; // Regular
-@import "@fontsource/pt-serif/700.css"; // Bold
-@import "@fontsource/pt-serif/400-italic.css"; // Regular Italic (nếu cần)
-@import "@fontsource/pt-serif/700-italic.css"; // Bold Italic (nếu cần)
 
 @layer tailwind-base, primeng, tailwind-utilities;
 
