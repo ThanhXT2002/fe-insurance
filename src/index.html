@@ -1,15 +1,96 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <title>XTBH - Bao hiểm của mọi nhà</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Viewport optimization for smooth scrolling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+  <!-- Performance optimizations -->
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#009a5e">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/assets/fonts/open-sans-v18-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+  <!-- Icons and manifest -->
   <link rel="icon" type="image/x-icon" href="assets/images/logo-insurance.webp">
   <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Performance hints -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Mobile optimizations -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-touch-fullscreen" content="yes">
+
+  <!-- Prevent text size adjust -->
+  <meta name="format-detection" content="telephone=no">
+
+  <style>
+    /* Critical CSS for immediate smooth scroll */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* Loading state */
+    app-root {
+      display: block;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* Smooth loading transition */
+    app-root:not(.loaded) {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    app-root.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+
+  <script>
+    // Mark app as loaded for smooth transition
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.querySelector('app-root').classList.add('loaded');
+      }, 100);
+    });
+
+    // Passive touch events for better performance
+    document.addEventListener('touchstart', function() {}, { passive: true });
+    document.addEventListener('touchmove', function() {}, { passive: true });
+  </script>
 </body>
 </html>

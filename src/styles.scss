@@ -26,16 +26,128 @@
 @layer base {
 
   html {
+    /* Smooth scroll cho toàn bộ website */
     scroll-behavior: smooth;
-  }
 
+    /* Tối ưu scroll performance cho tất cả browsers */
+    -webkit-overflow-scrolling: touch; /* iOS Safari */
+    overflow-x: hidden; /* Ngăn horizontal scroll */
+
+    /* Tăng hiệu suất scroll */
+    scroll-padding-top: var(--header-height, 52px);
+
+    /* Ngăn zoom khi double tap trên mobile */
+    touch-action: manipulation;
+  }
 
   body {
     font-family: "Open Sans", sans-serif;
+
+    /* Tối ưu rendering performance cho toàn bộ page */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    /* Tối ưu scroll behavior cho toàn bộ page */
+    overscroll-behavior: none; /* Ngăn bounce effect trên iOS */
+    scroll-behavior: smooth;
+
+    /* GPU acceleration cho toàn bộ page */
+    will-change: scroll-position;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+
+    /* Ngăn layout shift */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height */
+
+    /* Tối ưu cho mobile */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none; /* Ngăn select text khi scroll */
   }
 
+  /* Reset và tối ưu cho tất cả elements */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+
+    /* Tối ưu performance - chỉ enable will-change khi cần */
+    will-change: auto;
+
+    /* Smooth scroll cho tất cả scrollable elements */
+    scroll-behavior: inherit;
+  }
+
+  /* Tối ưu cho các container có scroll */
+  .scroll-container,
+  [style*="overflow"],
+  [class*="overflow"] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+
+  /* Tối ưu cho main app container */
   .container-layer {
-    @apply max-w-7xl px-3 md:px-5 lg:px-3  mx-auto;
+    @apply max-w-7xl px-3 md:px-5 lg:px-3 mx-auto;
+
+    /* Performance optimizations */
+    contain: layout style;
+    transform: translateZ(0);
+  }
+
+  /* Tối ưu cho sections */
+  section {
+    /* Containment để tăng performance */
+    contain: layout style;
+
+    /* Smooth animations */
+    will-change: auto; /* Chỉ enable khi có animation */
+  }
+
+  /* Tối ưu cho images - ngăn layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+
+    /* Tối ưu loading */
+    loading: lazy;
+    decoding: async;
+
+    /* Ngăn layout shift */
+    aspect-ratio: attr(width) / attr(height);
+
+    /* Smooth image transitions */
+    transition: opacity 0.3s ease;
+  }
+
+  /* Tối ưu cho links và buttons */
+  a,
+  button {
+    /* Smooth touch response */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Smooth transitions */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Disable smooth scroll cho users có motion sickness */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    html {
+      scroll-behavior: auto !important;
+    }
   }
 }
 @layer components {
@@ -75,9 +187,15 @@
     }
   }
 
-  // Image hover effect với overlay trắng trong suốt
+  // Image hover effect với overlay trắng trong suốt - OPTIMIZED
   .image-hover-effect {
-    @apply relative overflow-hidden transition-all duration-300 ease-in-out;
+    @apply relative overflow-hidden;
+
+    /* Tối ưu performance cho hover effects */
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform; /* Chỉ enable khi cần */
+    contain: layout style paint; /* Isolate rendering */
+    transform: translateZ(0); /* Force GPU layer */
 
     // Overlay trắng trong suốt - mở ra từ giữa theo đường chéo 45°, sau đó mờ dần và biến mất
     &::before {
@@ -91,6 +209,9 @@
       z-index: 2;
       transform: translate(-50%, -50%) rotate(45deg);
       opacity: 0;
+      /* Tối ưu animation performance */
+      will-change: width, opacity;
+      contain: strict;
     }
 
     &:hover::before {
@@ -98,16 +219,35 @@
       // Animation sẽ tự động mở ra rồi mờ dần biến mất
     }
 
-    // Image bên trong
+    // Image bên trong - OPTIMIZED
     img {
-      @apply transition-all duration-300 ease-in-out;
       position: relative;
       z-index: 1;
+      /* Tối ưu image rendering */
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                  filter 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, filter;
+      transform: translateZ(0); /* Force GPU acceleration */
+      image-rendering: -webkit-optimize-contrast; /* Tối ưu image quality */
+      image-rendering: crisp-edges;
     }
 
     &:hover img {
-      @apply brightness-110;
+      transform: scale(1.05) translateZ(0); /* Combine transforms */
       filter: brightness(1.1) contrast(1.02);
+    }
+
+    /* Reset will-change sau animation */
+    &:not(:hover) {
+      will-change: auto;
+
+      &::before {
+        will-change: auto;
+      }
+
+      img {
+        will-change: auto;
+      }
     }
   }
 }
@@ -142,9 +282,172 @@
   }
 
   .rounded-common{
-  @apply rounded-t-3xl rounded-e-3xl;
-}
+    @apply rounded-t-3xl rounded-e-3xl;
+  }
 
+  /* === SMOOTH SCROLL UTILITIES === */
+
+  /* Smooth scroll cho containers */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Instant scroll (cho cases cần thiết) */
+  .instant-scroll {
+    scroll-behavior: auto;
+  }
+
+  /* === PERFORMANCE UTILITIES === */
+
+  /* GPU acceleration khi cần */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Performance optimized transitions */
+  .transition-optimized {
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+  }
+
+  /* Smooth hover transitions */
+  .hover-optimized {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: auto;
+  }
+
+  .hover-optimized:hover {
+    will-change: transform, opacity;
+  }
+
+  /* === CONTAINMENT UTILITIES === */
+
+  /* Layout containment */
+  .contain-layout {
+    contain: layout;
+  }
+
+  /* Style containment */
+  .contain-style {
+    contain: style;
+  }
+
+  /* Paint containment */
+  .contain-paint {
+    contain: paint;
+  }
+
+  /* Strict containment (use sparingly) */
+  .contain-strict {
+    contain: strict;
+  }
+
+  /* Content containment (layout + style + paint) */
+  .contain-content {
+    contain: layout style paint;
+  }
+
+  /* === SCROLL OPTIMIZATION UTILITIES === */
+
+  /* Optimized scrolling areas */
+  .scroll-optimized {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    will-change: scroll-position;
+    contain: layout style;
+  }
+
+  /* Prevent scroll chaining */
+  .scroll-contained {
+    overscroll-behavior: contain;
+  }
+
+  /* No bounce scrolling */
+  .scroll-no-bounce {
+    overscroll-behavior: none;
+  }
+
+  /* === MOBILE OPTIMIZATIONS === */
+
+  /* Touch optimizations */
+  .touch-optimized {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Prevent text selection during scroll */
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* === ANIMATION PERFORMANCE === */
+
+  /* Performant fade in */
+  .fade-in-optimized {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+  }
+
+  .fade-in-optimized.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Performant scale animation */
+  .scale-optimized {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: auto;
+  }
+
+  .scale-optimized:hover {
+    transform: scale(1.05);
+    will-change: transform;
+  }
+
+  /* === REDUCED MOTION SUPPORT === */
+
+  /* Respect user preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .smooth-scroll {
+      scroll-behavior: auto;
+    }
+
+    .transition-optimized,
+    .hover-optimized,
+    .fade-in-optimized,
+    .scale-optimized {
+      transition: none;
+      animation: none;
+    }
+  }
+
+  /* === FORCE 60FPS UTILITIES === */
+
+  /* Force 60fps animations */
+  .force-60fps {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+
+  /* Optimized for continuous animations */
+  .animation-optimized {
+    contain: strict;
+    will-change: transform;
+    transform: translateZ(0);
+  }
 }
 
 @layer reset, primeng;
