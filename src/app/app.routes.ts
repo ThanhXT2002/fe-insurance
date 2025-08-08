@@ -13,13 +13,13 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () => import('./pages/home/home').then((m) => m.Home),
-        data: { title: 'Home' },
+        data: { title: 'Trang chủ' },
       },
       {
         path: 'about',
         loadComponent: () =>
           import('./pages/about-us/about-us').then((m) => m.AboutUs),
-        data: { title: 'About Us' },
+        data: { title: 'Giới thiệu' },
       },
       {
         path: 'blogs',
@@ -35,24 +35,24 @@ export const routes: Routes = [
         path: 'contact',
         loadComponent: () =>
           import('./pages/contact-us/contact-us').then((m) => m.ContactUs),
-        data: { title: 'Contact Us' },
+        data: { title: 'Liên hệ' },
       },
       {
         path: 'faqs',
         loadComponent: () => import('./pages/faqs/faqs').then((m) => m.FAQs),
-        data: { title: 'FAQs' },
+        data: { title: 'Câu hỏi thường gặp' },
       },
 
       {
         path: 'login',
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
-        data: { title: 'Login' },
+        data: { title: 'Đăng nhập' },
       },
 
       {
         path: 'order',
         loadComponent: () => import('./pages/order/order').then((m) => m.Order),
-        data: { title: 'Order' },
+        data: { title: 'Đặt hàng' },
       },
       {
         path: 'privacy-policy',
@@ -60,13 +60,13 @@ export const routes: Routes = [
           import('./pages/privacy-policy/privacy-policy').then(
             (m) => m.PrivacyPolicy,
           ),
-        data: { title: 'Privacy Policy' },
+        data: { title: 'Chính sách bảo mật' },
       },
       {
         path: 'products',
         loadComponent: () =>
           import('./pages/products/products').then((m) => m.Products),
-        data: { title: 'Products' },
+        data: { title: 'Sản phẩm' },
       },
       {
         path: 'product-detail/:id',
@@ -79,19 +79,19 @@ export const routes: Routes = [
         path: 'profile',
         loadComponent: () =>
           import('./pages/profile/profile').then((m) => m.Profile),
-        data: { title: 'Profile' },
+        data: { title: 'Hồ sơ' },
       },
       {
         path: 'search',
         loadComponent: () =>
           import('./pages/search/search').then((m) => m.Search),
-        data: { title: 'Search' },
+        data: { title: 'Tìm kiếm' },
       },
       {
         path: 'settings',
         loadComponent: () =>
           import('./pages/settings/settings').then((m) => m.Settings),
-        data: { title: 'Settings' },
+        data: { title: 'Cài đặt' },
       },
       {
         path: 'terms-of-service',
@@ -99,7 +99,7 @@ export const routes: Routes = [
           import('./pages/terms-of-service/terms-of-service').then(
             (m) => m.TermsOfService,
           ),
-        data: { title: 'Terms of service' },
+        data: { title: 'Điều khoản dịch vụ' },
       },
     ],
   },
@@ -115,13 +115,13 @@ export const routes: Routes = [
       import('./pages/internet-error/internet-error').then(
         (m) => m.InternetError,
       ),
-    data: { title: 'Internet Error' },
+    data: { title: 'Lỗi Internet' },
   },
   {
     path: 'server-error',
     loadComponent: () =>
       import('./pages/server-error/server-error').then((m) => m.ServerError),
-    data: { title: '505 - Server Error' },
+    data: { title: '505 - Lỗi máy chủ' },
   },
   {
     path: '**',
