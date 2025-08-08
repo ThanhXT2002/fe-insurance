@@ -3,7 +3,7 @@
     @if (footerData(); as data) {
       <div class="footer-grid">
         <!-- Company Info Section -->
-        <div>
+        <div class="md:col-span-2 lg:col-span-1">
           <div class="flex items-center mb-6">
             <app-logo [isShowName]="true" width="w-11 lg:w-14"/>
           </div>
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Quick Links Section -->
-        <div class="lg:pl-10">
+        <div class="lg:ml-10">
           <h3 class="footer-section-title">Liên kết nhanh</h3>
           <ul class="footer-nav-list">
             @for (link of data.quickLinks; track link.id) {
@@ -37,8 +37,23 @@
           </ul>
         </div>
 
+        <div class="">
+          <h3 class="footer-section-title">Liên kết hữu ích</h3>
+          <ul class="footer-nav-list">
+            @for (link of data.usefullLinks; track link.id) {
+              <li>
+                <a [routerLink]="link.link"
+                   class="footer-nav-link"
+                   [title]="link.note">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+
         <!-- Insurance Products Section -->
-        <div class="lg:pl-10">
+        <div class="">
           <h3 class="footer-section-title">Sản phẩm bảo hiểm</h3>
           <ul class="footer-nav-list">
             @for (product of data.insuranceProducts; track product.id) {
@@ -54,7 +69,7 @@
         </div>
 
         <!-- Contact Info Section -->
-        <div class="lg:pl-10">
+        <div class="">
           <h3 class="footer-section-title">Thông tin liên hệ</h3>
           <div class="footer-contact-container">
             <div class="footer-contact-item">

@@ -19,6 +19,7 @@ export interface FooterCompany {
 export interface FooterData {
   company: FooterCompany;
   quickLinks: AppMenuItem[];
+  usefullLinks: AppMenuItem[];
   insuranceProducts: AppMenuItem[];
   contactInfo: FooterContactInfo;
   legalLinks: AppMenuItem[];

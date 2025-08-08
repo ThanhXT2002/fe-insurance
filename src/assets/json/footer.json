@@ -70,7 +70,10 @@
       "link": "/blogs",
       "isBlank": false,
       "note": "Tin tức, bài viết"
-    },
+    }
+
+  ],
+  "usefullLinks": [
     {
       "id": 105,
       "label": "Liên hệ",
@@ -86,17 +89,25 @@
       "link": "/claims",
       "isBlank": false,
       "note": "Dịch vụ bồi thường"
+    },
+     {
+      "id": 107,
+      "label": "Điều khoản dịch vụ",
+      "icon": "ri-file-text-line",
+      "link": "/terms-of-service",
+      "isBlank": false,
+      "note": "Điều khoản sử dụng dịch vụ"
+    },
+    {
+      "id": 108,
+      "label": "Chính sách bảo mật",
+      "icon": "ri-shield-line",
+      "link": "/privacy-policy",
+      "isBlank": false,
+      "note": "Chính sách bảo vệ thông tin"
     }
   ],
   "insuranceProducts": [
-    {
-      "id": 201,
-      "label": "Bảo hiểm sức khỏe",
-      "icon": "ri-heart-pulse-line",
-      "link": "/products/health",
-      "isBlank": false,
-      "note": "Bảo vệ sức khỏe toàn diện"
-    },
     {
       "id": 202,
       "label": "Bảo hiểm nhân thọ",
@@ -112,14 +123,6 @@
       "link": "/products/business",
       "isBlank": false,
       "note": "Bảo vệ doanh nghiệp khỏi rủi ro"
-    },
-    {
-      "id": 204,
-      "label": "Bảo hiểm nhà ở",
-      "icon": "ri-home-3-line",
-      "link": "/products/home",
-      "isBlank": false,
-      "note": "Bảo vệ tài sản nhà ở"
     },
     {
       "id": 205,
@@ -147,23 +150,6 @@
     "phone": "1800-BAO-HIEM",
     "email": "info@secureguard.vn"
   },
-  "legalLinks": [
-    {
-      "id": 301,
-      "label": "Điều khoản dịch vụ",
-      "icon": "ri-file-text-line",
-      "link": "/terms-of-service",
-      "isBlank": false,
-      "note": "Điều khoản sử dụng dịch vụ"
-    },
-    {
-      "id": 302,
-      "label": "Chính sách bảo mật",
-      "icon": "ri-shield-line",
-      "link": "/privacy-policy",
-      "isBlank": false,
-      "note": "Chính sách bảo vệ thông tin"
-    }
-  ],
+
   "copyright": "© 2024 XTBH. All rights reserved."
 }

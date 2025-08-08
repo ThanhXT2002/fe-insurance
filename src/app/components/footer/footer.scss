@@ -6,7 +6,7 @@
 
 
 .footer-grid {
-  @apply grid md:grid-cols-2 lg:grid-cols-4 gap-8;
+  @apply grid md:grid-cols-2 lg:grid-cols-5 gap-8;
 }
 
 .footer-section-title {
@@ -66,7 +66,7 @@
 }
 
 .footer-bottom-content {
-  @apply flex flex-col lg:flex-row justify-between items-center gap-y-5;
+  @apply flex flex-col md:flex-row justify-between items-center gap-y-5;
 }
 
 .footer-copyright {

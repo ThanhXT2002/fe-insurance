@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Line clamp utilities
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Component specific optimizations
+article {
+  contain: layout style;
+
+  &:hover {
+    will-change: transform, box-shadow;
+  }
+
+  &:not(:hover) {
+    will-change: auto;
+  }
+}
+
+// Image optimizations
+img {
+  contain: layout style;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+// Performance optimizations for mobile
+@media (max-width: 768px) {
+  article {
+    // Optimize for touch devices
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

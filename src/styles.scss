@@ -25,8 +25,19 @@
 
 @layer base {
 
-  html {
+html {
+    /* Smooth scroll cho toàn bộ website */
     scroll-behavior: smooth;
+
+    /* Tối ưu scroll performance cho tất cả browsers */
+    -webkit-overflow-scrolling: touch; /* iOS Safari */
+    overflow-x: hidden; /* Ngăn horizontal scroll */
+
+    /* Tăng hiệu suất scroll */
+    scroll-padding-top: var(--header-height, 52px);
+
+    /* Ngăn zoom khi double tap trên mobile */
+    touch-action: manipulation;
   }
 
 
