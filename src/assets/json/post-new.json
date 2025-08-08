@@ -198,10 +198,10 @@
     "author": "Trần Thị K",
     "tags": ["bảo hiểm tai nạn"],
     "thumbnails": [
-      "/assets/images/posts/accident1.jpg",
-      "/assets/images/posts/accident2.jpg",
-      "/assets/images/posts/accident3.jpg",
-      "/assets/images/posts/accident4.jpg"
+      "/assets/images/posts/bh-tai-nan-1.jpg",
+      "/assets/images/posts/bh-tai-nan-2.jpg",
+      "/assets/images/posts/bh-tai-nan-3.jpg",
+      "/assets/images/posts/bh-tai-nan-4.jpg"
     ],
     "meta": {
       "meta_title": "Hướng Dẫn Về Bảo Hiểm Tai Nạn Cá Nhân - Bảo Vệ Bạn Và Gia Đình",
@@ -219,10 +219,8 @@
     "author": "Nguyễn Văn L",
     "tags": ["bảo hiểm thất nghiệp"],
     "thumbnails": [
-      "/assets/images/posts/unemployment1.jpg",
-      "/assets/images/posts/unemployment2.jpg",
-      "/assets/images/posts/unemployment3.jpg",
-      "/assets/images/posts/unemployment4.jpg"
+      "/assets/images/posts/bh-that-nghiep-1.jpeg",
+      "/assets/images/posts/bh-that-nghiep-2.jpeg"
     ],
     "meta": {
       "meta_title": "Thông Tin Về Bảo Hiểm Thất Nghiệp - Hỗ Trợ Tài Chính Hiệu Quả",
@@ -240,10 +238,10 @@
     "author": "Trần Thị M",
     "tags": ["bảo hiểm người cao tuổi"],
     "thumbnails": [
-      "/assets/images/posts/senior1.jpg",
-      "/assets/images/posts/senior2.jpg",
-      "/assets/images/posts/senior3.jpg",
-      "/assets/images/posts/senior4.jpg"
+      "/assets/images/posts/bh-suc-khoe-cho-nguoi-cao-tuoi-1.jpeg",
+      "/assets/images/posts/bh-suc-khoe-cho-nguoi-cao-tuoi-2.jpeg",
+      "/assets/images/posts/bh-suc-khoe-cho-nguoi-cao-tuoi-3.jpeg",
+      "/assets/images/posts/bh-suc-khoe-cho-nguoi-cao-tuoi-4.jpeg"
     ],
     "meta": {
       "meta_title": "Bảo Hiểm Sức Khỏe Cho Người Cao Tuổi - Hướng Dẫn Chi Tiết",

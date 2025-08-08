@@ -11,7 +11,129 @@
         />
       </div>
       <div class="w-full">
+        <!-- Featured Posts Layout: 1 large + 2 small -->
+        @if (featuredPosts().length >= 3) {
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+            <!-- Main Featured Post (Left Side) -->
+            <article
+            routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+              class="relative group h-96 lg:w-full lg:h-auto lg:aspect-[5/4] overflow-hidden rounded-common bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
+            >
+              <div
+                class="relative h-full w-full  overflow-hidden image-hover-effect"
+              >
+                <img
+                  [src]="featuredPosts()[0].thumbnails[0]"
+                  [alt]="featuredPosts()[0].title"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
 
+                <div
+                  class="absolute bottom-0 left-0 right-0 p-4 text-white z-10 w-full backdrop-blur-lg "
+                >
+                  <!-- Meta info -->
+                  <div class="mb-2">
+                    <i class="far fa-calendar-alt mr-1"></i>
+                    {{ formatDate(featuredPosts()[0].published_at) }}
+                  </div>
+
+                  <!-- Title -->
+                  <h2 class="lg:text-xl font-bold mb-1 leading-tight">
+                    <a
+                      routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+                      class="hover:text-secondary transition-colors duration-200"
+                    >
+                      {{ featuredPosts()[0].title }}
+                    </a>
+                  </h2>
+
+                  <!-- Excerpt -->
+                  <p class="text-sm leading-relaxed mb-4 line-clamp-2">
+                    {{ truncateText(featuredPosts()[0].excerpt, 150) }}
+                  </p>
+
+                  <hr class="border border-gray-300/30 w-full mb-4" />
+                  <button
+                   routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+                    class="group-hover:text-secondary font-bold custom-btn transition-colors duration-300 md:pb-0"
+                  >
+                    Đọc thêm
+                    <i
+                      class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-all duration-300 ease-in-out ml-2"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Secondary Posts (Right Side) -->
+            <div class="flex flex-col gap-6">
+              @for (
+                post of featuredPosts().slice(1, 3);
+                track post.id;
+                let i = $index
+              ) {
+                <article
+                routerLink="/blog?slug={{ post.slug }}"
+                  class="group bg-white rounded-common shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row h-full w-full"
+                >
+
+               <!-- Image -->
+                  <div
+                    class="relative  md:w-1/2 overflow-hidden flex-shrink-0 image-hover-effect"
+                  >
+                    <img
+                      [src]="post.thumbnails[0]"
+                      [alt]="post.title"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <!-- Content -->
+                  <div class="p-4 lg:p-6 flex flex-col justify-between">
+                    <div>
+                      <!-- Meta info -->
+                      <p class="mb-4 text-sm text-fourth">
+                          <i class="far  fa-calendar-alt mr-1"></i>
+                          {{ formatDate(post.published_at) }}
+                        </p>
+
+                      <!-- Title -->
+                      <h3
+                      routerLink="/blog?slug={{ post.slug }}"
+                        class="text-lg font-bold text-primary my-2 line-clamp-2 group-hover:text-secondary transition-colors duration-200"
+                      >
+                        {{ post.title }}
+                      </h3>
+
+                      <!-- Excerpt -->
+                      <p
+                        class="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3"
+                      >
+                        {{ truncateText(post.excerpt, 100) }}
+                      </p>
+                    </div>
+
+                    <!-- Read more link -->
+
+                    <a
+                      routerLink="/blog?slug={{ post.slug }}"
+                      class="inline-flex items-center text-primary font-medium text-sm hover:text-primary-dark transition-colors duration-200 mt-auto"
+                    >
+                      Đọc thêm
+                      <i
+                      class="fa-solid fa-arrow-right text-xs -rotate-45 group-hover:rotate-0 transition-all duration-300 ease-in-out ml-2"
+                    ></i>
+                    </a>
+                  </div>
+
+                </article>
+              }
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>

@@ -1,6 +1,10 @@
 
 <div class="layout-container">
-  <app-header/>
+   <app-top-header />
+  <div class="sticky top-0 z-50">
+      <app-header/>
+</div>
+
   <div class="flex-grow">
       <router-outlet></router-outlet>
   </div>

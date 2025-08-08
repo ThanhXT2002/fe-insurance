@@ -11,7 +11,7 @@ import { AppMenuItem } from '../../core/interfaces/menu.interface';
 
 @Component({
   selector: 'app-header',
-  imports: [TopHeader, Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader],
+  imports: [Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

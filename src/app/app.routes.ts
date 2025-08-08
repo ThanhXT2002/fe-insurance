@@ -24,7 +24,12 @@ export const routes: Routes = [
       {
         path: 'blogs',
         loadComponent: () => import('./pages/blogs/blogs').then((m) => m.Blogs),
-        data: { title: 'Blogs' },
+        data: { title: 'Bài viết' },
+      },
+      {
+        path: 'blog?slug=:slug',
+        loadComponent: () => import('./pages/blog-detail/blog-detail').then((m) => m.BlogDetail),
+        data: { title: 'Chi tiết bài viết' },
       },
       {
         path: 'contact',
