@@ -1,0 +1,9 @@
+<div
+  class="relative w-full h-48 lg:h-96 bg-cover bg-center bg-no-repeat overflow-hidden"
+  [style.background-image]="'url(' + bgUrl() + ')'">
+
+  <!-- Overlay với gradient -->
+  @if (showOverlay()) {
+    <div class="absolute inset-0 bg-gradient-to-r from-teal-700/80 via-teal-700/40 to-transparent"></div>
+  }
+</div>
