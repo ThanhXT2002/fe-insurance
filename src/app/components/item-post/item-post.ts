@@ -42,6 +42,6 @@ export class ItemPost {
 
   readonly blogUrl = computed(() => {
     const post = this.post();
-    return `/blog?slug=${post.slug}`;
+    return `/blog/${post.slug}`;
   });
 }

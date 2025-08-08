@@ -16,7 +16,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
             <!-- Main Featured Post (Left Side) -->
             <article
-              routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+              routerLink="/blog/{{ featuredPosts()[0].slug }}"
               class="relative group h-96 lg:w-full lg:h-auto lg:aspect-[5/4] overflow-hidden rounded-common bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
             >
               <div
@@ -41,7 +41,7 @@
                   <!-- Title -->
                   <h2 class="lg:text-xl font-bold mb-1 leading-tight">
                     <a
-                      routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+                      routerLink="/blog/{{ featuredPosts()[0].slug }}"
                       class="hover:text-secondary transition-colors duration-200"
                     >
                       {{ featuredPosts()[0].title }}
@@ -55,7 +55,7 @@
 
                   <hr class="border border-gray-300/30 w-full mb-4" />
                   <button
-                    routerLink="/blog?slug={{ featuredPosts()[0].slug }}"
+                    routerLink="/blog/{{ featuredPosts()[0].slug }}"
                     class="group-hover:text-secondary font-bold custom-btn transition-colors duration-300 md:pb-0"
                   >
                     Đọc thêm
