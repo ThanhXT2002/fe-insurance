@@ -6,7 +6,7 @@
           title="Câu hỏi thường gặp"
           firstText="Chắc hẳn"
           highlightText="bạn có nhiều câu hỏi"
-          lastText="về bảo dịch vụ của chúng tôi."
+          lastText="về bảo dịch vụ của chúng tôi"
           description="Tìm hiểu các câu hỏi thường gặp về bảo hiểm và các dịch vụ của chúng tôi. Chúng tôi cung cấp thông tin chi tiết để giúp bạn hiểu rõ hơn về các gói bảo hiểm của mình."
         />
         <div class="space-y-8">
@@ -83,40 +83,13 @@
                   >{{ faq.id }}. {{ faq.title }}</span>
                 </span>
               </p-accordion-header>
-              <p-accordion-content>
+             <p-accordion-content>
                 <p class="m-0 leading-relaxed text-sm">{{ faq.content }}</p>
               </p-accordion-content>
             </p-accordion-panel>
           </div>
           }
         </p-accordion>
-          <!-- <p-accordion [value]="0" class="custom-accordion">
-            @for (faq of faqsList; track faq.id) {
-              <p-accordion-panel [value]="faq.id">
-                <p-accordion-header class="custom-header">
-                  <ng-template #toggleicon let-active="active">
-                    <div>
-                      @if (active) {
-                        <i class="pi pi-angle-up"></i>
-                      } @else {
-                        <i class="pi pi-angle-down"></i>
-                      }
-                    </div>
-                  </ng-template>
-                  <span class="flex items-center gap-3">
-                    <span class="text-secondary font-bold"
-                      >{{ faq.id }}. {{ faq.title }}</span
-                    >
-                  </span>
-                </p-accordion-header>
-                <p-accordion-content class="custom-content">
-                  <p class="m-0 text-gray-700 leading-relaxed">
-                    {{ faq.content }}
-                  </p>
-                </p-accordion-content>
-              </p-accordion-panel>
-            }
-          </p-accordion> -->
         </div>
       </div>
     </div>

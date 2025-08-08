@@ -9,10 +9,12 @@ import { InsuranceHeroSection } from "../../components/insurance-hero-section/in
 import { PricingPlanSection } from "../../components/pricing-plan-section/pricing-plan-section";
 import { OurSupportTeamSection } from "../../components/our-support-team-section/our-support-team-section";
 import { FaqsSection } from "../../components/faqs-section/faqs-section";
+import { TestimonialsSection } from "../../components/testimonials-section/testimonials-section";
+import { PostNewsSection } from "../../components/post-news-section/post-news-section";
 
 @Component({
   selector: 'app-home',
-  imports: [BannerHome, AboutSection, ServiceSection, WhyChooseUs, HowItWorkSection, OurFeatureSection, InsuranceHeroSection, PricingPlanSection, OurSupportTeamSection, FaqsSection],
+  imports: [BannerHome, AboutSection, ServiceSection, WhyChooseUs, HowItWorkSection, OurFeatureSection, InsuranceHeroSection, PricingPlanSection, OurSupportTeamSection, FaqsSection, TestimonialsSection, PostNewsSection],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

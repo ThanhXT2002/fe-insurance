@@ -1,0 +1,93 @@
+<section class="py-20 bg-third bgUrlCustom">
+  <div class="container-layer">
+    <div class="flex__middle flex-col gap-10">
+      <div>
+        <app-section-intro
+          introClass="flex__middle flex-col text-center max-w-5xl"
+          title="Lời chứng thực"
+          firstText="Những câu chuyện thực tế"
+          highlightText="niềm tin thực sự từ khách hàng hài lòng"
+          description="Chúng tôi tự hào về sự tin tưởng mà khách hàng dành cho mình. Thông qua những câu chuyện thực tế và lời chứng thực, bạn sẽ thấy các giải pháp bảo hiểm toàn diện của chúng tôi đã tạo ra tác động tích cực như thế nào đến cuộc sống của họ. Từ quy trình giải quyết quyền lợi nhanh chóng đến dịch vụ cá nhân hóa, khách hàng hài lòng chia sẻ cách chúng tôi đã giúp họ bảo vệ những điều quan trọng nhất."
+          descriptionClass="text-center"
+        />
+      </div>
+      <div class="w-full">
+        <swiper-container
+          navigation="false"
+          [pagination]="{ clickable: true }"
+          slides-per-view="auto"
+          speed="500"
+          loop="true"
+          autoplay-delay="3000"
+          space-between="30"
+          [breakpoints]="breakpoints"
+        >
+          @if (testimonials && testimonials.length > 0) {
+            @for (item of testimonials; track $index) {
+              <swiper-slide
+                class="flex__middle flex-col gap-x-4 bg-secondary rounded-lg "
+              >
+                <div class="w-full pt-6 pb-8 px-6">
+                  <p class="text-sm text-gray-100 text-justify h-20">
+                    {{ item.content }}
+                  </p>
+                  <div class="flex__between mt-5">
+                    <div class="flex__start">
+                      <div class="mr-3">
+                        <img
+                          [src]="item.avatar"
+                          class="h-14 aspect-square rounded-full object-cover border-2 border-gray-200"
+                          [alt]="item.name"
+                        />
+                      </div>
+                      <div class="text-white">
+                        <p class="font-semibold">{{ item.name }}</p>
+                        <p class="text-gray-300 italic">
+                          {{ item.occupation }}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <i class="ri-double-quotes-r text-5xl text-white"></i>
+                    </div>
+                  </div>
+                </div>
+              </swiper-slide>
+            }
+          } @else {
+            <!-- Loading Skeleton Slides -->
+            @for (item of getSkeletonItems(); track $index) {
+              <swiper-slide class="flex__middle flex-col gap-x-4 bg-primary rounded-lg">
+                <div class="w-full pt-6 pb-8 px-6 animate-pulse">
+                  <!-- Content skeleton -->
+                  <div class="space-y-2 mb-5 h-20">
+                    <div class="h-3 bg-gray-600 rounded w-full"></div>
+                    <div class="h-3 bg-gray-600 rounded w-11/12"></div>
+                    <div class="h-3 bg-gray-600 rounded w-4/5"></div>
+                    <div class="h-3 bg-gray-600 rounded w-3/4"></div>
+                  </div>
+
+                  <!-- Author info skeleton -->
+                  <div class="flex__between mt-5">
+                    <div class="flex__start">
+                      <div class="mr-3">
+                        <div class="h-14 w-14 bg-gray-600 rounded-full border-2 border-gray-500"></div>
+                      </div>
+                      <div class="space-y-2">
+                        <div class="h-4 bg-gray-600 rounded w-24"></div>
+                        <div class="h-3 bg-gray-600 rounded w-20"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="w-12 h-12 bg-gray-600 rounded"></div>
+                    </div>
+                  </div>
+                </div>
+              </swiper-slide>
+            }
+          }
+        </swiper-container>
+      </div>
+    </div>
+  </div>
+</section>

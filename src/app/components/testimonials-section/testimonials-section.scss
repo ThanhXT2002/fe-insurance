@@ -1,0 +1,9 @@
+
+::ng-deep swiper-container::part(bullet-active) {
+  background-color: #13c480 !important;
+}
+
+::ng-deep swiper-container::part(bullet) {
+  background-color: #cbd5e1 !important;
+}
+
