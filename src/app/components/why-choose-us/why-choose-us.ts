@@ -1,4 +1,5 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SectionLabel } from "../section-label/section-label";
 import { SectionIntro } from "../section-intro/section-intro";
 import { FeatureList } from "../feature-list/feature-list";
@@ -14,13 +15,18 @@ export class WhyChooseUs implements AfterViewInit {
   @ViewChild('boxBackground') boxBackground!: ElementRef;
   @ViewChild('boxImg') boxImg!: ElementRef;
 
-  ngAfterViewInit() {
-    this.adjustBackgroundHeight();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-    // Listen for window resize
-    window.addEventListener('resize', () => {
+  ngAfterViewInit() {
+    // Only run in browser
+    if (isPlatformBrowser(this.platformId)) {
       this.adjustBackgroundHeight();
-    });
+
+      // Listen for window resize
+      window.addEventListener('resize', () => {
+        this.adjustBackgroundHeight();
+      });
+    }
   }
 
   private adjustBackgroundHeight() {

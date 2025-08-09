@@ -18,6 +18,7 @@ import {
 import { provideServiceWorker } from '@angular/service-worker';
 
 import { register as registerSwiperElements } from 'swiper/element/bundle';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 registerSwiperElements();
 export const appConfig: ApplicationConfig = {
@@ -42,6 +43,6 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
-    }),
+    }), provideClientHydration(withEventReplay()),
   ],
 };

@@ -1,4 +1,5 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Logo } from '../logo/logo';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ export class Footer implements OnInit {
   private readonly footerService = inject(FooterService);
   readonly footerData = signal<FooterData | null>(null);
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     effect(() => {
       this.footerService.getFooterData().subscribe((data: FooterData) => {
         this.footerData.set(data);
@@ -31,7 +32,7 @@ export class Footer implements OnInit {
 
   // Helper method để mở link external
   openExternalLink(item: AppMenuItem) {
-    if (item.isBlank) {
+    if (item.isBlank && isPlatformBrowser(this.platformId)) {
       window.open(item.link, '_blank');
     }
   }

@@ -51,7 +51,12 @@
               "node_modules/@fontsource/pt-serif/700.css",
               "node_modules/@fontsource/pt-serif/400-italic.css",
               "node_modules/@fontsource/pt-serif/700-italic.css"
-            ]
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
