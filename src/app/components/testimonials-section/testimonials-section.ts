@@ -1,5 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SectionIntro } from "../section-intro/section-intro";
+import { SwiperWrapper } from "./swiper-wrapper/swiper-wrapper";
 
 interface Testimonial {
   content: string;
@@ -10,7 +11,7 @@ interface Testimonial {
 
 @Component({
   selector: 'app-testimonials-section',
-  imports: [SectionIntro],
+  imports: [SectionIntro, SwiperWrapper],
   templateUrl: './testimonials-section.html',
   styleUrl: './testimonials-section.scss',
    schemas: [CUSTOM_ELEMENTS_SCHEMA]
