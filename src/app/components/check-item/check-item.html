@@ -1,0 +1,19 @@
+@for (feature of features(); track $index) {
+  <div class="flex items-center gap-3 mt-5">
+    <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
+      <img
+        [src]="iconSrc()"
+        [alt]="iconAlt()"
+        [class]="enableHover() ? 'group-hover:filter group-hover:brightness-0 group-hover:invert transition-all duration-300' : ''"
+      >
+    </div>
+    <span
+      class="text-fourth font-medium text-sm"
+      [class.group-hover:text-white]="enableHover()"
+      [class.transition-colors]="enableHover()"
+      [class.duration-300]="enableHover()"
+    >
+      {{ feature }}
+    </span>
+  </div>
+}

@@ -1,0 +1,47 @@
+{
+  "intro": {
+    "title": "CÁCH TIẾP CẬN CỦA CHÚNG TÔI",
+    "firstText": " ",
+    "highlightText": "Sứ mệnh, tầm nhìn và giá trị định hướng",
+    "lastText": " dịch vụ bảo hiểm của chúng tôi",
+    "description": "Mục tiêu của chúng tôi là cung cấp dịch vụ bảo hiểm thân thiện, tận tâm và các giải pháp bảo hiểm toàn diện, phù hợp với mọi nhu cầu khách hàng."
+  },
+  "data": [
+    {
+      "key": "our-vision",
+      "title": "Tầm Nhìn",
+      "img": "assets/images/our-approach/our-vision-img.webp",
+      "heading": "Những Đặc Điểm Nổi Bật Trong Tầm Nhìn Bảo Hiểm Của Chúng Tôi:",
+      "features": [
+        "Tập trung vào sự cải tiến liên tục và thích nghi với thay đổi",
+        "Duy trì sự minh bạch và liêm chính trong mọi hoạt động",
+        "Cung cấp các gói bảo hiểm toàn diện và phù hợp với mọi đối tượng",
+        "Đưa ra giải pháp cá nhân hóa cho từng khách hàng"
+      ]
+    },
+    {
+      "key": "our-mission",
+      "title": "Sứ Mệnh",
+      "img": "assets/images/our-approach/our-mission-img.webp",
+      "heading": "Sứ Mệnh Của Chúng Tôi:",
+      "features": [
+        "Bảo vệ an toàn tài chính cho khách hàng trước mọi rủi ro",
+        "Đồng hành cùng khách hàng xây dựng tương lai vững chắc",
+        "Nâng cao chất lượng dịch vụ bằng sự tận tâm và chuyên nghiệp",
+        "Thúc đẩy sự phát triển bền vững cho cộng đồng"
+      ]
+    },
+    {
+      "key": "value",
+      "title": "Giá Trị",
+      "img": "assets/images/our-approach/our-value-img.webp",
+      "heading": "Giá Trị Định Hướng:",
+      "features": [
+        "Khách hàng là trung tâm của mọi hoạt động",
+        "Cam kết minh bạch, trung thực và trách nhiệm",
+        "Đổi mới sáng tạo để mang lại giá trị vượt trội",
+        "Hợp tác và phát triển cùng đối tác, cộng đồng"
+      ]
+    }
+  ]
+}

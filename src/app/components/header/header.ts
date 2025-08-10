@@ -4,7 +4,7 @@ import { Logo } from "../logo/logo";
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DrawerHeader } from "./drawer-header/drawer-header";
-import { MenuService } from '../../core/services/menu';
+import { MenuService } from '../../core/services/api/menu';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
 
 

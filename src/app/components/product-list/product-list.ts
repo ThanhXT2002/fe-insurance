@@ -1,6 +1,6 @@
 import { Component, inject, input, OnInit, computed } from '@angular/core';
 import { IconBoxWrapper } from "../icon-box-wrapper/icon-box-wrapper";
-import { ProductsService } from '../../core/services/products';
+import { ProductsService } from '../../core/services/api/products';
 
 @Component({
   selector: 'app-product-list',

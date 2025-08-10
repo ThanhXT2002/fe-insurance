@@ -32,17 +32,11 @@
             </h3>
 
             <!-- Features List - Flex grow để chiếm hết không gian -->
-            <div class="space-y-4 flex-grow">
-              @for (feature of plan.features; track $index) {
-                <div class="flex items-center gap-3">
-                  <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                    <img src="assets/icons/check.svg" alt="icon_check" class="group-hover:filter group-hover:brightness-0 group-hover:invert transition-all duration-300">
-                  </div>
-                  <span class="text-fourth group-hover:text-white font-medium text-sm transition-colors duration-300">
-                    {{ feature }}
-                  </span>
-                </div>
-              }
+            <div class="flex-grow">
+              <app-check-item
+                [features]="plan.features"
+                [enableHover]="true"
+              />
             </div>
 
             <hr class="border border-gray-200 group-hover:border-white/30 my-5 transition-colors duration-300">

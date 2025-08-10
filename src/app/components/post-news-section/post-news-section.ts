@@ -2,7 +2,7 @@ import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SectionIntro } from "../section-intro/section-intro";
-import { BlogService } from '../../core/services/blog-serive';
+import { BlogService } from '../../core/services/api/blog-serive';
 import { ItemPost } from '../item-post/item-post';
 
 @Component({

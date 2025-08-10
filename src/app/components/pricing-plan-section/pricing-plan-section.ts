@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SectionIntro } from "../section-intro/section-intro";
 import { BtnCommon } from "../btn-common/btn-common";
+import { CheckItem } from "../check-item/check-item";
 
 interface PricingPlan {
   id: number;
@@ -14,7 +15,7 @@ interface PricingPlan {
 
 @Component({
   selector: 'app-pricing-plan-section',
-  imports: [SectionIntro, BtnCommon],
+  imports: [SectionIntro, BtnCommon, CheckItem],
   templateUrl: './pricing-plan-section.html',
   styleUrl: './pricing-plan-section.scss'
 })

@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Logo } from '../logo/logo';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FooterService } from '../../core/services/footer';
+import { FooterService } from '../../core/services/api/footer';
 import { FooterData } from '../../core/interfaces/footer.interface';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
 
@@ -16,8 +16,9 @@ import { AppMenuItem } from '../../core/interfaces/menu.interface';
 export class Footer implements OnInit {
   private readonly footerService = inject(FooterService);
   readonly footerData = signal<FooterData | null>(null);
+  private platformId = inject(PLATFORM_ID);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor() {
     effect(() => {
       this.footerService.getFooterData().subscribe((data: FooterData) => {
         this.footerData.set(data);

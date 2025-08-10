@@ -1,0 +1,41 @@
+<div class="pt-20 bg-third bgUrlCustom">
+  <div class="container-layer flex__end flex-col">
+    <app-section-intro
+      [title]="ourApproachData()?.intro!.title"
+      [firstText]="ourApproachData()?.intro?.firstText ?? ''"
+      [highlightText]="ourApproachData()?.intro?.highlightText ?? ''"
+      [lastText]="ourApproachData()?.intro?.lastText ?? ''"
+      description="Mục tiêu của phòng khám chúng tôi là cung cấp dịch vụ nha khoa thân thiện, tận tâm và các phương pháp điều trị nha khoa tổng quát, thẩm mỹ và chuyên khoa ở mức cao nhất. Với các cơ sở nha khoa trên toàn thế giới."
+      introClass="flex__middle flex-col text-center max-w-4xl"
+      descriptionClass="text-center"
+    />
+    <div class="mt-16 w-full rounded-common bg-white p-3 md:p-5 lg:p-10 ">
+        <div class="w-full flex__middle gap-x-3 md:gap-x-10 py-5 md:py-7">
+          @for(item of ourApproachData()?.data; track item.key) {
+            <button
+              class="py-3 px-4 font-semibold rounded-t-xl rounded-e-xl border border-primary transition-colors"
+              [class.bg-primary]="selectedTabKey() === item.key"
+              [class.text-white]="selectedTabKey() === item.key"
+              [class.text-primary]="selectedTabKey() !== item.key"
+              (click)="selectTab(item.key)"
+            >
+              {{item.title}}
+            </button>
+          }
+        </div>
+        <div class="flex__middle flex-col lg:flex-row gap-5 md:gap-7 lg:gap-10 mt-5 md:mt-7">
+          <div class="w-full">
+            <img [src]="selectedTabData?.img" alt="Our Approach Image" class="w-full h-auto rounded-common">
+          </div>
+          <div class="w-full">
+            <h4 class="text-xl font-bold text-primary-800">
+              {{selectedTabData?.heading}}
+            </h4>
+             <app-check-item
+                [features]="selectedTabData?.features ?? []"
+              />
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

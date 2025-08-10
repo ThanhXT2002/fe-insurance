@@ -51,34 +51,11 @@
         <div class="grid md:grid-cols-2 gap-8">
           <!-- Features List -->
           <div class="space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                <img src="assets/icons/check.svg" alt="icon_check">
-              </div>
-              <span class="text-fourth font-medium text-sm">Tập trung vào khách hàng</span>
-            </div>
 
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                <img src="assets/icons/check.svg" alt="icon_check">
-              </div>
-              <span class="text-fourth font-medium text-sm">Giao tiếp minh bạch và rõ ràng</span>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                <img src="assets/icons/check.svg" alt="icon_check">
-              </div>
-              <span class="text-fourth font-medium text-sm">Hỗ trợ 365/24x7 nhanh chóng</span>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <div class="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                <img src="assets/icons/check.svg" alt="icon_check">
-              </div>
-              <span class="text-fourth font-medium text-sm">Bảo hiểm toàn diện mọi như cầu</span>
-            </div>
-
+             <app-check-item
+                [features]="aboutFeatures"
+                ngSkipHydration
+              />
 
           <div class="pt-6">
             <app-btn-common

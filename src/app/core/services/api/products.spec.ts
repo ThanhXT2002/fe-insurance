@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ProductsService } from './products';
-import { ProductItem } from '../interfaces/product.interface';
-import { ProductStatus } from '../interfaces/product.interface';
+import { ProductItem } from '../../interfaces/product.interface';
+import { ProductStatus } from '../../interfaces/product.interface';
 
 describe('ProductsService', () => {
   let service: ProductsService;
