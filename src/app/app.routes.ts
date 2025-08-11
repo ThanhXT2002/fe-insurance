@@ -101,6 +101,14 @@ export const routes: Routes = [
           ),
         data: { title: 'Điều khoản dịch vụ' },
       },
+      {
+        path: 'indemnify',
+        loadComponent: () =>
+          import('./pages/indemnify/indemnify').then(
+            (m) => m.IndemnifyComponent,
+          ),
+        data: { title: 'Quy trình Bồi thường' },
+      },
     ],
   },
   {

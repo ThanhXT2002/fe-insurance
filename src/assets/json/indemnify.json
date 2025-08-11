@@ -1,0 +1,106 @@
+{
+	"title": "Quy trình Bồi thường",
+	"subtitle": "Hướng dẫn chi tiết về quy trình và thủ tục bồi thường bảo hiểm.",
+	"imgBanner": "assets/images/banners/page-header-bg.jpg",
+	"lastUpdated": "11-8-2025",
+	"sections": [
+		{
+			"id": "general-principles",
+			"heading": "Nguyên tắc chung",
+			"content": [
+				"Bồi thường bảo hiểm được thực hiện theo đúng điều khoản hợp đồng và quy định pháp luật hiện hành.",
+				"Mọi yêu cầu bồi thường phải được thông báo kịp thời và cung cấp đầy đủ hồ sơ chứng minh."
+			]
+		},
+		{
+			"id": "notification-requirements",
+			"heading": "Thông báo tổn thất",
+			"content": [
+				"Người được bảo hiểm phải thông báo cho công ty bảo hiểm trong vòng 24 giờ kể từ khi xảy ra sự kiện tổn thất.",
+				"Thông báo có thể thực hiện qua hotline: 1900 5678 hoặc email: claims@insureco.vn"
+			]
+		},
+		{
+			"id": "required-documents",
+			"heading": "Hồ sơ yêu cầu bồi thường",
+			"content": [
+				"Các tài liệu cần thiết bao gồm:",
+				"- Đơn yêu cầu bồi thường theo mẫu của công ty",
+				"- Bản sao hợp đồng bảo hiểm",
+				"- Biên bản điều tra của cơ quan có thẩm quyền (nếu có)",
+				"- Hóa đơn, chứng từ chứng minh thiệt hại",
+				"- Giấy tờ tùy thân của người được bảo hiểm",
+				"- Các tài liệu khác theo yêu cầu cụ thể của từng loại bảo hiểm"
+			]
+		},
+		{
+			"id": "claim-process",
+			"heading": "Quy trình xử lý",
+			"content": [
+				"Bước 1: Tiếp nhận hồ sơ và kiểm tra tính đầy đủ, hợp lệ",
+				"Bước 2: Thẩm định tổn thất và xác định nguyên nhân",
+				"Bước 3: Tính toán số tiền bồi thường theo điều khoản hợp đồng",
+				"Bước 4: Thông báo quyết định bồi thường cho khách hàng",
+				"Bước 5: Chi trả bồi thường theo phương thức đã thỏa thuận"
+			]
+		},
+		{
+			"id": "processing-time",
+			"heading": "Thời gian xử lý",
+			"content": [
+				"Thời gian xử lý hồ sơ bồi thường tối đa 15 ngày làm việc kể từ khi nhận đủ hồ sơ hợp lệ.",
+				"Đối với các trường hợp phức tạp cần điều tra thêm, thời gian có thể kéo dài nhưng không quá 30 ngày.",
+				"Khách hàng sẽ được thông báo tiến độ xử lý thường xuyên qua SMS hoặc email."
+			]
+		},
+		{
+			"id": "payment-methods",
+			"heading": "Phương thức chi trả",
+			"content": [
+				"Chuyển khoản ngân hàng: Khách hàng cung cấp thông tin tài khoản để nhận tiền bồi thường.",
+				"Tiền mặt: Áp dụng cho các trường hợp bồi thường có giá trị nhỏ tại văn phòng công ty.",
+				"Séc: Phát hành séc ngân hàng cho khách hàng (áp dụng theo yêu cầu)."
+			]
+		},
+		{
+			"id": "exclusions",
+			"heading": "Các trường hợp không bồi thường",
+			"content": [
+				"Tổn thất do hành vi cố ý của người được bảo hiểm",
+				"Thiệt hại xảy ra ngoài phạm vi bảo hiểm theo hợp đồng",
+				"Tổn thất do chiến tranh, khủng bố, thảm họa hạt nhân",
+				"Thiệt hại do hành vi vi phạm pháp luật",
+				"Các trường hợp loại trừ khác được quy định rõ trong hợp đồng bảo hiểm"
+			]
+		},
+		{
+			"id": "appeal-process",
+			"heading": "Khiếu nại và giải quyết tranh chấp",
+			"content": [
+				"Khách hàng có quyền khiếu nại nếu không đồng ý với quyết định bồi thường.",
+				"Khiếu nại phải được gửi bằng văn bản trong vòng 30 ngày kể từ khi nhận thông báo.",
+				"Công ty cam kết giải quyết khiếu nại trong vòng 15 ngày làm việc.",
+				"Nếu không thỏa thuận được, tranh chấp sẽ được giải quyết tại Tòa án có thẩm quyền."
+			]
+		},
+		{
+			"id": "customer-support",
+			"heading": "Hỗ trợ khách hàng",
+			"content": [
+				"Hotline 24/7: 1900 5678 để được tư vấn và hỗ trợ khi cần thiết.",
+				"Email hỗ trợ: xtbh@insurance.com",
+				"Hệ thống chi nhánh trên toàn quốc để phục vụ khách hàng tại địa phương.",
+				"Website tra cứu tiến độ xử lý hồ sơ: xtbh.tranxuanthanhtxt.com/indemnify-status"
+			]
+		},
+		{
+			"id": "legal-framework",
+			"heading": "Khung pháp lý",
+			"content": [
+				"Quy trình bồi thường tuân thủ Luật Kinh doanh Bảo hiểm và các văn bản hướng dẫn của Bộ Tài chính.",
+				"Mọi hoạt động bồi thường được giám sát bởi Cục Quản lý, Giám sát Bảo hiểm.",
+				"Công ty cam kết minh bạch, công bằng trong mọi quy trình bồi thường."
+			]
+		}
+	]
+}

@@ -86,7 +86,7 @@
       "id": 106,
       "label": "Bồi thường",
       "icon": "ri-file-shield-line",
-      "link": "/claims",
+      "link": "/indemnify",
       "isBlank": false,
       "note": "Dịch vụ bồi thường"
     },
