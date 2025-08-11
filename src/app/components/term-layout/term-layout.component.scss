@@ -175,8 +175,8 @@
 
 // Policy Sections
 .policy-section {
-  @apply mb-8 opacity-100; // Thay đổi từ opacity-0 thành opacity-100
-  transform: translateY(0); // Thay đổi từ translateY(30px) thành translateY(0)
+  @apply mb-8 opacity-0; // Khôi phục về opacity-0
+  transform: translateY(30px); // Khôi phục về translateY(30px)
   transition: opacity 0.6s ease, transform 0.6s ease;
 
   &.visible {
@@ -223,8 +223,8 @@
 
 // Animation Classes
 .reveal-text {
-  @apply opacity-100; // Thay đổi từ opacity-0 thành opacity-100
-  transform: translateY(0) rotateX(0); // Thay đổi để hiển thị ngay lập tức
+  @apply opacity-0; // Khôi phục về opacity-0
+  transform: translateY(20px) rotateX(20deg); // Khôi phục về giá trị ban đầu
   transform-origin: top;
   transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
@@ -236,8 +236,8 @@
 
 .stagger-list {
   li {
-    @apply opacity-100; // Thay đổi từ opacity-0 thành opacity-100
-    transform: translateX(0); // Thay đổi từ translateX(-20px) thành translateX(0)
+    @apply opacity-0; // Khôi phục về opacity-0
+    transform: translateX(-20px); // Khôi phục về translateX(-20px)
     transition: all 0.4s ease;
   }
 

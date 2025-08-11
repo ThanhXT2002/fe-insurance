@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { afterNextRender, ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, OnInit, PLATFORM_ID, Renderer2, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, PLATFORM_ID, Renderer2, signal, effect } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbImg } from '../breadcrumb-img/breadcrumb-img';
 import { Observable } from 'rxjs';
@@ -14,10 +14,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TermLayoutComponent  {
-
-private readonly platformId = inject(PLATFORM_ID);
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
   private readonly renderer = inject(Renderer2);
+  private animationObserver: IntersectionObserver | null = null;
 
   // Inputs
   readonly dataSource = input<Observable<TermData> | null>(null);
@@ -47,22 +47,18 @@ private readonly platformId = inject(PLATFORM_ID);
           next: (data) => {
             this.data.set(this.processData(data));
             this.isLoading.set(false);
+            // Initialize tất cả animations sau khi data được load và DOM updated
+            setTimeout(() => {
+              if (isPlatformBrowser(this.platformId)) {
+                this.initializeAllEffects();
+              }
+            }, 100);
           },
           error: (error) => {
             console.error('Error loading data:', error);
             this.isLoading.set(false);
           }
         });
-      }
-    });
-
-    // Initialize effects after render
-    afterNextRender(() => {
-      if (isPlatformBrowser(this.platformId)) {
-        this.initializeProgressBar();
-        this.initializeSmoothScrolling();
-        this.initializeTocActiveTracker();
-        this.initializeRevealAnimations();
       }
     });
   }
@@ -104,6 +100,13 @@ private readonly platformId = inject(PLATFORM_ID);
     if (isPlatformBrowser(this.platformId)) {
       alert(`Tải file ${this.downloadFileName()} (Demo)`);
     }
+  }
+
+  private initializeAllEffects(): void {
+    this.initializeProgressBar();
+    this.initializeSmoothScrolling();
+    this.initializeTocActiveTracker();
+    this.initializeRevealAnimations();
   }
 
   private initializeProgressBar(): void {
@@ -204,12 +207,17 @@ private readonly platformId = inject(PLATFORM_ID);
   }
 
   private initializeRevealAnimations(): void {
+    // Disconnect previous observer if exists
+    if (this.animationObserver) {
+      this.animationObserver.disconnect();
+    }
+
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    this.animationObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
@@ -217,11 +225,17 @@ private readonly platformId = inject(PLATFORM_ID);
       });
     }, observerOptions);
 
-    const elementsToReveal = document.querySelectorAll('.reveal-text, .stagger-list');
-    elementsToReveal.forEach(el => observer.observe(el));
+    // Observe tất cả elements cần animation
+    const elementsToObserve = document.querySelectorAll('.policy-section, .reveal-text, .stagger-list');
+    elementsToObserve.forEach(element => this.animationObserver!.observe(element));
 
+    console.log(`Initialized animations for ${elementsToObserve.length} elements`);
+
+    // Cleanup khi component destroy
     this.destroyRef.onDestroy(() => {
-      observer.disconnect();
+      if (this.animationObserver) {
+        this.animationObserver.disconnect();
+      }
     });
   }
 
