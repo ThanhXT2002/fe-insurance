@@ -11,13 +11,16 @@
     }
   </div>
 </div>
-<div class="absolute left-4 md:left-8 lg:left-32 top-28 md:top-44 lg:top-64">
-<h1 class="text-3xl md:text-4xl lg:text-6xl text-white font-bold text-left">
-  {{title()}}
-</h1>
-<div class="mt-2 lg:mt-8 flex__start gap-x-3 text-white">
-<a routerLink="/"
-class="hover:text-primary"
->Trang chủ</a> <i class="fa-solid fa-circle text-primary text-[6px] lg:text-[8px]"></i> <span>  {{title()}}</span>
+<div class="container-layer">
+  <div class="absolute  top-28 md:top-44 lg:top-64">
+  <h1 class="text-3xl md:text-4xl lg:text-6xl text-white font-bold text-left">
+    {{ title() }}
+  </h1>
+  <div class="mt-2 lg:mt-8 flex__start gap-x-3 text-white">
+    <a routerLink="/" class="hover:text-primary">Trang chủ</a>
+    <i class="fa-solid fa-circle text-primary text-[6px] lg:text-[8px]"></i>
+    <span> {{ title() }}</span>
+  </div>
 </div>
+
 </div>

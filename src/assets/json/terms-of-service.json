@@ -1,0 +1,78 @@
+{
+	"title": "Điều khoản Dịch vụ",
+	"subtitle": "Vui lòng đọc kỹ các điều khoản trước khi sử dụng dịch vụ của chúng tôi.",
+	"lastUpdated": "2025-08-11",
+	"sections": [
+		{
+			"id": "introduction",
+			"heading": "Giới thiệu",
+			"content": [
+				"Khi sử dụng website và dịch vụ của InsureCo, bạn đồng ý tuân thủ các điều khoản và điều kiện dưới đây. Nếu bạn không đồng ý với bất kỳ điều khoản nào, vui lòng không sử dụng dịch vụ của chúng tôi."
+			]
+		},
+		{
+			"id": "service-description",
+			"heading": "Mô tả dịch vụ",
+			"content": [
+				"InsureCo cung cấp các sản phẩm và dịch vụ bảo hiểm trực tuyến, bao gồm tư vấn, mua bảo hiểm, quản lý hợp đồng và hỗ trợ bồi thường."
+			]
+		},
+		{
+			"id": "user-obligations",
+			"heading": "Nghĩa vụ của người dùng",
+			"content": [
+				"Bạn cam kết cung cấp thông tin chính xác, đầy đủ khi đăng ký và sử dụng dịch vụ.",
+				"Không sử dụng dịch vụ cho mục đích gian lận, vi phạm pháp luật hoặc gây hại cho bên thứ ba."
+			]
+		},
+		{
+			"id": "account-security",
+			"heading": "Bảo mật tài khoản",
+			"content": [
+				"Bạn chịu trách nhiệm bảo mật thông tin tài khoản và mật khẩu. Mọi hoạt động phát sinh từ tài khoản của bạn đều do bạn chịu trách nhiệm."
+			]
+		},
+		{
+			"id": "intellectual-property",
+			"heading": "Quyền sở hữu trí tuệ",
+			"content": [
+				"Tất cả nội dung, hình ảnh, logo, phần mềm trên website thuộc sở hữu của InsureCo hoặc bên cấp phép. Nghiêm cấm sao chép, sử dụng lại khi chưa có sự đồng ý bằng văn bản."
+			]
+		},
+		{
+			"id": "limitation-of-liability",
+			"heading": "Giới hạn trách nhiệm",
+			"content": [
+				"InsureCo không chịu trách nhiệm cho bất kỳ thiệt hại nào phát sinh do việc sử dụng hoặc không thể sử dụng dịch vụ, trừ khi pháp luật có quy định khác."
+			]
+		},
+		{
+			"id": "third-party-services",
+			"heading": "Dịch vụ bên thứ ba",
+			"content": [
+				"Dịch vụ có thể liên kết với website hoặc dịch vụ của bên thứ ba. Chúng tôi không chịu trách nhiệm về nội dung hoặc chính sách của các bên này."
+			]
+		},
+		{
+			"id": "termination",
+			"heading": "Chấm dứt dịch vụ",
+			"content": [
+				"Chúng tôi có quyền chấm dứt hoặc tạm ngưng cung cấp dịch vụ cho bất kỳ ai vi phạm điều khoản hoặc có hành vi gây hại cho hệ thống."
+			]
+		},
+		{
+			"id": "changes-to-terms",
+			"heading": "Thay đổi điều khoản",
+			"content": [
+				"Chúng tôi có thể cập nhật điều khoản dịch vụ bất cứ lúc nào. Các thay đổi sẽ được thông báo trên website. Việc tiếp tục sử dụng dịch vụ đồng nghĩa với việc bạn chấp nhận các thay đổi đó."
+			]
+		},
+		{
+			"id": "contact-us",
+			"heading": "Liên hệ",
+			"content": [
+				"Nếu bạn có bất kỳ câu hỏi nào về điều khoản dịch vụ, vui lòng liên hệ: support@insureco.vn hoặc số điện thoại: 1900 5678."
+			]
+		}
+	]
+}

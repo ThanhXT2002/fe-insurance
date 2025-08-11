@@ -1,0 +1,91 @@
+{
+	"title": "Chính sách Bảo mật",
+	"subtitle": "Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn.",
+  "lastUpdated": "2025-08-11",
+	"sections": [
+		{
+			"id": "introduction",
+			"heading": "Giới thiệu",
+			"content": [
+				"Chào mừng bạn đến với Chính sách Bảo mật của InsureCo. Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn và đảm bảo rằng dữ liệu của bạn được xử lý một cách an toàn và minh bạch. Vui lòng đọc kỹ chính sách này để hiểu rõ về cách chúng tôi thu thập, sử dụng và bảo vệ thông tin của bạn."
+			]
+		},
+		{
+			"id": "information-we-collect",
+			"heading": "Thông tin chúng tôi thu thập",
+			"content": [
+				"Chúng tôi có thể thu thập các loại thông tin sau:",
+				"- Thông tin cá nhân: Họ tên, địa chỉ, email, số điện thoại, ngày sinh, số CMND/CCCD, thông tin tài chính, thông tin sức khỏe.",
+				"- Thông tin thiết bị: Địa chỉ IP, loại trình duyệt, hệ điều hành, thông tin cookie.",
+				"- Thông tin giao dịch: Lịch sử mua bảo hiểm, yêu cầu bồi thường, thanh toán."
+			]
+		},
+		{
+			"id": "how-we-use-information",
+			"heading": "Cách chúng tôi sử dụng thông tin",
+			"content": [
+				"Chúng tôi sử dụng thông tin của bạn cho các mục đích sau:",
+				"- Cung cấp và quản lý dịch vụ bảo hiểm.",
+				"- Xử lý hợp đồng, yêu cầu bồi thường và thanh toán.",
+				"- Gửi thông báo, cập nhật, ưu đãi và thông tin marketing (nếu bạn đồng ý).",
+				"- Nghiên cứu, phân tích và cải thiện sản phẩm/dịch vụ.",
+				"- Tuân thủ quy định pháp luật."
+			]
+		},
+		{
+			"id": "information-sharing",
+			"heading": "Chia sẻ và tiết lộ thông tin",
+			"content": [
+				"Chúng tôi có thể chia sẻ thông tin của bạn với:",
+				"- Đối tác, nhà cung cấp dịch vụ hỗ trợ vận hành (ví dụ: công ty công nghệ, thanh toán, vận chuyển).",
+				"- Cơ quan nhà nước, pháp luật khi có yêu cầu hợp pháp.",
+				"Chúng tôi cam kết không bán thông tin cá nhân của bạn cho bên thứ ba."
+			]
+		},
+		{
+			"id": "your-rights",
+			"heading": "Quyền của bạn",
+			"content": [
+				"Bạn có các quyền sau đối với thông tin cá nhân của mình:",
+				"- Truy cập, chỉnh sửa hoặc xóa thông tin cá nhân.",
+				"- Phản đối hoặc hạn chế việc xử lý dữ liệu.",
+				"- Rút lại sự đồng ý bất cứ lúc nào (không ảnh hưởng đến tính hợp pháp của việc xử lý trước đó)."
+			]
+		},
+		{
+			"id": "data-security",
+			"heading": "Bảo mật dữ liệu",
+			"content": [
+				"Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ thông tin cá nhân khỏi truy cập trái phép, mất mát hoặc tiết lộ."
+			]
+		},
+		{
+			"id": "children-privacy",
+			"heading": "Bảo vệ trẻ em",
+			"content": [
+				"Dịch vụ của chúng tôi không dành cho trẻ em dưới 18 tuổi. Nếu phát hiện trẻ em cung cấp thông tin cá nhân, vui lòng liên hệ với chúng tôi để xử lý kịp thời."
+			]
+		},
+		{
+			"id": "international-transfers",
+			"heading": "Chuyển dữ liệu ra nước ngoài",
+			"content": [
+				"Chúng tôi có thể chuyển dữ liệu cá nhân ra ngoài lãnh thổ Việt Nam, nhưng luôn đảm bảo tuân thủ các quy định bảo vệ dữ liệu hiện hành."
+			]
+		},
+		{
+			"id": "policy-changes",
+			"heading": "Thay đổi chính sách",
+			"content": [
+				"Chính sách này có thể được cập nhật theo thời gian. Chúng tôi sẽ thông báo khi có thay đổi quan trọng và khuyến nghị bạn kiểm tra thường xuyên."
+			]
+		},
+		{
+			"id": "contact-us",
+			"heading": "Liên hệ",
+			"content": [
+				"Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến chính sách bảo mật, vui lòng liên hệ bộ phận bảo mật của chúng tôi qua email: xtbh@insureco.vn hoặc số điện thoại: 1900 1234."
+			]
+		}
+	]
+}
