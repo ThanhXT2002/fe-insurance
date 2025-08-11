@@ -60,8 +60,8 @@ export class PrivacyPolicy {
     if (isPlatformBrowser(this.platformId)) {
       afterNextRender(() => {
         this.initializeScrollEffects();
-        this.initializeProgressBar();
         this.initializeSmoothScrolling();
+        this.initializeTocActiveTracker();
       });
     }
   }
@@ -136,35 +136,6 @@ export class PrivacyPolicy {
     });
   }
 
-  private initializeProgressBar(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    const progressBar = document.querySelector('#progressBar') as HTMLElement;
-    if (!progressBar) return;
-
-    const updateProgressBar = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.offsetHeight;
-      const winHeight = window.innerHeight;
-      const scrollPercent = scrollTop / (docHeight - winHeight);
-      const scrollPercentRounded = Math.round(scrollPercent * 100);
-      this.renderer.setStyle(progressBar, 'width', `${scrollPercentRounded}%`);
-    };
-
-    const scrollListener = this.renderer.listen(
-      'window',
-      'scroll',
-      updateProgressBar,
-    );
-    this.scrollListeners.push(scrollListener);
-    updateProgressBar();
-
-    // Cleanup listener when component is destroyed
-    this.destroyRef.onDestroy(() => {
-      this.scrollListeners.forEach((listener) => listener());
-    });
-  }
-
   private initializeSmoothScrolling(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
@@ -179,18 +150,14 @@ export class PrivacyPolicy {
         const targetElement = document.querySelector(targetId!) as HTMLElement;
 
         if (targetElement) {
-          // Remove active class from all links
-          tocLinks.forEach((l: HTMLElement) => {
-            this.renderer.removeClass(l, 'active');
-          });
-          // Add active class to clicked link
-          this.renderer.addClass(link, 'active');
-
           // Scroll to target with offset for header
           window.scrollTo({
             top: targetElement.offsetTop - 100,
             behavior: 'smooth',
           });
+
+          // Note: Active state will be handled automatically by initializeTocActiveTracker
+          // when the scroll completes, so we don't need to manually update it here
         }
       });
 
@@ -198,6 +165,74 @@ export class PrivacyPolicy {
     });
   }
 
+  private initializeTocActiveTracker(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const sections = document.querySelectorAll(
+      '.policy-section',
+    ) as NodeListOf<HTMLElement>;
+    const tocLinks = document.querySelectorAll(
+      '.toc-link',
+    ) as NodeListOf<HTMLAnchorElement>;
+
+    if (sections.length === 0 || tocLinks.length === 0) return;
+
+    const updateActiveTocLink = () => {
+      const scrollTop = window.scrollY;
+      const headerOffset = 120; // Offset for header
+
+      let currentSectionId = '';
+
+      // Convert NodeList to Array and reverse to check from bottom to top
+      const sectionsArray = Array.from(sections).reverse();
+
+      // Find the first section (from bottom) that is above the trigger point
+      for (const section of sectionsArray) {
+        const sectionTop = section.offsetTop;
+
+        if (scrollTop + headerOffset >= sectionTop) {
+          currentSectionId = section.id;
+          break;
+        }
+      }
+
+      // If no section found (at very top), use first section
+      if (!currentSectionId && sections.length > 0) {
+        currentSectionId = sections[0].id;
+      }
+
+      // Update TOC links active state
+      tocLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        const targetId = href?.substring(1); // Remove the '#'
+
+        if (targetId === currentSectionId) {
+          this.renderer.addClass(link, 'active');
+        } else {
+          this.renderer.removeClass(link, 'active');
+        }
+      });
+    };
+
+    // Initial check after a short delay to ensure DOM is fully rendered
+    setTimeout(() => {
+      updateActiveTocLink();
+    }, 100);
+
+    // Add throttled scroll listener for TOC active tracking
+    let ticking = false;
+    const scrollListener = this.renderer.listen('window', 'scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveTocLink();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    this.scrollListeners.push(scrollListener);
+  }
   downloadPdf(): void {
     // In a real implementation, this would trigger a download of an actual PDF file
     alert('Privacy Policy PDF is being downloaded.');
