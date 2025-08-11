@@ -4,7 +4,6 @@
 @import "primeicons/primeicons.css";
 @import "remixicon/fonts/remixicon.css";
 
-
 @layer tailwind-base, primeng, tailwind-utilities;
 
 // Global CSS Custom Properties
@@ -24,8 +23,7 @@
 }
 
 @layer base {
-
-html {
+  html {
     /* Smooth scroll cho toàn bộ website */
     scroll-behavior: smooth;
 
@@ -40,7 +38,6 @@ html {
     touch-action: manipulation;
   }
 
-
   body {
     font-family: "Open Sans", sans-serif;
   }
@@ -50,25 +47,20 @@ html {
   }
 }
 @layer components {
-
   @keyframes move-x {
-  0% {
-    transform: translateX(0);
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(60px);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
-  50% {
-    transform: translateX(60px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 
-.animate-move-x {
-  animation: move-x 5s ease-in-out infinite;
-}
-
-  .bgUrlCustom {
-    @apply bg-[url('/assets/images/section-bg-shape.svg')]  bg-bottom bg-no-repeat bg-contain;
+  .animate-move-x {
+    animation: move-x 5s ease-in-out infinite;
   }
 
   @keyframes overlay-reveal {
@@ -152,10 +144,12 @@ html {
     @apply flex justify-end items-center;
   }
 
-  .rounded-common{
-  @apply rounded-t-3xl rounded-e-3xl;
-}
-
+  .rounded-common {
+    @apply rounded-t-3xl rounded-e-3xl;
+  }
+  .bgUrlCustom {
+    @apply bg-[url('/assets/images/section-bg-shape.svg')]  bg-bottom bg-no-repeat bg-contain;
+  }
 }
 
 @layer reset, primeng;
