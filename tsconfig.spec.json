@@ -11,5 +11,5 @@
   },
   "include": [
     "src/**/*.ts"
-, "src/app/components/term-layout/term-layout.component.ts"  ]
+  ]
 }
