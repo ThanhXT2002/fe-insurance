@@ -1,6 +1,7 @@
 export interface TermData {
   title: string;
   subtitle: string;
+  imgBanner?: string;
   lastUpdated: string;
   sections: SectionCommon[];
 }

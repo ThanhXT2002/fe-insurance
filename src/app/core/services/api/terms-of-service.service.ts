@@ -21,7 +21,7 @@ export class TermOfServiceService {
       return of(saved);
     }
     return this.http
-      .get<TermData>('assets/json/term-of-service.json')
+      .get<TermData>('assets/json/terms-of-service.json')
       .pipe(tap((data) => this.transferState.set(TERM_OF_SERVICE_KEY, data)));
   }
 }

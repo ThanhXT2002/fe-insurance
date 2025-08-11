@@ -8,16 +8,13 @@
 
 // Global CSS Custom Properties
 :root {
-  --header-height: 52px;
-}
-
-:root {
   --color-primary: #009a5e;
   --color-secondary: #004f4c;
-  --color-third: #EBEFF0;
-  --color-fourth: #6F6F6F;
+  --color-third: #ebeff0;
+  --color-fourth: #6f6f6f;
   --color-light: #ffffff;
   --color-dark: #000000;
+  --header-height: 52px;
 }
 
 @layer reset, primeng;
