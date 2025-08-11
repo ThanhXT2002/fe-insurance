@@ -1,4 +1,4 @@
-export interface IntroCommon<T> {
+export interface SectionCommon<T> {
   intro: introData;
   data: T[];
 }
@@ -18,4 +18,13 @@ export interface introData {
   lastText?: string;
   description?: string;
   image?: string;
+}
+
+
+export interface OurTeamData{
+  key: string;
+  name: string;
+  img: string;
+  position: string;
+  description: string;
 }

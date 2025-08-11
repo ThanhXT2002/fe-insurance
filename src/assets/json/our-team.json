@@ -1,0 +1,39 @@
+{
+  "intro": {
+    "title": "ĐỘI NGŨ CỦA CHÚNG TÔI",
+    "firstText": "Chuyên gia bảo hiểm tận tâm",
+    "highlightText": "luôn đồng hành cùng bạn",
+    "lastText": "",
+    "description": "Đội ngũ chuyên gia bảo hiểm của chúng tôi cam kết mang đến dịch vụ cá nhân hóa và tư vấn chuyên nghiệp, giúp khách hàng an tâm trước mọi rủi ro."
+  },
+  "data": [
+    {
+      "key": "ceo",
+      "name": "Nguyễn Văn Hùng",
+      "img": "assets/images/team-founder/team-1.webp",
+      "position": "Co-Founder & CEO",
+      "description": "Hơn 15 năm kinh nghiệm trong lĩnh vực bảo hiểm, dẫn dắt đội ngũ phát triển bền vững."
+    },
+    {
+      "key": "engineer",
+      "name": "Trần Minh Quân",
+      "img": "assets/images/team-founder/team-2.webp",
+      "position": "Sr Engineer",
+      "description": "Chuyên gia công nghệ bảo hiểm, xây dựng giải pháp tối ưu cho khách hàng."
+    },
+    {
+      "key": "junior-manager",
+      "name": "Lê Thị Mai",
+      "img": "assets/images/team-founder/team-3.webp",
+      "position": "Junior Manager",
+      "description": "Năng động, tận tâm hỗ trợ khách hàng và phát triển dịch vụ mới."
+    },
+    {
+      "key": "co-founder",
+      "name": "Phạm Thu Hằng",
+      "img": "assets/images/team-founder/team-4.webp",
+      "position": "Co-Founder",
+      "description": "Định hướng chiến lược và phát triển quan hệ đối tác lâu dài."
+    }
+  ]
+}

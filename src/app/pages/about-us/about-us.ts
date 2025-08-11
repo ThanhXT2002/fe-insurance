@@ -6,10 +6,12 @@ import { OurFeatureSection } from "../../components/our-feature-section/our-feat
 import { InsuranceHeroSection } from "../../components/insurance-hero-section/insurance-hero-section";
 import { TestimonialsSection } from "../../components/testimonials-section/testimonials-section";
 import { OurApproachSection } from "../../components/our-approach-section/our-approach-section";
+import { OurTeamSection } from '../../components/our-team-section/our-team-section';
+
 
 @Component({
   selector: 'app-about-us',
-  imports: [AboutSection, BreadcrumbImg, WhyChooseUs, OurFeatureSection, InsuranceHeroSection, TestimonialsSection, OurApproachSection],
+  imports: [AboutSection, BreadcrumbImg, WhyChooseUs, OurFeatureSection, InsuranceHeroSection, TestimonialsSection, OurApproachSection, OurTeamSection],
   templateUrl: './about-us.html',
   styleUrl: './about-us.scss'
 })

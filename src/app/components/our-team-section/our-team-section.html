@@ -1,0 +1,26 @@
+<div class="py-20 bg-third bgUrlCustom">
+  <div class="container-layer flex__end flex-col">
+    <app-section-intro
+      [title]="ourTeamData()?.intro!.title"
+      [firstText]="ourTeamData()?.intro?.firstText ?? ''"
+      [highlightText]="ourTeamData()?.intro?.highlightText ?? ''"
+      [lastText]="ourTeamData()?.intro?.lastText ?? ''"
+      description="Mục tiêu của phòng khám chúng tôi là cung cấp dịch vụ nha khoa thân thiện, tận tâm và các phương pháp điều trị nha khoa tổng quát, thẩm mỹ và chuyên khoa ở mức cao nhất. Với các cơ sở nha khoa trên toàn thế giới."
+      introClass="flex__middle flex-col text-center max-w-4xl"
+      descriptionClass="text-center"
+    />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      @for(item of ourTeamData()?.data ; track $index){
+        <div class="rounded-common bg-white drop-shadow-lg overflow-hidden">
+          <div class="w-full ">
+            <img [src]="item.img" class="w-full aspect-[2.5/3]" [alt]="item.name">
+          </div>
+          <div class="flex__middle flex-col py-4">
+            <p class="font-bold text-primary-800">{{ item.name }}</p>
+            <p class="text-fourth mt-1">{{ item.position }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
