@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 })
 export class BreadcrumbImg {
   // Chỉ cần các thuộc tính cơ bản
-  bgUrl = input<string>('assets/images/banner/page-header-bg.jpg');
+  bgUrl = input<string>('assets/images/banners/page-header-bg.jpg');
   showOverlay = input<boolean>(true);
   title = input<string>('');
 }

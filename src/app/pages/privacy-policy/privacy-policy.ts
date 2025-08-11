@@ -2,8 +2,6 @@ import { Component, computed, inject } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { TermLayoutComponent } from '../../components/term-layout/term-layout.component';
 import { PrivacyPolicyService } from '../../core/services/api/privacy-policy.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TermData } from '../../core/interfaces/term.interface';
 
 @Component({
   selector: 'app-privacy-policy',

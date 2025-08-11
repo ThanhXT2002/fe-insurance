@@ -1,17 +1,21 @@
-import { Component, inject } from '@angular/core';
-import { TermLayoutComponent } from "../../components/term-layout/term-layout.component";
+import { Component, computed, inject } from '@angular/core';
+import { TermLayoutComponent } from '../../components/term-layout/term-layout.component';
 import { TermOfServiceService } from '../../core/services/api/terms-of-service.service';
 
 @Component({
   selector: 'app-terms-of-service',
   imports: [TermLayoutComponent],
-  templateUrl: './terms-of-service.html',
-  styleUrl: './terms-of-service.scss'
+  template: `
+    <app-term-layout
+      [dataSource]="dataSource()"
+      loadingText="Đang tải điều khoản sử dụng..."
+      downloadButtonText="Tải PDF"
+      downloadFileName="privacy-policy.pdf"
+    />
+  `,
 })
 export class TermsOfService {
+  private readonly termOfServiceService = inject(TermOfServiceService);
 
-    private readonly termOfServiceService = inject(TermOfServiceService);
-
-  readonly dataSource = this.termOfServiceService.getTermOfServiceData();
-
+  readonly dataSource = computed(() => this.termOfServiceService.getTermOfServiceData());
 }

@@ -17,6 +17,6 @@ import { OurTeamSection } from '../../components/our-team-section/our-team-secti
 })
 export class AboutUs {
 
-  bgUrl = 'assets/images/banner/page-header-bg.jpg';
+  bgUrl = 'assets/images/banners/page-header-bg.jpg';
 
 }
