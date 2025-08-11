@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, computed } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ProductItem } from '../../interfaces/product.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
   // Signal lưu trữ toàn bộ danh sách sản phẩm
@@ -13,7 +13,9 @@ export class ProductsService {
   // Signal lấy 4 sản phẩm đầu tiên (ưu tiên theo priority tăng dần)
   readonly top4Products = computed(() => {
     const products = this.productsSignal();
-    return products ? [...products].sort((a, b) => a.priority - b.priority).slice(0, 4) : [];
+    return products
+      ? [...products].sort((a, b) => a.priority - b.priority).slice(0, 4)
+      : [];
   });
 
   constructor(private http: HttpClient) {
@@ -24,10 +26,20 @@ export class ProductsService {
    * Lấy danh sách sản phẩm từ file json và lưu vào signal
    */
   fetchProducts(): void {
-    this.http.get<ProductItem[]>('assets/json/products.json').subscribe({
-      next: (data) => this.productsSignal.set(data),
-      error: () => this.productsSignal.set([])
-    });
+    this.http
+      .get<ProductItem[]>('assets/json/products.json')
+      .pipe(
+        // Lọc và sắp xếp ngay trong pipeline
+        map((products) =>
+          products
+            .filter((item) => item.isPublish)
+            .sort((a, b) => a.priority - b.priority),
+        ),
+      )
+      .subscribe({
+        next: (data) => this.productsSignal.set(data),
+        error: () => this.productsSignal.set([]),
+      });
   }
 
   /**
