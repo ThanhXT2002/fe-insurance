@@ -54,6 +54,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/register/register').then((m) => m.Register),
         data: { title: 'Đăng ký' },
       },
+      {
+        path: 'auth-demo',
+        loadComponent: () => import('./components/auth-demo/auth-demo.component').then((m) => m.AuthDemoComponent),
+        data: { title: 'Auth Demo' },
+      },
 
       {
         path: 'order',
@@ -143,3 +148,25 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
+
+
+// // Bảo vệ route cần đăng nhập
+// {
+//   path: 'profile',
+//   component: ProfileComponent,
+//   canActivate: [authGuard]
+// }
+
+// // Route cho guest only
+// {
+//   path: 'login',
+//   component: LoginComponent,
+//   canActivate: [guestGuard]
+// }
+
+// // Route cần email verification
+// {
+//   path: 'dashboard',
+//   component: DashboardComponent,
+//   canActivate: [emailVerificationGuard]
+// }
