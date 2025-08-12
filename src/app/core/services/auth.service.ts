@@ -95,22 +95,51 @@ export class AuthService {
         throw new Error('Mật khẩu không khớp');
       }
 
+      console.log('Starting user registration with email:', credentials.email);
+
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         credentials.email,
         credentials.password
       );
 
-      // Gửi email xác thực
-      await sendEmailVerification(userCredential.user);
+      console.log('User created successfully:', userCredential.user.uid);
+      console.log('User email verified:', userCredential.user.emailVerified);
+
+      // Kiểm tra user có tồn tại trước khi gửi email
+      if (!userCredential.user) {
+        throw new Error('Không thể tạo user');
+      }
+
+      console.log('Sending email verification...');
+
+      // Cấu hình action code settings cho email verification
+      const actionCodeSettings = {
+        url: window.location.origin + '/login?emailVerified=true',
+        handleCodeInApp: false
+      };
+
+      // Gửi email xác thực với settings
+      await sendEmailVerification(userCredential.user, actionCodeSettings);
+
+      console.log('Email verification sent successfully');
 
       // Thông báo cho user check email
-      alert('Đã gửi email xác thực. Vui lòng kiểm tra email và xác thực tài khoản.');
+//       alert(`Đã gửi email xác thực đến ${credentials.email}.
+
+// Vui lòng:
+// 1. Kiểm tra hộp thư đến
+// 2. Kiểm tra thư mục spam/junk
+// 3. Click vào link xác thực trong email
+// 4. Quay lại đăng nhập sau khi xác thực
+
+// Lưu ý: Email có thể mất vài phút để đến.`);
 
       // Tự động đăng xuất để user phải xác thực email trước
       await this.logout();
 
     } catch (error: any) {
+      console.error('Registration error:', error);
       this.handleAuthError(error);
       throw error;
     } finally {
@@ -221,6 +250,49 @@ export class AuthService {
   }
 
   /**
+   * Test method để force gửi email verification cho user hiện tại
+   */
+  async testSendEmailVerification(): Promise<void> {
+    try {
+      if (!this.auth.currentUser) {
+        throw new Error('Không có user hiện tại để gửi email verification');
+      }
+
+      console.log('Testing email verification for user:', {
+        uid: this.auth.currentUser.uid,
+        email: this.auth.currentUser.email,
+        emailVerified: this.auth.currentUser.emailVerified
+      });
+
+      const actionCodeSettings = {
+        url: `${window.location.origin}/login?emailVerified=true`,
+        handleCodeInApp: false
+      };
+
+      console.log('Sending email with settings:', actionCodeSettings);
+
+      await sendEmailVerification(this.auth.currentUser, actionCodeSettings);
+
+      console.log('✅ Email verification sent successfully');
+
+      alert(`✅ Test: Đã gửi email xác thực thành công!
+
+Email gửi đến: ${this.auth.currentUser.email}
+Kiểm tra:
+1. Hộp thư đến
+2. Thư mục spam/junk
+3. Có thể mất 1-5 phút để nhận được
+
+Debug info đã được log ra console.`);
+
+    } catch (error: any) {
+      console.error('❌ Test email verification failed:', error);
+      alert(`❌ Lỗi gửi email: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
    * Gửi lại email xác thực
    */
   async resendEmailVerification(): Promise<void> {
@@ -230,11 +302,30 @@ export class AuthService {
       }
 
       this.setLoading(true);
-      await sendEmailVerification(this.auth.currentUser);
 
-      alert('Đã gửi lại email xác thực. Vui lòng kiểm tra email.');
+      console.log('Resending email verification for:', this.auth.currentUser.email);
+
+      // Cấu hình action code settings
+      const actionCodeSettings = {
+        url: window.location.origin + '/login?emailVerified=true',
+        handleCodeInApp: false
+      };
+
+      await sendEmailVerification(this.auth.currentUser, actionCodeSettings);
+
+      console.log('Email verification resent successfully');
+
+      alert(`Đã gửi lại email xác thực đến ${this.auth.currentUser.email}.
+
+Vui lòng:
+1. Kiểm tra hộp thư đến
+2. Kiểm tra thư mục spam/junk
+3. Click vào link xác thực trong email
+
+Lưu ý: Email có thể mất vài phút để đến.`);
 
     } catch (error: any) {
+      console.error('Resend verification error:', error);
       this.handleAuthError(error);
       throw error;
     } finally {
