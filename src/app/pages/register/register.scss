@@ -1,2 +1,10 @@
 
 
+::ng-deep .p-inputtext{
+  width: 100%;
+}
+::ng-deep .p-inputtext.ng-invalid.ng-dirty,
+::ng-deep p-password.ng-invalid.ng-dirty .p-inputtext
+{
+  border-width: 2px;
+}

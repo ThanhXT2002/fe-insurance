@@ -7,11 +7,11 @@
         <div class="md:hidden">
           <app-logo width="w-24" />
         </div>
-        <h1 class="text-lg md:text-2xl font-bold text-secondary uppercase my-4">
+        <h1 class="text-lg md:text-2xl font-bold text-secondary uppercase mb-4">
           {{ title() }} tài khoản của bạn
         </h1>
         <ng-content></ng-content>
-        <div class="flex__middle gap-x-4 w-full text-third px-4">
+        <div class="flex__middle gap-x-4 w-full text-third px-4 mt-4">
           <hr class="w-full border border-white" />
           <p class="w-full text-nowrap">Hoặc {{ title() }} với</p>
           <hr class="w-full border border-white" />
@@ -52,15 +52,25 @@
 
 
       <div class="text-center">
-        <p class="text-sm text-gray-300">
+        @if(isLogin()) {
+           <p class="text-sm text-gray-300">
+          Bạn chưa có tài khoản?
+          <a routerLink="/register" class="font-medium text-secondary hover:text-primary-900 transition-colors duration-200">
+            Đăng ký ngay
+          </a>
+        </p>
+        }@else {
+           <p class="text-sm text-gray-300">
           Đã có tài khoản?
-          <a href="/login" class="font-medium text-secondary hover:text-primary-900 transition-colors duration-200">
+          <a routerLink="/login" class="font-medium text-secondary hover:text-primary-900 transition-colors duration-200">
             Đăng nhập ngay
           </a>
         </p>
+        }
+
       </div>
       </div>
-      <div class="hidden md:block w-full lg:flex__middle flex-col gap-6">
+      <div class="hidden md:block w-full md:flex__middle flex-col gap-6">
         <app-logo width="w-44" />
         <div
           class="text-white bg-green-100/30 p-4 pt-0 rounded-common shadow-2xl shadow-yellow-500 drop-shadow-2xl"

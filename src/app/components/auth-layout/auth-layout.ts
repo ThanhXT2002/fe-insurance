@@ -1,17 +1,20 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { Logo } from "../logo/logo";
 import { CheckItem } from "../check-item/check-item";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.html',
   styleUrl: './auth-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Logo, CheckItem]
+  imports: [Logo, CheckItem, RouterLink]
 })
 export class AuthLayout {
 
   title = input.required<string>();
+
+  isLogin = input<boolean>(true);
 
   items = [
     'Bảo mật thông tin tuyệt đối',
