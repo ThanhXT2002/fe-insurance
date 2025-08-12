@@ -19,8 +19,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
-export class Register implements AfterViewInit {
-  @ViewChild('emailInput') emailInput!: ElementRef;
+export class Register {
 
   private fb = new FormBuilder();
 
@@ -47,15 +46,6 @@ export class Register implements AfterViewInit {
         validators: PasswordValidators.passwordMatch(),
       }
     );
-  }
-
-  ngAfterViewInit(): void {
-    // Focus vào trường email sau khi view được khởi tạo
-    setTimeout(() => {
-      if (this.emailInput?.nativeElement) {
-        this.emailInput.nativeElement.focus();
-      }
-    }, 100);
   }
 
   onSubmit(): void {

@@ -1,1 +1,93 @@
-<p>login works!</p>
+<app-auth-layout [title]="'Đăng nhập'" [isLogin]="true">
+  <div class="w-full max-w-md mx-auto formRegister">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <p-floatlabel variant="in">
+        <p-iconfield>
+          <p-inputicon class="pi pi-envelope" />
+          <input
+            pInputText
+            id="email"
+            [pAutoFocus]="true"
+            formControlName="email"
+            autocomplete="off"
+            pSize="small"
+            class="w-full"
+          />
+        </p-iconfield>
+        <label for="email">Email</label>
+      </p-floatlabel>
+
+      <p-floatlabel variant="in" styleClass="w-full">
+        <p-iconfield class="w-full">
+          <p-inputicon class="pi pi-lock" />
+          <p-password
+            pSize="small"
+            class="w-full"
+            formControlName="password"
+            inputId="password"
+            [toggleMask]="true"
+            [feedback]="false"
+          >
+          </p-password>
+        </p-iconfield>
+        <label for="password">Mật khẩu</label>
+      </p-floatlabel>
+
+      <!-- Remember Me Checkbox -->
+      <div class="flex__between items-center">
+        <div class="flex items-center">
+          <input
+            id="rememberMe"
+            type="checkbox"
+            [checked]="rememberMe()"
+            (change)="toggleRememberMe()"
+            class="h-4 w-4 accent-secondary"
+          />
+          <label for="rememberMe" class="ml-2 block text-sm text-third">
+            Ghi nhớ đăng nhập
+          </label>
+        </div>
+        <div>
+          <a
+            routerLink="/forgot-password"
+            class="font-semibold text-secondary italic"
+            >Quên mật khẩu</a
+          >
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="isSubmitting()"
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-semibold flex__middle"
+      >
+        @if (isSubmitting()) {
+          <svg
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Đang xử lý...
+        } @else {
+          Đăng nhập
+        }
+      </button>
+    </form>
+  </div>
+</app-auth-layout>
