@@ -1,5 +1,5 @@
 <app-auth-layout [title]="'Đăng ký'" [isLogin]="false">
-  <div class="w-full max-w-md mx-auto">
+  <div class="w-full max-w-md mx-auto formRegister">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <p-floatlabel variant="in">
         <p-iconfield>
@@ -8,6 +8,7 @@
             #emailInput
             pInputText
             id="email"
+            [pAutoFocus]="true"
             formControlName="email"
             autocomplete="off"
             pSize="small"
@@ -25,7 +26,27 @@
             class="w-full"
             formControlName="password"
             inputId="password"
-          />
+            [toggleMask]="true"
+            promptLabel="Nhập mật khẩu của bạn"
+            weakLabel="Mật khẩu quá đơn giản"
+            mediumLabel="Mật khẩu có độ phức tạp trung bình"
+            strongLabel="Mật khẩu mạnh"
+          >
+            <ng-template #header>
+              <div class="font-semibold text-xm !mb-2">Chọn một mật khẩu</div>
+            </ng-template>
+            <ng-template #footer>
+              <p-divider />
+              <ul class="pl-2 ml-2 !mt-2 my-0 leading-normal">
+                <li>Mật khẩu phải chứa ít nhất một chữ cái viết hoa</li>
+                <li>Mật khẩu phải chứa ít nhất một chữ cái viết thường</li>
+                <li>Mật khẩu phải chứa ít nhất một số</li>
+                <li>Mật khẩu phải chứa ít nhất một ký tự đặc biệt</li>
+                <li>Mật khẩu phải có ít nhất 8 ký tự</li>
+                <li>Mật khẩu không được vượt quá 16 ký tự</li>
+              </ul>
+            </ng-template>
+          </p-password>
         </p-iconfield>
         <label for="password">Mật khẩu</label>
       </p-floatlabel>
@@ -38,7 +59,38 @@
             class="w-full"
             formControlName="confirmPassword"
             inputId="confirmPassword"
-          />
+            [feedback]="true"
+            [toggleMask]="true"
+            promptLabel="Nhập mật khẩu của bạn"
+            weakLabel="Mật khẩu quá đơn giản"
+            mediumLabel="Mật khẩu có độ phức tạp trung bình"
+            strongLabel="Mật khẩu mạnh"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                registerForm.errors?.['passwordMismatch'] ||
+                (registerForm.get('confirmPassword')?.touched &&
+                  registerForm.get('confirmPassword')?.errors),
+            }"
+          >
+            <ng-template #header>
+              <div class="font-semibold text-xm !mb-2">Nhập lại mật khẩu</div>
+            </ng-template>
+            <ng-template #footer>
+              <p-divider />
+              @if (registerForm.get("confirmPassword")?.touched) {
+                <ul class="!mt-2 my-0 leading-normal text-red-500">
+                  @if (
+                    registerForm.get("confirmPassword")?.errors?.["required"]
+                  ) {
+                    <li>Mật khẩu là bắt buộc</li>
+                  }
+                  @if (registerForm.errors?.["passwordMismatch"]) {
+                    <li>Mật khẩu không khớp</li>
+                  }
+                </ul>
+              }
+            </ng-template>
+          </p-password>
         </p-iconfield>
         <label for="confirmPassword">Nhập lại mật khẩu</label>
       </p-floatlabel>
@@ -70,7 +122,7 @@
       <button
         type="submit"
         [disabled]="isSubmitting()"
-        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-semibold flex__middle"
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-semibold flex__middle"
       >
         @if (isSubmitting()) {
           <svg

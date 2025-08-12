@@ -8,10 +8,14 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { RouterLink } from '@angular/router';
 import { PasswordValidators } from '../../core/validators/password.validator';
 import { PasswordModule } from 'primeng/password';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { DividerModule } from 'primeng/divider';
+import { CommonModule, NgClass } from '@angular/common';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-register',
-  imports: [AuthLayout, ReactiveFormsModule, InputIconModule, IconFieldModule, InputTextModule, FormsModule, FloatLabelModule, RouterLink, PasswordModule],
+  imports: [AuthLayout, ReactiveFormsModule, InputIconModule, IconFieldModule, InputTextModule, FormsModule, FloatLabelModule, RouterLink, PasswordModule, AutoFocusModule , DividerModule, CommonModule,InputGroupAddonModule],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
