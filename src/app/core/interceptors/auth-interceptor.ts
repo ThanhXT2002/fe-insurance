@@ -8,9 +8,9 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   // Danh sách các URL không cần token
   const excludedUrls = [
-    '/auth/login',
-    '/auth/register',
-    '/auth/reset-password',
+    '/login',
+    '/register',
+    '/reset-password',
     '/public'
   ];
 

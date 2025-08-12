@@ -55,9 +55,19 @@ export const routes: Routes = [
         data: { title: 'Đăng ký' },
       },
       {
+        path: 'reset-password',
+        loadComponent: () => import('./pages/reset-password/reset-password').then((m) => m.ResetPassword),
+        data: { title: 'Đặt lại mật khẩu' },
+      },
+      {
         path: 'auth-demo',
         loadComponent: () => import('./components/auth-demo/auth-demo.component').then((m) => m.AuthDemoComponent),
         data: { title: 'Auth Demo' },
+      },
+      {
+        path: 'toast-demo',
+        loadComponent: () => import('./components/toast-demo/toast-demo.component').then((m) => m.ToastDemoComponent),
+        data: { title: 'Toast Demo' },
       },
 
       {

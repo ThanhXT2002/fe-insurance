@@ -1,0 +1,51 @@
+/* Custom Toast Styles for Secondary and Contrast */
+
+/* Secondary Toast - Gray themed */
+.p-toast .p-toast-message.p-toast-message-secondary {
+  background: #6b7280; /* gray-500 */
+  border: 1px solid #9ca3af; /* gray-400 */
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-secondary .p-toast-message-icon {
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-secondary .p-toast-icon-close {
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-secondary .p-toast-icon-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Contrast Toast - High contrast black/white */
+.p-toast .p-toast-message.p-toast-message-contrast {
+  background: #000000; /* pure black */
+  border: 2px solid #ffffff; /* white border for contrast */
+  color: white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.p-toast .p-toast-message.p-toast-message-contrast .p-toast-message-icon {
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-contrast .p-toast-icon-close {
+  color: white;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.p-toast .p-toast-message.p-toast-message-contrast .p-toast-icon-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom icons for secondary and contrast toasts */
+.p-toast .p-toast-message.p-toast-message-secondary .p-toast-message-icon:before {
+  content: "\e90c"; /* PrimeIcons icon - you can change this */
+}
+
+.p-toast .p-toast-message.p-toast-message-contrast .p-toast-message-icon:before {
+  content: "\e943"; /* PrimeIcons icon - you can change this */
+}

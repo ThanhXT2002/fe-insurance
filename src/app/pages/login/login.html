@@ -32,30 +32,6 @@
         </p-iconfield>
         <label for="password">Mật khẩu</label>
       </p-floatlabel>
-
-      <!-- Remember Me Checkbox -->
-      <div class="flex__between items-center">
-        <div class="flex items-center">
-          <input
-            id="rememberMe"
-            type="checkbox"
-            [checked]="rememberMe()"
-            (change)="toggleRememberMe()"
-            class="h-4 w-4 accent-secondary"
-          />
-          <label for="rememberMe" class="ml-2 block text-sm text-third">
-            Ghi nhớ đăng nhập
-          </label>
-        </div>
-        <div>
-          <a
-            routerLink="/forgot-password"
-            class="font-semibold text-secondary italic"
-            >Quên mật khẩu</a
-          >
-        </div>
-      </div>
-
       <!-- Submit Button -->
       <button
         type="submit"
