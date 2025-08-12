@@ -8,7 +8,8 @@
       >
     </div>
     <span
-      class="text-fourth font-medium text-sm"
+      class=" font-medium text-sm"
+      [class]="textColor()"
       [class.group-hover:text-white]="enableHover()"
       [class.transition-colors]="enableHover()"
       [class.duration-300]="enableHover()"

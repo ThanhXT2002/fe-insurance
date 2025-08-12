@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Register } from './pages/register/register';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,11 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
         data: { title: 'Đăng nhập' },
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/register/register').then((m) => m.Register),
+        data: { title: 'Đăng ký' },
       },
 
       {

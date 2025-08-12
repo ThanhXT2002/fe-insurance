@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-check-item',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './check-item.html',
   styleUrl: './check-item.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,4 +20,6 @@ export class CheckItem {
 
   // Có sử dụng hover effect không (để tương thích với parent hover)
   enableHover = input<boolean>(false);
+
+  textColor = input<string>('text-fourth');
 }

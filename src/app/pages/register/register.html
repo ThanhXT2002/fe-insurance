@@ -1,0 +1,112 @@
+<app-auth-layout [title]="'Đăng ký'">
+  <div class="w-full max-w-md mx-auto">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Email Field -->
+      <!-- <app-input-common
+        [label]="'Email'"
+        [type]="'email'"
+        [placeholder]="'Nhập địa chỉ email'"
+        [required]="true"
+        [control]="registerForm.get('email')"
+        [id]="'email'"
+        [autocomplete]="'email'"
+        formControlName="email">
+      </app-input-common> -->
+      <p-floatlabel variant="in">
+        <p-iconfield>
+          <p-inputicon class="pi pi-envelope" />
+          <input
+            pInputText
+            id="email"
+            formControlName="email"
+            autocomplete="off"
+            pSize="small"
+          />
+        </p-iconfield>
+        <label for="email">Email</label>
+      </p-floatlabel>
+
+      <!-- <p-iftalabel variant="in">
+        <p-iconfield>
+            <p-inputicon class="pi pi-envelope" />
+            <input pInputText id="email"  formControlName="email" autocomplete="off" pSize="small" />
+        </p-iconfield>
+        <label for="email">Email</label>
+    </p-iftalabel> -->
+
+      <!-- Password Field -->
+      <app-input-common
+        [label]="'Mật khẩu'"
+        [type]="'password'"
+        [placeholder]="'Nhập mật khẩu'"
+        [required]="true"
+        [control]="registerForm.get('password')"
+        [id]="'password'"
+        [minlength]="8"
+        [autocomplete]="'new-password'"
+        formControlName="password"
+      >
+      </app-input-common>
+
+      <!-- Repeat Password Field -->
+      <app-input-common
+        [label]="'Nhập lại mật khẩu'"
+        [type]="'password'"
+        [placeholder]="'Nhập lại mật khẩu'"
+        [required]="true"
+        [control]="registerForm.get('repeatPassword')"
+        [id]="'repeatPassword'"
+        [autocomplete]="'new-password'"
+        formControlName="repeatPassword"
+      >
+      </app-input-common>
+
+      <!-- Remember Me Checkbox -->
+      <div class="flex items-center">
+        <input
+          id="rememberMe"
+          type="checkbox"
+          [checked]="rememberMe()"
+          (change)="toggleRememberMe()"
+          class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+        />
+        <label for="rememberMe" class="ml-2 block text-sm text-gray-700">
+          Ghi nhớ đăng nhập
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="isSubmitting()"
+        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+      >
+        @if (isSubmitting()) {
+          <svg
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Đang xử lý...
+        } @else {
+          Đăng ký
+        }
+      </button>
+    </form>
+  </div>
+</app-auth-layout>
