@@ -4,7 +4,11 @@ import {
   provideZonelessChangeDetection,
   isDevMode,
 } from '@angular/core';
-import { provideRouter, withViewTransitions, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  withViewTransitions,
+  withInMemoryScrolling,
+} from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
@@ -18,7 +22,10 @@ import {
 import { provideServiceWorker } from '@angular/service-worker';
 
 import { register as registerSwiperElements } from 'swiper/element/bundle';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
 
 registerSwiperElements();
 export const appConfig: ApplicationConfig = {
@@ -30,8 +37,8 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withInMemoryScrolling({
         scrollPositionRestoration: 'top',
-        anchorScrolling: 'enabled'
-      })
+        anchorScrolling: 'enabled',
+      }),
     ),
     providePrimeNG({
       theme: {
@@ -50,6 +57,7 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
-    }), provideClientHydration(withEventReplay()),
+    }),
+    provideClientHydration(withEventReplay()),
   ],
 };
