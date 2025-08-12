@@ -26,6 +26,9 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
 
 registerSwiperElements();
 export const appConfig: ApplicationConfig = {
@@ -53,6 +56,8 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideAnimations(),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
     provideHttpClient(withFetch(), withInterceptors([])),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
