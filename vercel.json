@@ -1,7 +1,6 @@
 {
   "buildCommand": "npm install --legacy-peer-deps && npm run build:vercel",
   "outputDirectory": "dist/fe-insurance/browser",
-  "framework": "angular",
   "rewrites": [
     { "source": "/service-worker.js", "destination": "/service-worker.js" },
     { "source": "/ngsw-worker.js", "destination": "/ngsw-worker.js" },
