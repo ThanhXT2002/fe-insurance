@@ -15,7 +15,7 @@ import { AppMenuItem } from '../../core/interfaces/menu.interface';
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header implements OnInit {
+export class Header {
 
   private readonly menuService = inject(MenuService)
   readonly menuItems = signal<AppMenuItem[]>([]);
@@ -24,12 +24,7 @@ export class Header implements OnInit {
   effect(() => {
     this.menuService.getMenu().subscribe((items: AppMenuItem[]) => {
       this.menuItems.set(items);
-      console.log('Menu items:', items); // Log ở đây sẽ luôn có dữ liệu
     });
   });
 }
-
-  ngOnInit() {
-    console.log(this.menuItems())
-  }
 }
