@@ -3,6 +3,10 @@
   "author": "tran_xuan_thanh",
   "email": "tranxuanthanhtxt2002@gmail.com",
   "version": "0.0.1",
+  "overrides": {
+    "@angular/platform-browser-dynamic": "20.1.4",
+    "@angular/core": "20.1.4"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port=4600 --host=0.0.0.0",
