@@ -458,6 +458,6 @@ export class AuthService {
   }
 
   toastLoginSuccess(){
-    this.toastService.success('Đăng nhập thành công', 'Chào mừng bạn đến với hệ thống');
+    this.toastService.success('Chào mừng bạn đến với hệ thống','Đăng nhập thành công');
   }
 }
