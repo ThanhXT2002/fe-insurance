@@ -1,6 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AuthLayout } from "../../components/auth-layout/auth-layout";
+import { Component, inject, signal } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { AuthLayout } from '../../components/auth-layout/auth-layout';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,20 +17,36 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { DividerModule } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import {
+  AuthService,
+  RegisterCredentials,
+} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [AuthLayout, ReactiveFormsModule, InputIconModule, IconFieldModule, InputTextModule, FormsModule, FloatLabelModule, PasswordModule, AutoFocusModule , DividerModule, CommonModule,InputGroupAddonModule],
+  imports: [
+    AuthLayout,
+    ReactiveFormsModule,
+    InputIconModule,
+    IconFieldModule,
+    InputTextModule,
+    FormsModule,
+    FloatLabelModule,
+    PasswordModule,
+    AutoFocusModule,
+    DividerModule,
+    CommonModule,
+    InputGroupAddonModule,
+  ],
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrl: './register.scss',
 })
 export class Register {
-
-  private fb = new FormBuilder();
+  private fb = inject(FormBuilder);
+  readonly authService = inject(AuthService);
 
   registerForm: FormGroup;
   isSubmitting = signal(false);
-  rememberMe = signal(false);
 
   constructor() {
     this.registerForm = this.fb.group(
@@ -43,31 +65,29 @@ export class Register {
       },
       {
         validators: PasswordValidators.passwordMatch(),
-      }
+      },
     );
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+    // Kiểm tra form hợp lệ
     if (this.registerForm.valid) {
       this.isSubmitting.set(true);
-
-      // Simulate API call
-      console.log('Form submitted:', this.registerForm.value);
-      console.log('Remember me:', this.rememberMe());
-
-      // Reset submitting state after 2 seconds (simulate API response)
-      setTimeout(() => {
+      // Lấy dữ liệu đăng ký từ form, đảm bảo đúng kiểu
+      const credentials = this.registerForm.value as RegisterCredentials;
+      try {
+        // Gọi API đăng ký
+        await this.authService.registerWithEmail(credentials);
+      } catch (error: unknown) {
+        console.error('Register error:', error);
+      } finally {
+        // Luôn reset trạng thái submitting sau khi xử lý xong
         this.isSubmitting.set(false);
-        // Handle success or error here
-      }, 2000);
+      }
     } else {
-      // Mark all fields as touched to show validation errors
+      // Nếu form không hợp lệ, đánh dấu tất cả các trường là touched để hiển thị lỗi
       this.registerForm.markAllAsTouched();
     }
-  }
-
-  toggleRememberMe(): void {
-    this.rememberMe.update(value => !value);
   }
 
   // Phương thức để kiểm tra lỗi

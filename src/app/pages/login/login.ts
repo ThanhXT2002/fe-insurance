@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthLayout } from "../../components/auth-layout/auth-layout";
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { IconFieldModule } from 'primeng/iconfield';
+import { AuthService, LoginCredentials } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ import { IconFieldModule } from 'primeng/iconfield';
   styleUrl: './login.scss',
 })
 export class Login {
-  private fb = new FormBuilder();
+  private fb = inject(FormBuilder);
+
+  readonly authService = inject(AuthService);
 
   isSubmitting = signal(false);
 
@@ -29,8 +32,19 @@ export class Login {
   }
 
 
-  onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.loginForm.valid) {
+      this.isSubmitting.set(true);
+      const credentials: LoginCredentials = this.loginForm.value as LoginCredentials;
+      try {
+        await this.authService.loginWithEmail(credentials);
+      } catch (error: unknown) {
+        console.error('Register error:', error);
+      } finally {
+        this.isSubmitting.set(false);
+      }
+    }else {
+      this.loginForm.markAllAsTouched();
     }
   }
 }

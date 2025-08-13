@@ -44,7 +44,7 @@ export class ToastService {
       severity = 'info',
       title,
       message,
-      position = 'top-center',
+      position = 'bottom-center',
       life = 5000,
       sticky = false
     } = options;

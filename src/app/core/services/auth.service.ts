@@ -14,6 +14,7 @@ import {
   User,
   UserCredential,
   AuthError,
+  updateProfile,
 } from '@angular/fire/auth';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -134,8 +135,7 @@ export class AuthService {
       // Thông báo cho user check email bằng toast
       this.toastService.success(
         `Email xác thực đã được gửi đến ${credentials.email}. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
-        'Đăng ký thành công',
-        'top-center',
+        'Đăng ký thành công'
       );
 
       // Tự động đăng xuất để user phải xác thực email trước
@@ -163,13 +163,14 @@ export class AuthService {
         credentials.password,
       );
 
+      console.log('Login successful:', userCredential);
+
       // Kiểm tra email đã được verify chưa
       if (!userCredential.user.emailVerified) {
         console.log('Email chưa được xác thực');
         this.toastService.warn(
           `Tài khoản này chưa được xác thực. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
-          'Chú ý',
-          'top-center',
+          'Chú ý'
         );
         await signOut(this.auth);
         return;
@@ -289,19 +290,17 @@ export class AuthService {
 
       await sendEmailVerification(this.auth.currentUser, actionCodeSettings);
 
-      console.log('✅ Email verification sent successfully');
+      console.log('Email verification sent successfully');
 
       this.toastService.success(
         `Email xác thực đã được gửi đến ${this.auth.currentUser.email}. Kiểm tra hộp thư đến và thư mục spam.`,
-        'Test Email Verification',
-        'top-center',
+        'Test Email Verification'
       );
     } catch (error: any) {
-      console.error('❌ Test email verification failed:', error);
+      console.error('Test email verification failed:', error);
       this.toastService.error(
         `Lỗi gửi email: ${error.message}`,
-        'Test Failed',
-        'top-center',
+        'Có lỗi'
       );
       throw error;
     }
@@ -336,7 +335,6 @@ export class AuthService {
       this.toastService.info(
         `Email xác thực đã được gửi lại đến ${this.auth.currentUser.email}. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
         'Gửi lại email xác thực',
-        'top-center',
       );
     } catch (error: any) {
       console.error('Resend verification error:', error);
@@ -391,6 +389,34 @@ export class AuthService {
       providerId: firebaseUser.providerData[0]?.providerId || 'email',
     };
   }
+
+  /**
+ * Cập nhật thông tin profile cho user hiện tại
+ * @param displayName Tên hiển thị mới
+ * @param photoURL Ảnh đại diện mới (tùy chọn)
+ */
+async updateProfile(displayName: string, photoURL?: string): Promise<void> {
+  const user = this.auth.currentUser;
+  if (!user) {
+    this.toastService.error('Bạn chưa đăng nhập', 'Lỗi cập nhật', 'top-center');
+    throw new Error('Không có user đang đăng nhập');
+  }
+
+  try {
+    this.setLoading(true);
+    await updateProfile(user, { displayName, photoURL });
+    this.toastService.success('Cập nhật thông tin thành công', 'Profile', 'top-center');
+    // Reload lại user để cập nhật state nếu cần
+    const updatedUser = this.mapFirebaseUser(user);
+    this.userSignal.set(updatedUser);
+    this.authState$.next(updatedUser);
+  } catch (error: unknown) {
+    this.handleAuthError(error as Error);
+    throw error;
+  } finally {
+    this.setLoading(false);
+  }
+}
 
   private handleAuthError(error: AuthError | Error): void {
     let errorMessage = 'Đã xảy ra lỗi không xác định';
