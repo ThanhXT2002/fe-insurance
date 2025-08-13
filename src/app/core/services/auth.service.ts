@@ -152,6 +152,7 @@ export class AuthService {
       );
 
       // Tự động đăng xuất để user phải xác thực email trước
+      this.router.navigate(['/login']);
       await this.logout();
     } catch (error: any) {
       console.error('Registration error:', error);
@@ -340,6 +341,7 @@ export class AuthService {
       // Đăng xuất ngay sau khi gửi email xác thực
       await signOut(this.auth);
       this.setLoading(false);
+      this.router.navigate(['/login']);
     }
   }
 
@@ -350,7 +352,7 @@ export class AuthService {
     try {
       this.setLoading(true);
       await signOut(this.auth);
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
