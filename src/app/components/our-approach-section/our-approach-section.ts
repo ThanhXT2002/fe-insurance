@@ -25,7 +25,6 @@ export class OurApproachSection {
         if (data?.data?.length) {
           this.selectedTabKey.set(data.data[0].key);
         }
-        console.log('Our Approach data:', data);
       })
     })
   }

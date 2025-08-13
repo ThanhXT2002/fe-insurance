@@ -25,7 +25,6 @@ export class OurTeamSection {
         if (data?.data?.length) {
           this.selectedTabKey.set(data.data[0].key);
         }
-        console.log('Our Team data:', data);
       })
     })
   }

@@ -57,7 +57,6 @@ export class DrawerHeader implements OnChanges {
   isOpen: Record<number, boolean> = {};
 
   toggleOpen(id: number) {
-    console.log('Toggling:', id);
     this.isOpen[id] = !this.isOpen[id];
   }
 

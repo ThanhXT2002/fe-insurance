@@ -1,14 +1,14 @@
 <div class="bg-auth py-5 lg:py-7 text-white">
   <div class="container-layer h-full flex__middle">
     <div
-      class="flex__middle gap-x-7 flex-col md:flex-row py-7 px-3 md:px-7 rounded-lg lg:rounded-2xl border border-white/40 bg-white/30 backdrop-blur-lg w-full max-w-lg "
+      class="flex__middle gap-x-7 flex-col md:flex-row py-7 px-3 md:px-7 rounded-lg lg:rounded-2xl border border-white/40 bg-white/30 backdrop-blur-lg w-full max-w-lg"
     >
       <div class="w-full flex__middle flex-col">
         <div>
           <app-logo width="w-24" />
         </div>
         <h1 class="text-lg md:text-2xl font-bold text-secondary uppercase mb-4">
-          Quên mật khẩu
+          Xác thực tài khoản
         </h1>
         <div class="w-full max-w-md mx-auto formReset">
           <form
@@ -30,6 +30,22 @@
                 />
               </p-iconfield>
               <label for="email">Email</label>
+            </p-floatlabel>
+
+            <p-floatlabel variant="in" styleClass="w-full">
+              <p-iconfield class="w-full">
+                <p-inputicon class="pi pi-lock" />
+                <p-password
+                  pSize="small"
+                  class="w-full"
+                  formControlName="password"
+                  inputId="password"
+                  [toggleMask]="true"
+                  [feedback]="false"
+                >
+                </p-password>
+              </p-iconfield>
+              <label for="password">Mật khẩu</label>
             </p-floatlabel>
 
             <!-- Submit Button -->
@@ -61,7 +77,7 @@
                 </svg>
                 Đang xử lý...
               } @else {
-                Xác thực email
+                Xác thực ngay
               }
             </button>
           </form>
@@ -73,8 +89,8 @@
           </div>
           <!-- Social Login Buttons -->
           <div class="my-4 w-full">
-          <app-social-login-button />
-        </div>
+            <app-social-login-button />
+          </div>
 
           <div class="text-center">
             <p class="text-sm text-gray-300">

@@ -165,25 +165,6 @@ import { CommonModule } from '@angular/common';
       } @else {
         <!-- Logged In Actions -->
         <div class="space-y-4">
-          @if (authService.user()?.providerId === 'email' && !authService.user()?.emailVerified) {
-            <div class="space-y-2">
-              <button
-                (click)="onResendVerification()"
-                [disabled]="authService.isLoading()"
-                class="w-full bg-yellow-500 text-white p-3 rounded-md hover:bg-yellow-600 disabled:opacity-50"
-              >
-                Gửi lại email xác thực
-              </button>
-              <button
-                (click)="onTestEmailVerification()"
-                [disabled]="authService.isLoading()"
-                class="w-full bg-orange-500 text-white p-3 rounded-md hover:bg-orange-600 disabled:opacity-50"
-              >
-                🧪 Test Email Verification
-              </button>
-            </div>
-          }
-
           <button
             (click)="onGetToken()"
             class="w-full bg-purple-500 text-white p-3 rounded-md hover:bg-purple-600"
@@ -282,21 +263,7 @@ export class AuthDemoComponent {
     }
   }
 
-  async onResendVerification() {
-    try {
-      await this.authService.resendEmailVerification();
-    } catch (error) {
-      console.error('Resend verification error:', error);
-    }
-  }
 
-  async onTestEmailVerification() {
-    try {
-      await this.authService.testSendEmailVerification();
-    } catch (error) {
-      console.error('Test email verification error:', error);
-    }
-  }
 
   async onGetToken() {
     try {

@@ -2,13 +2,14 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { Logo } from "../logo/logo";
 import { CheckItem } from "../check-item/check-item";
 import { RouterLink } from '@angular/router';
+import { SocialLoginButton } from "../social-login-button/social-login-button";
 
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.html',
   styleUrl: './auth-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Logo, CheckItem, RouterLink]
+  imports: [Logo, CheckItem, RouterLink, SocialLoginButton]
 })
 export class AuthLayout {
 
