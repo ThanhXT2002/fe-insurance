@@ -3,6 +3,8 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
   isDevMode,
+  inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import {
   provideRouter,
@@ -31,6 +33,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { MessageService } from 'primeng/api';
+import { isPlatformBrowser } from '@angular/common';
 
 registerSwiperElements();
 export const appConfig: ApplicationConfig = {
@@ -58,8 +61,12 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideAnimations(),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
+    ...(isPlatformBrowser(inject(PLATFORM_ID))
+      ? [
+          provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+          provideAuth(() => getAuth()),
+        ]
+      : []),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     MessageService, // Provider cho PrimeNG Toast
     provideServiceWorker('ngsw-worker.js', {
