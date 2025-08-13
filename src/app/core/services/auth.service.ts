@@ -1,4 +1,5 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import {
   Auth,
@@ -55,6 +56,7 @@ export class AuthService {
   private router = inject(Router);
   private toastService = inject(ToastService);
   private navService = inject(NavigationService);
+  private platformId = inject(PLATFORM_ID);
 
   // Signals for state management
   private readonly userSignal = signal<AuthUser | null>(null);
@@ -72,32 +74,36 @@ export class AuthService {
   readonly isAuthenticated$ = this.authState$.pipe(map((user) => !!user));
 
   constructor() {
-    // Listen to auth state changes
-    onAuthStateChanged(
-      this.auth,
-      (firebaseUser) => {
-        this.loadingSignal.set(true);
+    // Tránh đăng ký listener trên server để giảm treo prerender
+    if (isPlatformBrowser(this.platformId)) {
+      onAuthStateChanged(
+        this.auth,
+        (firebaseUser) => {
+          this.loadingSignal.set(true);
 
-        if (firebaseUser) {
-          const authUser = this.mapFirebaseUser(firebaseUser);
-          console.log('Auth state changed:', authUser);
-          this.userSignal.set(authUser);
-          this.authState$.next(authUser);
-        } else {
-          this.userSignal.set(null);
-          this.authState$.next(null);
-        }
+          if (firebaseUser) {
+            const authUser = this.mapFirebaseUser(firebaseUser);
+            // console.debug('Auth state changed:', authUser);
+            this.userSignal.set(authUser);
+            this.authState$.next(authUser);
+          } else {
+            this.userSignal.set(null);
+            this.authState$.next(null);
+          }
 
-        this.loadingSignal.set(false);
-      },
-      (error) => {
-        // Handle unexpected auth state errors
-        this.errorSignal.set(
-          'Lỗi xác thực: ' + (error?.message ?? 'Không xác định'),
-        );
-        this.loadingSignal.set(false);
-      },
-    );
+            this.loadingSignal.set(false);
+        },
+        (error) => {
+          this.errorSignal.set(
+            'Lỗi xác thực: ' + (error?.message ?? 'Không xác định'),
+          );
+          this.loadingSignal.set(false);
+        },
+      );
+    } else {
+      // Server: không block prerender; đánh dấu đã xong
+      this.loadingSignal.set(false);
+    }
   }
 
   /**
@@ -125,8 +131,8 @@ export class AuthService {
 
       // Cấu hình action code settings cho email verification
       const actionCodeSettings = {
-        url: window.location.origin + '/login?emailVerified=true',
-        handleCodeInApp: false, // Link xác thực sẽ mở trên trình duyệt, xác thực xong mới chuyển về app.
+        url: this.getOrigin() + '/login?emailVerified=true',
+        handleCodeInApp: false,
       };
 
       // Gửi email xác thực với settings
@@ -282,7 +288,7 @@ export class AuthService {
       });
 
       const actionCodeSettings = {
-        url: `${window.location.origin}/login?emailVerified=true`,
+        url: `${this.getOrigin()}/login?emailVerified=true`,
         handleCodeInApp: false,
       };
 
@@ -324,7 +330,7 @@ export class AuthService {
 
       // Cấu hình action code settings
       const actionCodeSettings = {
-        url: window.location.origin + '/login?emailVerified=true',
+        url: this.getOrigin() + '/login?emailVerified=true',
         handleCodeInApp: false,
       };
 
@@ -469,6 +475,17 @@ async updateProfile(displayName: string, photoURL?: string): Promise<void> {
 
   private clearError(): void {
     this.errorSignal.set(null);
+  }
+
+  /**
+   * Lấy origin an toàn cho SSR (tránh tham chiếu window trên server)
+   */
+  private getOrigin(): string {
+    if (isPlatformBrowser(this.platformId) && typeof window !== 'undefined') {
+      return window.location.origin;
+    }
+    // Fallback server – có thể cấu hình qua ENV
+    return 'https://example.com';
   }
 
   toastLoginSuccess() {

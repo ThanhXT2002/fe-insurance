@@ -3,10 +3,6 @@
   "author": "tran_xuan_thanh",
   "email": "tranxuanthanhtxt2002@gmail.com",
   "version": "0.0.1",
-  "overrides": {
-    "@angular/platform-browser-dynamic": "20.1.4",
-    "@angular/core": "20.1.4"
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port=4600 --host=0.0.0.0",
@@ -47,6 +43,7 @@
     "@angular/fire": "20.0.1",
     "@angular/forms": "20.1.4",
     "@angular/platform-browser": "20.1.4",
+    "@angular/platform-browser-dynamic": "20.1.4",
     "@angular/platform-server": "20.1.4",
     "@angular/pwa": "20.1.4",
     "@angular/router": "20.1.4",
@@ -59,7 +56,7 @@
     "@primeuix/themes": "1.2.2",
     "@tailwindcss/postcss": "4.1.11",
     "express": "5.1.0",
-    "firebase": "^12.1.0",
+    "firebase": "11.10.0",
     "primeicons": "7.0.0",
     "primeng": "20.0.1",
     "remixicon": "4.6.0",
