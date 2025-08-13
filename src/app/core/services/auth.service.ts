@@ -13,11 +13,13 @@ import {
   onAuthStateChanged,
   User,
   UserCredential,
-  AuthError
+  AuthError,
 } from '@angular/fire/auth';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToastService } from './toast.service';
+import { Location } from '@angular/common';
+import { NavigationService } from './navigation.service';
 
 // Interfaces
 export interface AuthUser {
@@ -45,12 +47,13 @@ export interface AuthState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private auth = inject(Auth);
   private router = inject(Router);
   private toastService = inject(ToastService);
+  private navService = inject(NavigationService);
 
   // Signals for state management
   private readonly userSignal = signal<AuthUser | null>(null);
@@ -65,24 +68,34 @@ export class AuthService {
 
   // Observable for compatibility with guards/interceptors
   readonly authState$ = new BehaviorSubject<AuthUser | null>(null);
-  readonly isAuthenticated$ = this.authState$.pipe(map(user => !!user));
+  readonly isAuthenticated$ = this.authState$.pipe(map((user) => !!user));
 
   constructor() {
     // Listen to auth state changes
-    onAuthStateChanged(this.auth, (firebaseUser) => {
-      this.loadingSignal.set(true);
+    onAuthStateChanged(
+      this.auth,
+      (firebaseUser) => {
+        this.loadingSignal.set(true);
 
-      if (firebaseUser) {
-        const authUser = this.mapFirebaseUser(firebaseUser);
-        this.userSignal.set(authUser);
-        this.authState$.next(authUser);
-      } else {
-        this.userSignal.set(null);
-        this.authState$.next(null);
-      }
+        if (firebaseUser) {
+          const authUser = this.mapFirebaseUser(firebaseUser);
+          this.userSignal.set(authUser);
+          this.authState$.next(authUser);
+        } else {
+          this.userSignal.set(null);
+          this.authState$.next(null);
+        }
 
-      this.loadingSignal.set(false);
-    });
+        this.loadingSignal.set(false);
+      },
+      (error) => {
+        // Handle unexpected auth state errors
+        this.errorSignal.set(
+          'Lỗi xác thực: ' + (error?.message ?? 'Không xác định'),
+        );
+        this.loadingSignal.set(false);
+      },
+    );
   }
 
   /**
@@ -97,45 +110,36 @@ export class AuthService {
         throw new Error('Mật khẩu không khớp');
       }
 
-      console.log('Starting user registration with email:', credentials.email);
-
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         credentials.email,
-        credentials.password
+        credentials.password,
       );
-
-      console.log('User created successfully:', userCredential.user.uid);
-      console.log('User email verified:', userCredential.user.emailVerified);
 
       // Kiểm tra user có tồn tại trước khi gửi email
       if (!userCredential.user) {
         throw new Error('Không thể tạo user');
       }
 
-      console.log('Sending email verification...');
-
       // Cấu hình action code settings cho email verification
       const actionCodeSettings = {
         url: window.location.origin + '/login?emailVerified=true',
-        handleCodeInApp: false
+        handleCodeInApp: false,// Link xác thực sẽ mở trên trình duyệt, xác thực xong mới chuyển về app.
       };
 
       // Gửi email xác thực với settings
       await sendEmailVerification(userCredential.user, actionCodeSettings);
 
-      console.log('Email verification sent successfully');
 
       // Thông báo cho user check email bằng toast
       this.toastService.success(
         `Email xác thực đã được gửi đến ${credentials.email}. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
         'Đăng ký thành công',
-        'top-center'
+        'top-center',
       );
 
       // Tự động đăng xuất để user phải xác thực email trước
       await this.logout();
-
     } catch (error: any) {
       console.error('Registration error:', error);
       this.handleAuthError(error);
@@ -156,18 +160,26 @@ export class AuthService {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         credentials.email,
-        credentials.password
+        credentials.password,
       );
 
       // Kiểm tra email đã được verify chưa
       if (!userCredential.user.emailVerified) {
-        await this.logout();
-        throw new Error('Email chưa được xác thực. Vui lòng kiểm tra email và xác thực tài khoản.');
+        console.log('Email chưa được xác thực');
+        this.toastService.warn(
+        `Tài khoản này chưa được xác thực. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
+        'Chú ý',
+        'top-center',
+      );
+      await signOut(this.auth);
+      return;
+      // await this.logout();
       }
 
       // Redirect sau khi đăng nhập thành công
-      this.router.navigate(['/']);
-
+      this.toastLoginSuccess();
+      // this.router.navigate(['/']);
+      this.navService.back();
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
@@ -188,12 +200,14 @@ export class AuthService {
       // Thêm scope nếu cần
       provider.addScope('email');
       provider.addScope('profile');
+    provider.setCustomParameters({ prompt: 'select_account' });
+
 
       const userCredential = await signInWithPopup(this.auth, provider);
 
       // Redirect sau khi đăng nhập thành công
-      this.router.navigate(['/']);
-
+      this.toastLoginSuccess();
+      this.navService.back();
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
@@ -216,8 +230,8 @@ export class AuthService {
 
       const userCredential = await signInWithPopup(this.auth, provider);
 
-      // Redirect sau khi đăng nhập thành công
-      this.router.navigate(['/']);
+      this.toastLoginSuccess();
+      this.navService.back();
 
     } catch (error: any) {
       this.handleAuthError(error);
@@ -240,9 +254,8 @@ export class AuthService {
       this.toastService.info(
         'Email reset mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư đến.',
         'Reset mật khẩu',
-        'top-center'
+        'top-center',
       );
-
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
@@ -263,12 +276,12 @@ export class AuthService {
       console.log('Testing email verification for user:', {
         uid: this.auth.currentUser.uid,
         email: this.auth.currentUser.email,
-        emailVerified: this.auth.currentUser.emailVerified
+        emailVerified: this.auth.currentUser.emailVerified,
       });
 
       const actionCodeSettings = {
         url: `${window.location.origin}/login?emailVerified=true`,
-        handleCodeInApp: false
+        handleCodeInApp: false,
       };
 
       console.log('Sending email with settings:', actionCodeSettings);
@@ -280,15 +293,14 @@ export class AuthService {
       this.toastService.success(
         `Email xác thực đã được gửi đến ${this.auth.currentUser.email}. Kiểm tra hộp thư đến và thư mục spam.`,
         'Test Email Verification',
-        'top-center'
+        'top-center',
       );
-
     } catch (error: any) {
       console.error('❌ Test email verification failed:', error);
       this.toastService.error(
         `Lỗi gửi email: ${error.message}`,
         'Test Failed',
-        'top-center'
+        'top-center',
       );
       throw error;
     }
@@ -305,12 +317,15 @@ export class AuthService {
 
       this.setLoading(true);
 
-      console.log('Resending email verification for:', this.auth.currentUser.email);
+      console.log(
+        'Resending email verification for:',
+        this.auth.currentUser.email,
+      );
 
       // Cấu hình action code settings
       const actionCodeSettings = {
         url: window.location.origin + '/login?emailVerified=true',
-        handleCodeInApp: false
+        handleCodeInApp: false,
       };
 
       await sendEmailVerification(this.auth.currentUser, actionCodeSettings);
@@ -320,9 +335,8 @@ export class AuthService {
       this.toastService.info(
         `Email xác thực đã được gửi lại đến ${this.auth.currentUser.email}. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
         'Gửi lại email xác thực',
-        'top-center'
+        'top-center',
       );
-
     } catch (error: any) {
       console.error('Resend verification error:', error);
       this.handleAuthError(error);
@@ -339,7 +353,7 @@ export class AuthService {
     try {
       this.setLoading(true);
       await signOut(this.auth);
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
@@ -386,7 +400,7 @@ export class AuthService {
       displayName: firebaseUser.displayName,
       photoURL: firebaseUser.photoURL,
       emailVerified: firebaseUser.emailVerified,
-      providerId: firebaseUser.providerData[0]?.providerId || 'email'
+      providerId: firebaseUser.providerData[0]?.providerId || 'email',
     };
   }
 
@@ -441,5 +455,9 @@ export class AuthService {
 
   private clearError(): void {
     this.errorSignal.set(null);
+  }
+
+  toastLoginSuccess(){
+    this.toastService.success('Đăng nhập thành công', 'Chào mừng bạn đến với hệ thống');
   }
 }
