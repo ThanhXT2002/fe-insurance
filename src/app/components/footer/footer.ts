@@ -13,7 +13,7 @@ import { AppMenuItem } from '../../core/interfaces/menu.interface';
   templateUrl: './footer.html',
   styleUrl: './footer.scss'
 })
-export class Footer implements OnInit {
+export class Footer  {
   private readonly footerService = inject(FooterService);
   readonly footerData = signal<FooterData | null>(null);
   private platformId = inject(PLATFORM_ID);
@@ -22,13 +22,8 @@ export class Footer implements OnInit {
     effect(() => {
       this.footerService.getFooterData().subscribe((data: FooterData) => {
         this.footerData.set(data);
-        console.log('Footer data:', data);
       });
     });
-  }
-
-  ngOnInit() {
-    console.log('Footer data on init:', this.footerData());
   }
 
   // Helper method để mở link external

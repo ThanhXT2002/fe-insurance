@@ -42,7 +42,7 @@ export class DrawerHeader implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['MenuItems']) {
-      console.log('Drawer Header Menu Items:', this.MenuItems);
+      // console.log('Drawer Header Menu Items:', this.MenuItems);
     }
   }
 

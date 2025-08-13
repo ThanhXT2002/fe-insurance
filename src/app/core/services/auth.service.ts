@@ -79,6 +79,7 @@ export class AuthService {
 
         if (firebaseUser) {
           const authUser = this.mapFirebaseUser(firebaseUser);
+          console.log('Auth state changed:', authUser);
           this.userSignal.set(authUser);
           this.authState$.next(authUser);
         } else {
@@ -124,12 +125,11 @@ export class AuthService {
       // Cấu hình action code settings cho email verification
       const actionCodeSettings = {
         url: window.location.origin + '/login?emailVerified=true',
-        handleCodeInApp: false,// Link xác thực sẽ mở trên trình duyệt, xác thực xong mới chuyển về app.
+        handleCodeInApp: false, // Link xác thực sẽ mở trên trình duyệt, xác thực xong mới chuyển về app.
       };
 
       // Gửi email xác thực với settings
       await sendEmailVerification(userCredential.user, actionCodeSettings);
-
 
       // Thông báo cho user check email bằng toast
       this.toastService.success(
@@ -167,13 +167,13 @@ export class AuthService {
       if (!userCredential.user.emailVerified) {
         console.log('Email chưa được xác thực');
         this.toastService.warn(
-        `Tài khoản này chưa được xác thực. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
-        'Chú ý',
-        'top-center',
-      );
-      await signOut(this.auth);
-      return;
-      // await this.logout();
+          `Tài khoản này chưa được xác thực. Vui lòng kiểm tra hộp thư đến và thư mục spam.`,
+          'Chú ý',
+          'top-center',
+        );
+        await signOut(this.auth);
+        return;
+        // await this.logout();
       }
 
       // Redirect sau khi đăng nhập thành công
@@ -200,10 +200,11 @@ export class AuthService {
       // Thêm scope nếu cần
       provider.addScope('email');
       provider.addScope('profile');
-    provider.setCustomParameters({ prompt: 'select_account' });
-
+      provider.setCustomParameters({ prompt: 'select_account' });
 
       const userCredential = await signInWithPopup(this.auth, provider);
+
+      console.log('Google login successful:', userCredential);
 
       // Redirect sau khi đăng nhập thành công
       this.toastLoginSuccess();
@@ -229,10 +230,10 @@ export class AuthService {
       provider.addScope('email');
 
       const userCredential = await signInWithPopup(this.auth, provider);
+      console.log('face login successful:', userCredential);
 
       this.toastLoginSuccess();
       this.navService.back();
-
     } catch (error: any) {
       this.handleAuthError(error);
       throw error;
@@ -366,37 +367,24 @@ export class AuthService {
    * Lấy ID Token hiện tại để gửi lên backend
    */
   async getCurrentToken(): Promise<string | null> {
-    try {
-      if (!this.auth.currentUser) {
+    const user = this.auth.currentUser;
+    if (user) {
+      try {
+        // forceRefresh = true để đảm bảo token mới nhất
+        return await user.getIdToken(true);
+      } catch (error) {
+        console.error('Error getting ID token:', error);
         return null;
       }
-      return await this.auth.currentUser.getIdToken();
-    } catch (error) {
-      console.error('Error getting token:', error);
-      return null;
     }
-  }
-
-  /**
-   * Refresh token
-   */
-  async refreshToken(): Promise<string | null> {
-    try {
-      if (!this.auth.currentUser) {
-        return null;
-      }
-      return await this.auth.currentUser.getIdToken(true); // Force refresh
-    } catch (error) {
-      console.error('Error refreshing token:', error);
-      return null;
-    }
+    return null;
   }
 
   // Private helper methods
   private mapFirebaseUser(firebaseUser: User): AuthUser {
     return {
       uid: firebaseUser.uid,
-      email: firebaseUser.email,
+      email: firebaseUser.providerData[0]?.email,
       displayName: firebaseUser.displayName,
       photoURL: firebaseUser.photoURL,
       emailVerified: firebaseUser.emailVerified,
@@ -457,7 +445,10 @@ export class AuthService {
     this.errorSignal.set(null);
   }
 
-  toastLoginSuccess(){
-    this.toastService.success('Chào mừng bạn đến với hệ thống','Đăng nhập thành công');
+  toastLoginSuccess() {
+    this.toastService.success(
+      'Chào mừng bạn đến với hệ thống',
+      'Đăng nhập thành công',
+    );
   }
 }
