@@ -6,12 +6,13 @@ import { CommonModule } from '@angular/common';
 import { DrawerHeader } from "./drawer-header/drawer-header";
 import { MenuService } from '../../core/services/api/menu';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
+import { BtnAuthNavigation } from "./btn-auth-navigation/btn-auth-navigation";
 
 
 
 @Component({
   selector: 'app-header',
-  imports: [Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader],
+  imports: [Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader, BtnAuthNavigation],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

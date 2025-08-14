@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Register } from './pages/register/register';
 import { VerifyAccount } from './pages/verify-account/verify-account';
-import { guestGuard } from './core/guards';
+import { authGuard, guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,7 +31,8 @@ export const routes: Routes = [
       },
       {
         path: 'blog/:slug',
-        loadComponent: () => import('./pages/blog-detail/blog-detail').then((m) => m.BlogDetail),
+        loadComponent: () =>
+          import('./pages/blog-detail/blog-detail').then((m) => m.BlogDetail),
         data: { title: 'Chi tiết bài viết' },
       },
       {
@@ -50,34 +51,47 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
         data: { title: 'Đăng nhập' },
-        canActivate: [guestGuard]
+        canActivate: [guestGuard],
       },
       {
         path: 'register',
-        loadComponent: () => import('./pages/register/register').then((m) => m.Register),
+        loadComponent: () =>
+          import('./pages/register/register').then((m) => m.Register),
         data: { title: 'Đăng ký' },
-        canActivate: [guestGuard]
+        canActivate: [guestGuard],
       },
       {
         path: 'reset-password',
-        loadComponent: () => import('./pages/reset-password/reset-password').then((m) => m.ResetPassword),
+        loadComponent: () =>
+          import('./pages/reset-password/reset-password').then(
+            (m) => m.ResetPassword,
+          ),
         data: { title: 'Đặt lại mật khẩu' },
-        canActivate: [guestGuard]
+        canActivate: [guestGuard],
       },
       {
         path: 'verify-account',
-        loadComponent: () => import('./pages/verify-account/verify-account').then((m) => m.VerifyAccount),
+        loadComponent: () =>
+          import('./pages/verify-account/verify-account').then(
+            (m) => m.VerifyAccount,
+          ),
         data: { title: 'Xác minh tài khoản' },
-        canActivate: [guestGuard]
+        canActivate: [guestGuard],
       },
       {
         path: 'auth-demo',
-        loadComponent: () => import('./components/auth-demo/auth-demo.component').then((m) => m.AuthDemoComponent),
+        loadComponent: () =>
+          import('./components/auth-demo/auth-demo.component').then(
+            (m) => m.AuthDemoComponent,
+          ),
         data: { title: 'Auth Demo' },
       },
       {
         path: 'toast-demo',
-        loadComponent: () => import('./components/toast-demo/toast-demo.component').then((m) => m.ToastDemoComponent),
+        loadComponent: () =>
+          import('./components/toast-demo/toast-demo.component').then(
+            (m) => m.ToastDemoComponent,
+          ),
         data: { title: 'Toast Demo' },
       },
 
@@ -112,6 +126,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/profile/profile').then((m) => m.Profile),
         data: { title: 'Hồ sơ' },
+        canActivate: [authGuard],
       },
       {
         path: 'search',
@@ -123,7 +138,7 @@ export const routes: Routes = [
         path: 'settings',
         loadComponent: () =>
           import('./pages/settings/settings').then((m) => m.Settings),
-        data: { title: 'Cài đặt' },
+        data: { title: 'Cài đặt' }
       },
       {
         path: 'terms-of-service',
@@ -169,7 +184,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-
 
 // // Bảo vệ route cần đăng nhập
 // {

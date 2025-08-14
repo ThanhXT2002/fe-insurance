@@ -25,6 +25,7 @@ import {
 } from '@angular/fire/auth';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ToastService } from './toast.service';
 import { Location } from '@angular/common';
 import { NavigationService } from './navigation.service';
@@ -76,41 +77,53 @@ export class AuthService {
   readonly isLoading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
 
-  // Observable for compatibility with guards/interceptors
-  readonly authState$ = new BehaviorSubject<AuthUser | null>(null);
-  readonly isAuthenticated$ = this.authState$.pipe(map((user) => !!user));
+  // Observable for compatibility with guards/interceptors (convert from signal)
+  readonly isAuthenticated$ = toObservable(this.isAuthenticated);
+
+  /**
+   * Kiểm tra trạng thái đăng nhập đồng bộ
+   * @returns boolean - true nếu đã đăng nhập
+   */
+  isLoggedIn(): boolean {
+    return !!this.userSignal();
+  }
 
   constructor() {
     // Tránh đăng ký listener trên server để giảm treo prerender
     if (isPlatformBrowser(this.platformId)) {
-      onAuthStateChanged(
-        this.auth,
-        (firebaseUser) => {
-          this.loadingSignal.set(true);
-
-          if (firebaseUser) {
-            const authUser = this.mapFirebaseUser(firebaseUser);
-            // console.debug('Auth state changed:', authUser);
-            this.userSignal.set(authUser);
-            this.authState$.next(authUser);
-          } else {
-            this.userSignal.set(null);
-            this.authState$.next(null);
-          }
-
-          this.loadingSignal.set(false);
-        },
-        (error) => {
-          this.errorSignal.set(
-            'Lỗi xác thực: ' + (error?.message ?? 'Không xác định'),
-          );
-          this.loadingSignal.set(false);
-        },
-      );
+      this.setupAuthStateListener();
     } else {
       // Server: không block prerender; đánh dấu đã xong
       this.loadingSignal.set(false);
     }
+  }
+
+  /**
+   * Setup Firebase auth state listener
+   */
+  private setupAuthStateListener(): void {
+    onAuthStateChanged(
+      this.auth,
+      (firebaseUser) => {
+        if (firebaseUser) {
+          const authUser = this.mapFirebaseUser(firebaseUser);
+          this.userSignal.set(authUser);
+          console.log('user signal set:', this.userSignal());
+        } else {
+          this.userSignal.set(null);
+        }
+
+        // Auth state đã ổn định
+        this.loadingSignal.set(false);
+        this.clearError(); // Clear error khi auth state ổn định
+      },
+      (error) => {
+        this.errorSignal.set(
+          'Lỗi xác thực: ' + (error?.message ?? 'Không xác định'),
+        );
+        this.loadingSignal.set(false);
+      },
+    );
   }
 
   /**
@@ -284,6 +297,8 @@ export class AuthService {
         'Reset mật khẩu',
         'bottom-center',
       );
+      this.router.navigate(['/login']);
+
     } catch (error: any) {
       this.handleAuthError(error);
       this.toastService.error(
@@ -291,7 +306,6 @@ export class AuthService {
         'Thất bại',
         'bottom-center',
       );
-      throw error;
     } finally {
       this.setLoading(false);
     }
@@ -316,10 +330,10 @@ export class AuthService {
       const user = userCredential.user;
       if (!user) {
         this.toastService.error(
-        'Không thể xác minh với email này. vui lòng liên hệ quản trị viên hoặc trang liên hệ để báo cáo vấn đề.',
-        'Lỗi',
-        'bottom-center',
-      );
+          'Không thể xác minh với email này. Vui lòng liên hệ quản trị viên.',
+          'Lỗi xác thực',
+        );
+        return;
       }
 
       // Gửi email xác thực
@@ -336,7 +350,6 @@ export class AuthService {
       );
     } catch (error: unknown) {
       this.handleAuthError(error as Error);
-      throw error;
     } finally {
       // Đăng xuất ngay sau khi gửi email xác thực
       await signOut(this.auth);
@@ -398,29 +411,22 @@ export class AuthService {
   async updateProfile(displayName: string, photoURL?: string): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) {
-      this.toastService.error(
-        'Bạn chưa đăng nhập',
-        'Lỗi cập nhật',
-      );
+      this.toastService.error('Bạn chưa đăng nhập', 'Lỗi cập nhật');
       throw new Error('Không có user đang đăng nhập');
     }
 
     try {
       this.setLoading(true);
       await updateProfile(user, { displayName, photoURL });
-      this.toastService.success(
-        'Cập nhật thông tin thành công',
-        'Profile',
-      );
+      this.toastService.success('Cập nhật thông tin thành công', 'Profile');
       // Reload lại user để cập nhật state nếu cần
       const updatedUser = this.mapFirebaseUser(user);
       this.userSignal.set(updatedUser);
-      this.authState$.next(updatedUser);
     } catch (error: unknown) {
       this.handleAuthError(error as Error);
       this.toastService.error(
         'Đã có lỗi xảy ra trong quá trình cập nhật thông tin. Vui lòng thử lại sau!',
-        'Thất bại'
+        'Thất bại',
       );
       throw error;
     } finally {
@@ -479,6 +485,21 @@ export class AuthService {
 
   private clearError(): void {
     this.errorSignal.set(null);
+  }
+
+  /**
+   * Kiểm tra user hiện tại có tồn tại không
+   */
+  getCurrentUser(): AuthUser | null {
+    return this.userSignal();
+  }
+
+  /**
+   * Kiểm tra user hiện tại có verified email không
+   */
+  isEmailVerified(): boolean {
+    const user = this.userSignal();
+    return user ? user.emailVerified : false;
   }
 
   /**
