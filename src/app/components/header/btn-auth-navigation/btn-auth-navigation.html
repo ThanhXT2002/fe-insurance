@@ -45,15 +45,25 @@
       @if (isBoxUpdateInfo) {
         <div
           @slideUpDown
-          class="w-full border border-gray-400/80 py-5 px-2 rounded-md"
+          class="w-full border border-gray-400/80 py-5 px-2 rounded-md relative"
         >
+          <button
+            (click)="handleShowBoxUpdateInfo()"
+            class="absolute top-0 right-0 w-8 h-8 rounded-full hover:bg-gray-100 flex__middle"
+          >
+            <i class="pi pi-times"></i>
+          </button>
           <form [formGroup]="updateForm" class="space-y-6">
             <div class="flex__middle">
               <img
-                [src]="imageUrl()"
-                (error)="handleImageError()"
-                class="w-36 h-36 rounded-full border-2 border-secondary overflow-hidden"
+                [src]="
+                  updateForm.get('photoURL')?.value ||
+                  'assets/images/avatar-default.webp'
+                "
+                (error)="imgError()"
+                class="w-36 h-36 rounded-full border-2 border-secondary overflow-hidden cursor-pointer"
                 [alt]="authService.userSignal()?.email"
+                (click)="onAvatarClick()"
               />
             </div>
             <p-floatlabel variant="in">
@@ -71,17 +81,21 @@
               <label for="displayName">Tên mới</label>
             </p-floatlabel>
 
-            <input type="hidden" formControlName="photoURL">
+            <input type="hidden" formControlName="photoURL" />
           </form>
         </div>
       }
 
       <button
-        (click)="handleShowBoxUpdateInfo()"
+        (click)="handleUpdateNow()"
         class="rounded-md w-full py-2 border border-primary text-primary hover:bg-secondary hover:text-white"
       >
         <i class="pi pi-pen-to-square mr-3"></i>
-        Cập nhật thông tin
+        @if (isBoxUpdateInfo) {
+          Cập nhật ngay
+        } @else {
+          Cập nhật thông tin
+        }
       </button>
       <button
         (click)="handleLogout()"
