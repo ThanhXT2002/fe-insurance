@@ -67,7 +67,7 @@ export class AuthService {
   private platformId = inject(PLATFORM_ID);
 
   // Signals for state management
-  private readonly userSignal = signal<AuthUser | null>(null);
+  public readonly userSignal = signal<AuthUser | null>(null);
   private readonly loadingSignal = signal<boolean>(true);
   private readonly errorSignal = signal<string | null>(null);
 

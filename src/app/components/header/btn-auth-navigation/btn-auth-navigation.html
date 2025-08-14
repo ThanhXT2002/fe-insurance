@@ -1,7 +1,95 @@
-<button
-  routerLink="/login"
-  routerLinkActive="active"
-  class="hidden lg:block border-2 border-secondary rounded-full w-8 h-8 flex__middle hover:text-green-700 font-medium"
->
-  <i class="ri-user-3-line text-xl"></i>
-</button>
+<div class="w-8 h-8 rounded-full hover:drop-shadow-xl">
+  @if (authService.isLoggedIn()) {
+    <div class="w-full h-full" (click)="handleShowProfile()">
+      <img
+        [src]="imageUrl()"
+        (error)="handleImageError()"
+        class="w-8 h-8 rounded-full border-2 border-secondary overflow-hidden"
+        [alt]="authService.userSignal()?.email"
+      />
+    </div>
+  } @else {
+    <button
+      routerLink="/login"
+      routerLinkActive="active"
+      class="border-2 border-secondary rounded-full w-8 h-8 flex__middle hover:text-green-700 font-medium"
+    >
+      <i class="ri-user-3-line text-xl"></i>
+    </button>
+  }
+</div>
+
+<p-drawer [(visible)]="isShowProfile" [blockScroll]="true" position="right">
+  <ng-template #header>
+    <div class="flex flex-col gap-2">
+      <p-avatar
+        [image]="
+          authService.userSignal()?.photoURL ??
+          'assets/images/avatar-default.webp'
+        "
+        class="w-12 h-12 border-2 border-secondary"
+        size="large"
+        shape="circle"
+      />
+      <div>
+        @if (authService.userSignal()?.displayName) {
+          <p class="text-sm">{{ authService.userSignal()?.displayName }}</p>
+        }
+        <p class="text-sm">{{ authService.userSignal()?.email }}</p>
+      </div>
+    </div>
+  </ng-template>
+  <div class=""></div>
+  <ng-template #footer>
+    <div class="flex flex-col items-center gap-2">
+      @if (isBoxUpdateInfo) {
+        <div
+          @slideUpDown
+          class="w-full border border-gray-400/80 py-5 px-2 rounded-md"
+        >
+          <form [formGroup]="updateForm" class="space-y-6">
+            <div class="flex__middle">
+              <img
+                [src]="imageUrl()"
+                (error)="handleImageError()"
+                class="w-36 h-36 rounded-full border-2 border-secondary overflow-hidden"
+                [alt]="authService.userSignal()?.email"
+              />
+            </div>
+            <p-floatlabel variant="in">
+              <p-iconfield>
+                <p-inputicon class="pi pi-user-edit" />
+                <input
+                  pInputText
+                  id="displayName"
+                  formControlName="displayName"
+                  autocomplete="off"
+                  pSize="small"
+                  class="w-full"
+                />
+              </p-iconfield>
+              <label for="displayName">Tên mới</label>
+            </p-floatlabel>
+
+            <input type="hidden" formControlName="photoURL">
+          </form>
+        </div>
+      }
+
+      <button
+        (click)="handleShowBoxUpdateInfo()"
+        class="rounded-md w-full py-2 border border-primary text-primary hover:bg-secondary hover:text-white"
+      >
+        <i class="pi pi-pen-to-square mr-3"></i>
+        Cập nhật thông tin
+      </button>
+      <button
+        (click)="handleLogout()"
+        class="rounded-md w-full py-2 border border-red-500 text-red-500 hover:bg-red-200/50"
+      >
+        <i class="pi pi-sign-out mr-3"></i>
+        Đăng xuất
+      </button>
+    </div>
+  </ng-template>
+</p-drawer>
