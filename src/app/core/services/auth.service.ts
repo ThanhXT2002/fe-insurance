@@ -22,6 +22,8 @@ import {
   UserCredential,
   AuthError,
   updateProfile,
+  signInWithRedirect,
+  getRedirectResult,
 } from '@angular/fire/auth';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -92,6 +94,17 @@ export class AuthService {
     // Tránh đăng ký listener trên server để giảm treo prerender
     if (isPlatformBrowser(this.platformId)) {
       this.setupAuthStateListener();
+
+      // Xử lý kết quả đăng nhập redirect (Facebook/Google)
+      getRedirectResult(this.auth)
+        .then((result) => {
+          if (result?.user) {
+            console.log('Redirect login successful:', result);
+          }
+        })
+        .catch((error) => {
+          this.handleAuthError(error);
+        });
     } else {
       // Server: không block prerender; đánh dấu đã xong
       this.loadingSignal.set(false);
@@ -232,7 +245,7 @@ export class AuthService {
       provider.addScope('profile');
       provider.setCustomParameters({ prompt: 'select_account' });
 
-      const userCredential = await signInWithPopup(this.auth, provider);
+      const userCredential = await signInWithRedirect(this.auth, provider);
 
       console.log('Google login successful:', userCredential);
 
@@ -261,12 +274,14 @@ export class AuthService {
       this.clearError();
 
       const provider = new FacebookAuthProvider();
-      // Thêm scope nếu cần
       provider.addScope('email');
 
-      const userCredential = await signInWithPopup(this.auth, provider);
-      console.log('face login successful:', userCredential);
-
+      this.toastService.info(
+        'Đang chuyển hướng sang Facebook để đăng nhập...',
+        'Đang chuyển hướng',
+        'bottom-center',
+      );
+      await signInWithRedirect(this.auth, provider);
       this.toastLoginSuccess();
       this.navService.back();
     } catch (error: any) {
@@ -298,7 +313,6 @@ export class AuthService {
         'bottom-center',
       );
       this.router.navigate(['/login']);
-
     } catch (error: any) {
       this.handleAuthError(error);
       this.toastService.error(
