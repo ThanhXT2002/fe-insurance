@@ -275,12 +275,6 @@ export class AuthService {
 
       const provider = new FacebookAuthProvider();
       provider.addScope('email');
-
-      this.toastService.info(
-        'Đang chuyển hướng sang Facebook để đăng nhập...',
-        'Đang chuyển hướng',
-        'bottom-center',
-      );
       await signInWithRedirect(this.auth, provider);
       this.toastLoginSuccess();
       this.navService.back();
