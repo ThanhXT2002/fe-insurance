@@ -18,7 +18,9 @@ import { DividerModule } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { AuthService } from '@/core/services/auth.service';
-
+import { registerDTO } from '@/core/interfaces/user.interface';
+import { MessageService } from 'primeng/api';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +44,7 @@ import { AuthService } from '@/core/services/auth.service';
 export class Register {
   private fb = inject(FormBuilder);
   readonly authService = inject(AuthService);
+  private messageService = inject(MessageService);
 
   registerForm: FormGroup;
   isSubmitting = signal(false);
@@ -72,16 +75,36 @@ export class Register {
     if (this.registerForm.valid) {
       this.isSubmitting.set(true);
       // Lấy dữ liệu đăng ký từ form, đảm bảo đúng kiểu
-      // const credentials = this.registerForm.value as RegisterCredentials;
-      try {
-        // Gọi API đăng ký
-        // await this.authService.registerWithEmail(credentials);
-      } catch (error: unknown) {
-        console.error('Register error:', error);
-      } finally {
-        // Luôn reset trạng thái submitting sau khi xử lý xong
-        this.isSubmitting.set(false);
-      }
+      const credentials = this.registerForm.value;
+      delete credentials.confirmPassword; // Loại bỏ confirmPassword không cần thiết
+      console.log('Register credentials:', credentials);
+
+      // Gọi API đăng ký, dùng finalize để đảm bảo isSubmitting được reset
+      this.authService
+        .register(credentials)
+        .pipe(finalize(() => this.isSubmitting.set(false)))
+        .subscribe({
+          next: (response) => {
+            console.log('Register success:', response);
+            // Hiển thị thông báo thành công
+            this.messageService.add({
+              severity: 'success',
+              summary: response.message || 'Đăng ký thành công!',
+            });
+          },
+          error: (err) => {
+            console.error('Register error:', err);
+            // Hiển thị thông báo lỗi
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Đăng ký thất bại!',
+              detail:
+                err?.error?.errors?.message ||
+                err?.error?.errors ||
+                'Vui lòng thử lại.',
+            });
+          },
+        });
     } else {
       // Nếu form không hợp lệ, đánh dấu tất cả các trường là touched để hiển thị lỗi
       this.registerForm.markAllAsTouched();

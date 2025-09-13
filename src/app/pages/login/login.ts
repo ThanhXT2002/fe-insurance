@@ -68,7 +68,11 @@ export class Login {
       const { data, error } = await this.authService.signIn(email, password);
 
       if (error) {
-        showMessage('error', error.message || 'Đăng nhập thất bại');
+        if (error.code == "invalid_credentials") {
+          showMessage('error', 'Email hoặc mật khẩu không đúng');
+        } else {
+          showMessage('error', 'Đăng nhập thất bại');
+        }
         return;
       }
 
@@ -87,7 +91,7 @@ export class Login {
         showMessage('error', 'Không load được profile');
       }
     } catch (err: any) {
-      showMessage('error', err?.message || 'Lỗi khi đăng nhập');
+      showMessage('error', 'Lỗi khi đăng nhập');
     } finally {
       this.isSubmitting.set(false);
     }

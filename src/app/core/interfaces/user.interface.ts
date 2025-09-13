@@ -13,3 +13,11 @@ export interface updateProfile{
   name:string
   addresses:string
 }
+
+
+export interface registerDTO{
+  email:string
+  password:string
+}
+
+

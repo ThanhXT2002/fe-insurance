@@ -29,6 +29,14 @@ export const loginGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
   const authStore = inject(AuthStore);
 
+  // Allow password recovery routes even if a session/token exists because
+  // Supabase may create a temporary session during redirect from the email link.
+  const targetUrl = state.url || '';
+  const isRecoveryRoute =
+    targetUrl.includes('/reset-password') ||
+    targetUrl.includes('/forgot-password');
+  if (isRecoveryRoute) return true;
+
   const profile = authStore.profile();
   if (profile) {
     router.navigate(['/']);

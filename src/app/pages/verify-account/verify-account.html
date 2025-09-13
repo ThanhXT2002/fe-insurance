@@ -8,8 +8,22 @@
           <app-logo width="w-24" />
         </div>
         <h1 class="text-lg md:text-2xl font-bold text-secondary uppercase mb-4">
-          Xác thực tài khoản
+          @if (mode === "verify") {
+            Xác thực tài khoản
+          } @else {
+            Đặt lại mật khẩu
+          }
         </h1>
+        <p class="mb-4 text-sm text-gray-50 max-w-md mx-auto text-center">
+          @if (mode === "verify") {
+            Nhập email của bạn để gửi lại liên kết xác thực. Nếu không thấy
+            email, vui lòng kiểm tra mục spam.
+          } @else {
+            Nhập email của bạn để nhận liên kết đặt lại mật khẩu. Sau khi nhận
+            email, làm theo hướng dẫn để thay đổi mật khẩu của bạn.
+          }
+        </p>
+
         <div class="w-full max-w-md mx-auto formReset">
           <form
             [formGroup]="verifyForm"
@@ -24,28 +38,12 @@
                   id="email"
                   [pAutoFocus]="true"
                   formControlName="email"
-                  autocomplete="off"
+                  autocomplete="on"
                   pSize="small"
                   class="w-full"
                 />
               </p-iconfield>
               <label for="email">Email</label>
-            </p-floatlabel>
-
-            <p-floatlabel variant="in" styleClass="w-full">
-              <p-iconfield class="w-full">
-                <p-inputicon class="pi pi-lock" />
-                <p-password
-                  pSize="small"
-                  class="w-full"
-                  formControlName="password"
-                  inputId="password"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                >
-                </p-password>
-              </p-iconfield>
-              <label for="password">Mật khẩu</label>
             </p-floatlabel>
 
             <!-- Submit Button -->
@@ -77,7 +75,11 @@
                 </svg>
                 Đang xử lý...
               } @else {
-                Xác thực ngay
+                @if (mode === "verify") {
+                  Gửi email xác thực
+                } @else {
+                  Gửi liên kết đặt lại mật khẩu
+                }
               }
             </button>
           </form>

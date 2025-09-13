@@ -68,6 +68,15 @@ export const routes: Routes = [
         canActivate: [loginGuard],
       },
       {
+        path: 'forgot-password',
+        loadComponent: () =>
+          import('./pages/verify-account/verify-account').then(
+            (m) => m.VerifyAccount,
+          ),
+        data: { title: 'Đặt lại mật khẩu' },
+        canActivate: [loginGuard],
+      },
+      {
         path: 'verify-account',
         loadComponent: () =>
           import('./pages/verify-account/verify-account').then(

@@ -46,7 +46,7 @@
       @if (isBoxUpdateInfo) {
         <div
           @slideUpDown
-          class="w-full border border-gray-400/80 py-5 px-2 rounded-md relative"
+          class="w-full border border-gray-400/80 py-3 px-2 rounded-md relative"
         >
           <button
             (click)="handleShowBoxUpdateInfo()"
@@ -54,7 +54,7 @@
           >
             <i class="pi pi-times"></i>
           </button>
-          <div class="flex__middle mb-5">
+          <div class="flex__middle mb-3">
             <img
               [src]="displayAvatar"
               class="w-36 h-36 rounded-full overflow-hidden object-cover cursor-pointer"
@@ -64,7 +64,7 @@
             />
           </div>
           <form [formGroup]="updateForm">
-            <p-floatlabel variant="in" class="mb-5">
+            <p-floatlabel variant="in" class="mb-3">
               <p-iconfield>
                 <p-inputicon class="pi pi-user-edit" />
                 <input
@@ -79,7 +79,7 @@
               <label for="name">Tên mới</label>
             </p-floatlabel>
 
-            <p-floatlabel variant="in" class="mb-5">
+            <p-floatlabel variant="in" class="mb-3">
               <p-iconfield>
                 <p-inputicon class="pi pi-user-edit" />
                 <input
