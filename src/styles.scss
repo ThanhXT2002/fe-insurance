@@ -29,13 +29,30 @@
 }
 
 @layer base {
+  /* Global reset to avoid unexpected horizontal overflow */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    /* prevent very long words/elements from forcing horizontal scroll */
+    min-width: 0;
+  }
+
+  /* Apply no horizontal overflow site-wide. Include common SPA roots. */
+  html,
+  body,
+  app-root,
+  #root,
+  #__next {
+    overflow-x: hidden;
+  }
+
   html {
     /* Smooth scroll cho toàn bộ website */
     scroll-behavior: smooth;
 
     /* Tối ưu scroll performance cho tất cả browsers */
     -webkit-overflow-scrolling: touch; /* iOS Safari */
-    overflow-x: hidden; /* Ngăn horizontal scroll */
 
     /* Tăng hiệu suất scroll */
     scroll-padding-top: var(--header-height, 52px);
@@ -45,12 +62,32 @@
   }
 
   body {
+    margin: 0; /* Remove default body margin that can create whitespace */
+    max-width: 100%;
     font-family: "Open Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .container-layer {
     @apply max-w-7xl px-3 md:px-5 lg:px-3  mx-auto;
   }
+}
+
+/* Ensure media do not overflow horizontally */
+img,
+picture,
+video,
+iframe,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utility to explicitly disable horizontal scroll on any element */
+.no-horizontal-scroll {
+  overflow-x: hidden !important;
 }
 @layer components {
   @keyframes move-x {
