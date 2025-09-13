@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { Register } from './pages/register/register';
-import { VerifyAccount } from './pages/verify-account/verify-account';
-import { authGuard, guestGuard } from './core/guards/auth.guard';
+import { authGuard, loginGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -51,14 +49,14 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
         data: { title: 'Đăng nhập' },
-        canActivate: [guestGuard],
+        canActivate: [loginGuard],
       },
       {
         path: 'register',
         loadComponent: () =>
           import('./pages/register/register').then((m) => m.Register),
         data: { title: 'Đăng ký' },
-        canActivate: [guestGuard],
+        canActivate: [loginGuard],
       },
       {
         path: 'reset-password',
@@ -67,7 +65,7 @@ export const routes: Routes = [
             (m) => m.ResetPassword,
           ),
         data: { title: 'Đặt lại mật khẩu' },
-        canActivate: [guestGuard],
+        canActivate: [loginGuard],
       },
       {
         path: 'verify-account',
@@ -76,15 +74,7 @@ export const routes: Routes = [
             (m) => m.VerifyAccount,
           ),
         data: { title: 'Xác minh tài khoản' },
-        canActivate: [guestGuard],
-      },
-      {
-        path: 'auth-demo',
-        loadComponent: () =>
-          import('./components/auth-demo/auth-demo.component').then(
-            (m) => m.AuthDemoComponent,
-          ),
-        data: { title: 'Auth Demo' },
+        canActivate: [loginGuard],
       },
       {
         path: 'toast-demo',
@@ -184,24 +174,3 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-
-// // Bảo vệ route cần đăng nhập
-// {
-//   path: 'profile',
-//   component: ProfileComponent,
-//   canActivate: [authGuard]
-// }
-
-// // Route cho guest only
-// {
-//   path: 'login',
-//   component: LoginComponent,
-//   canActivate: [guestGuard]
-// }
-
-// // Route cần email verification
-// {
-//   path: 'dashboard',
-//   component: DashboardComponent,
-//   canActivate: [emailVerificationGuard]
-// }

@@ -17,10 +17,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { DividerModule } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import {
-  AuthService,
-  RegisterCredentials,
-} from '../../core/services/auth.service';
+import { AuthService } from '@/core/services/auth.service';
+
 
 @Component({
   selector: 'app-register',
@@ -74,10 +72,10 @@ export class Register {
     if (this.registerForm.valid) {
       this.isSubmitting.set(true);
       // Lấy dữ liệu đăng ký từ form, đảm bảo đúng kiểu
-      const credentials = this.registerForm.value as RegisterCredentials;
+      // const credentials = this.registerForm.value as RegisterCredentials;
       try {
         // Gọi API đăng ký
-        await this.authService.registerWithEmail(credentials);
+        // await this.authService.registerWithEmail(credentials);
       } catch (error: unknown) {
         console.error('Register error:', error);
       } finally {

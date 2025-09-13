@@ -1,11 +1,11 @@
 <div class="w-8 h-8 rounded-full hover:drop-shadow-xl">
-  @if (authService.isLoggedIn()) {
+  @if (isLogined()) {
     <div class="w-full h-full" (click)="handleShowProfile()">
       <img
-        [src]="imageUrl()"
+        [src]="avatarUrl"
         (error)="handleImageError()"
         class="w-8 h-8 rounded-full border-2 border-secondary overflow-hidden"
-        [alt]="authService.userSignal()?.email"
+        (error)="handleImageError()"
       />
     </div>
   } @else {
@@ -22,24 +22,26 @@
 <p-drawer [(visible)]="isShowProfile" [blockScroll]="true" position="right">
   <ng-template #header>
     <div class="flex flex-col gap-2">
-      <p-avatar
-        [image]="
-          authService.userSignal()?.photoURL ??
-          'assets/images/avatar-default.webp'
-        "
-        class="w-12 h-12 border-2 border-secondary"
+      <img
+        [src]="avatarUrl"
+        class="!h-12 !w-12 object-cover rounded-full"
         size="large"
-        shape="circle"
+        alt=""
+        (error)="handleImageError()"
       />
       <div>
-        @if (authService.userSignal()?.displayName) {
-          <p class="text-sm">{{ authService.userSignal()?.displayName }}</p>
+        @if (authStore.profile()?.name) {
+          <p class="!mb-0">{{ authStore.profile()?.name }}</p>
         }
-        <p class="text-sm">{{ authService.userSignal()?.email }}</p>
+        <p class="">{{ authStore.profile()?.email }}</p>
       </div>
     </div>
   </ng-template>
-  <div class=""></div>
+  <div class="h-full flex__middle">
+    @if (uploading()) {
+      <i class="pi pi-spinner-dotted !text-3xl animate-spin"></i>
+    }
+  </div>
   <ng-template #footer>
     <div class="flex flex-col items-center gap-2">
       @if (isBoxUpdateInfo) {
@@ -53,42 +55,67 @@
           >
             <i class="pi pi-times"></i>
           </button>
-          <form [formGroup]="updateForm" class="space-y-6">
-            <div class="flex__middle">
-              <img
-                [src]="
-                  updateForm.get('photoURL')?.value ||
-                  'assets/images/avatar-default.webp'
-                "
-                (error)="imgError()"
-                class="w-36 h-36 rounded-full border-2 border-secondary overflow-hidden cursor-pointer"
-                [alt]="authService.userSignal()?.email"
-                (click)="onAvatarClick()"
-              />
-            </div>
-            <p-floatlabel variant="in">
+          <div class="flex__middle mb-5">
+            <img
+              [src]="displayAvatar"
+              class="w-36 h-36 rounded-full overflow-hidden object-cover cursor-pointer"
+              [alt]="authStore.profile()?.email"
+              (click)="onAvatarClick()"
+              (error)="handleImageError()"
+            />
+          </div>
+          <form [formGroup]="updateForm">
+            <p-floatlabel variant="in" class="mb-5">
               <p-iconfield>
                 <p-inputicon class="pi pi-user-edit" />
                 <input
                   pInputText
-                  id="displayName"
-                  formControlName="displayName"
+                  id="name"
+                  formControlName="name"
                   autocomplete="off"
                   pSize="small"
                   class="w-full"
                 />
               </p-iconfield>
-              <label for="displayName">Tên mới</label>
+              <label for="name">Tên mới</label>
             </p-floatlabel>
 
-            <input type="hidden" formControlName="photoURL" />
+            <p-floatlabel variant="in" class="mb-5">
+              <p-iconfield>
+                <p-inputicon class="pi pi-user-edit" />
+                <input
+                  pInputText
+                  id="phoneNumber"
+                  formControlName="phoneNumber"
+                  autocomplete="off"
+                  pSize="small"
+                  class="w-full"
+                />
+              </p-iconfield>
+              <label for="phoneNumber">Số điện thoại</label>
+            </p-floatlabel>
+
+            <p-floatlabel variant="in">
+              <p-iconfield>
+                <p-inputicon class="pi pi-building-columns" />
+                <input
+                  pInputText
+                  id="addresses"
+                  formControlName="addresses"
+                  autocomplete="off"
+                  pSize="small"
+                  class="w-full"
+                />
+              </p-iconfield>
+              <label for="addresses">Địa chỉ</label>
+            </p-floatlabel>
           </form>
         </div>
       }
 
       <button
         (click)="handleUpdateNow()"
-        class="rounded-md w-full py-2 border border-primary text-primary hover:bg-secondary hover:text-white"
+        class="rounded-md w-full py-2 border border-primary text-primary hover:bg-primary hover:text-white"
       >
         <i class="pi pi-pen-to-square mr-3"></i>
         @if (isBoxUpdateInfo) {

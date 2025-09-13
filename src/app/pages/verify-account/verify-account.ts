@@ -53,22 +53,22 @@ export class VerifyAccount {
   isSubmitting = signal(false);
 
   onSubmit() {
-    if (this.verifyForm.valid) {
-      this.isSubmitting.set(true);
-      this.authService
-        .sendVerification(this.verifyForm.value)
-        .then(() => {
-          // Có thể reset form hoặc chuyển hướng nếu muốn
-          this.verifyForm.reset();
-        })
-        .catch(() => {
-          // Xử lý lỗi nếu cần
-        })
-        .finally(() => {
-          this.isSubmitting.set(false);
-        });
-    } else {
-      this.verifyForm.markAllAsTouched();
-    }
+    // if (this.verifyForm.valid) {
+    //   this.isSubmitting.set(true);
+    //   this.authService
+    //     .sendVerification(this.verifyForm.value)
+    //     .then(() => {
+    //       // Có thể reset form hoặc chuyển hướng nếu muốn
+    //       this.verifyForm.reset();
+    //     })
+    //     .catch(() => {
+    //       // Xử lý lỗi nếu cần
+    //     })
+    //     .finally(() => {
+    //       this.isSubmitting.set(false);
+    //     });
+    // } else {
+    //   this.verifyForm.markAllAsTouched();
+    // }
   }
 }

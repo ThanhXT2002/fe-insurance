@@ -13,7 +13,7 @@ export class SocialLoginButton {
 
   async onLoginGoogle() {
     try {
-      await this.authService.loginWithGoogle();
+      // await this.authService.loginWithGoogle();
     } catch (error) {
       console.error('Google login error:', error);
     }
@@ -21,7 +21,7 @@ export class SocialLoginButton {
 
   async onLoginfacebook() {
     try {
-      await this.authService.loginWithFacebook();
+      // await this.authService.loginWithFacebook();
     } catch (error) {
       console.error('Facebook login error:', error);
     }

@@ -1,88 +1,46 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { map, take, filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { combineLatest } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { AuthStore } from '../store/auth/auth.store';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+export const authGuard: CanActivateFn = async (route, state) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    const authStore = inject(AuthStore);
 
-  // Đợi auth state ổn định (không loading) trước khi quyết định
-  return combineLatest([
-    authService.isAuthenticated$,
-    toObservable(authService.isLoading)
-  ]).pipe(
-    filter(([_, isLoading]) => !isLoading), // Chỉ proceed khi không loading
-    take(1),
-    map(([isAuthenticated, _]) => {
-      if (isAuthenticated) {
+    // Prefer store (sync) to avoid extra I/O
+    const profile = authStore.profile();
+    if (profile) return true;
+
+    // Fallback to Supabase user check (preserve existing behavior and refresh token)
+    const user = await authService.getUser();
+    if (user) {
+        // trigger forced refresh of profile in background to ensure store is populated
+        authStore.loadProfile(true).catch(() => {});
         return true;
-      } else {
-        // Redirect về login page nếu chưa đăng nhập
-        router.navigate(['/login'], {
-          queryParams: { returnUrl: state.url },
-        });
-        return false;
-      }
-    }),
-  );
+    }
+
+    router.navigate(['/auth/login']);
+    return false;
 };
 
-export const guestGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+export const loginGuard: CanActivateFn = async (route, state) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    const authStore = inject(AuthStore);
 
-  // Đợi auth state ổn định trước khi quyết định
-  return combineLatest([
-    authService.isAuthenticated$,
-    toObservable(authService.isLoading)
-  ]).pipe(
-    filter(([_, isLoading]) => !isLoading), // Chỉ proceed khi không loading
-    take(1),
-    map(([isAuthenticated, _]) => {
-      if (isAuthenticated) {
-        // Nếu đã đăng nhập, redirect về trang chủ
+    const profile = authStore.profile();
+    if (profile) {
         router.navigate(['/']);
         return false;
-      }
-      return true;
-    }),
-  );
-};
+    }
 
-/**
- * Guard yêu cầu user phải đăng nhập VÀ đã verify email
- */
-export const emailVerificationGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-
-  return combineLatest([
-    authService.isAuthenticated$,
-    toObservable(authService.isLoading)
-  ]).pipe(
-    filter(([_, isLoading]) => !isLoading),
-    take(1),
-    map(([isAuthenticated, _]) => {
-      if (!isAuthenticated) {
-        // Chưa đăng nhập
-        router.navigate(['/login'], {
-          queryParams: { returnUrl: state.url },
-        });
+    const user = await authService.getUser();
+    if (user) {
+        router.navigate(['/']);
+        // load profile in background
+        authStore.loadProfile().catch(() => {});
         return false;
-      }
-
-      if (!authService.isEmailVerified()) {
-        // Đã đăng nhập nhưng chưa verify email
-        router.navigate(['/verify-account'], {
-          queryParams: { returnUrl: state.url },
-        });
-        return false;
-      }
-
-      return true;
-    }),
-  );
+    }
+    return true;
 };

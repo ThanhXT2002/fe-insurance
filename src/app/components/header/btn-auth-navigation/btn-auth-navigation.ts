@@ -17,11 +17,13 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
+import { AuthStore } from '@/core/store/auth/auth.store';
+import { AuthApiService } from '@/core/store/auth/auth.api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-btn-auth-navigation',
   imports: [
-    RouterLink,
     AvatarModule,
     DrawerModule,
     ButtonModule,
@@ -34,6 +36,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     FloatLabelModule,
     CommonModule,
+    RouterLink,
   ],
   templateUrl: './btn-auth-navigation.html',
   styleUrl: './btn-auth-navigation.scss',
@@ -56,53 +59,110 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class BtnAuthNavigation {
-  private fb = inject(FormBuilder);
+  authStore = inject(AuthStore);
+  authApiService = inject(AuthApiService);
   authService = inject(AuthService);
+  private messageService = inject(MessageService);
+  readonly isLogined = computed(() => !!this.authService.user());
+
+  // Preview / optimistic UI signals
+  private previewAvatar = signal<string | null>(null);
+  uploading = signal(false);
+
+  get avatarUrl(): string | undefined {
+    const profile = this.authStore.profile();
+    return profile?.avatarUrl ?? 'assets/images/avatar-default.webp';
+  }
+
+  // Displayed avatar: preview when available, otherwise store avatar
+  get displayAvatar(): string {
+    return this.previewAvatar() ?? this.avatarUrl!;
+  }
+
+  private fb = inject(FormBuilder);
+
   isShowProfile: boolean = false;
   isBoxUpdateInfo: boolean = false;
-
-  isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
-  }
 
   updateForm!: FormGroup;
 
   constructor() {
-  this.updateForm = this.fb.group({
-    displayName: ['', [Validators.required]],
-    photoURL: ['assets/images/avatar-default.webp'],
-  });
+    this.updateForm = this.fb.group({
+      name: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
+      addresses: [''],
+    });
 
-  effect(() => {
-    const user = this.authService.userSignal();
-    if (user) {
-      this.updateForm.patchValue({
-        displayName: user.displayName ?? '',
-        photoURL: user.photoURL ?? 'assets/images/avatar-default.webp',
-      });
-      if (user.photoURL) {
-        this.hasImageError.set(false);
+    effect(() => {
+      const user = this.authStore.profile();
+      if (user) {
+        this.updateForm.patchValue({
+          name: user.name ?? '',
+          phoneNumber: user.phoneNumber ?? '',
+          addresses: user.addresses,
+        });
+        if (user.avatarUrl) {
+          this.hasImageError.set(false);
+        }
       }
-    }
-  });
-}
+    });
+  }
+
 
   onAvatarClick(): void {
+    if (this.uploading()) return; // prevent concurrent uploads
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
     input.onchange = (event: any) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          const result = e.target.result;
-          this.updateForm
-            .get('photoURL')
-            ?.setValue(result || 'assets/images/avatar-default.webp');
-        };
-        reader.readAsDataURL(file);
-      }
+      const file: File = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const oldAvatarUrl = this.avatarUrl;
+
+      // create preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const previewUrl = e.target.result as string;
+        this.previewAvatar.set(previewUrl);
+        this.uploading.set(true);
+
+        // call API to upload
+        this.authApiService.updateAvatar(file).subscribe({
+          next: (res) => {
+            this.uploading.set(false);
+            if (res.status && res.data) {
+              // update store with server profile (authoritative)
+              this.authStore.setProfile(res.data);
+              // clear preview so displayAvatar reads from store
+              this.previewAvatar.set(null);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Cập nhật avatar thành công',
+              });
+            } else {
+              // revert preview
+              this.previewAvatar.set(null);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Cập nhật avatar thất bại',
+                detail: res?.message || 'Vui lòng thử lại',
+              });
+            }
+          },
+          error: (err) => {
+            this.uploading.set(false);
+            this.previewAvatar.set(null);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Cập nhật avatar thất bại',
+              detail: err?.error?.message || 'Vui lòng thử lại',
+            });
+          },
+        });
+      };
+      reader.readAsDataURL(file);
     };
     input.click();
   }
@@ -124,13 +184,33 @@ export class BtnAuthNavigation {
   }
 
   async handleUpdateProfile(): Promise<void> {
-    const displayName = this.updateForm.get('displayName')?.value;
-    const photoURL = this.updateForm.get('photoURL')?.value;
-
-    console.log('Updating profile with:', { displayName, photoURL });
-
-    await this.authService.updateProfile(displayName, photoURL);
-    this.isBoxUpdateInfo = false; // Đóng box sau khi cập nhật
+    if (!this.updateForm.valid) {
+      this.updateForm.markAllAsTouched();
+    }
+    this.uploading.set(true);
+    const data = this.updateForm.value;
+    this.authApiService.updateProfile(data).subscribe({
+      next: (res) => {
+        if (res.status && res.data) {
+          this.authStore.setProfile(res.data);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Cập nhật thành công',
+          });
+          this.isBoxUpdateInfo = false; // Đóng box sau khi cập nhật
+        }
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Cập nhật thất bại',
+          detail: err?.error?.message || 'Vui lòng thử lại',
+        });
+      },
+      complete: () => {
+        this.uploading.set(false);
+      },
+    });
   }
 
   async handleLogout(): Promise<void> {
@@ -138,23 +218,7 @@ export class BtnAuthNavigation {
     this.handleShowProfile();
   }
 
-  imgError(): void {
-    this.updateForm
-      .get('photoURL')
-      ?.setValue('assets/images/avatar-default.webp');
-  }
-
   private readonly hasImageError = signal(false);
-
-  readonly imageUrl = computed(() => {
-    if (this.hasImageError()) {
-      return 'assets/images/avatar-default.webp';
-    }
-    return (
-      this.authService.userSignal()?.photoURL ||
-      'assets/images/avatar-default.webp'
-    );
-  });
 
   handleImageError(): void {
     this.hasImageError.set(true);
