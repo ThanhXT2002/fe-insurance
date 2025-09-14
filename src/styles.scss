@@ -48,8 +48,8 @@
     margin: 0; /* Remove default body margin that can create whitespace */
     max-width: 100%;
     font-family: "Open Sans", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    // -webkit-font-smoothing: antialiased;
+    // -moz-osx-font-smoothing: grayscale;
   }
 
   .container-layer {
@@ -58,15 +58,7 @@
 }
 
 /* Ensure media do not overflow horizontally */
-img,
-picture,
-video,
-iframe,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+
 
 /* Utility to explicitly disable horizontal scroll on any element */
 .no-horizontal-scroll {
