@@ -29,23 +29,6 @@
 }
 
 @layer base {
-  /* Global reset to avoid unexpected horizontal overflow */
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    /* prevent very long words/elements from forcing horizontal scroll */
-    min-width: 0;
-  }
-
-  /* Apply no horizontal overflow site-wide. Include common SPA roots. */
-  html,
-  body,
-  app-root,
-  #root,
-  #__next {
-    overflow-x: hidden;
-  }
 
   html {
     /* Smooth scroll cho toàn bộ website */
