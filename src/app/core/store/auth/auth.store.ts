@@ -1,14 +1,26 @@
-import { Injectable, inject, signal, computed, Injector } from '@angular/core';
+import {
+  Injectable,
+  inject,
+  signal,
+  computed,
+  Injector,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 import { AuthApiService } from './auth.api';
 import { UserProfileSafe, PROFILE_TTL_MS } from './auth.types';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '@/core/services/auth.service';
+import { ProfileTransferService } from '@/core/services/profile-transfer.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private api = inject(AuthApiService);
   private injector = inject(Injector);
+  private platformId = inject(PLATFORM_ID) as Object;
+  private profileTransfer = inject(ProfileTransferService);
 
   profile = signal<UserProfileSafe | null>(null);
   status = signal<'idle' | 'loading' | 'loaded' | 'error'>('idle');
@@ -39,10 +51,41 @@ export class AuthStore {
 
     this.status.set('loading');
     this.error.set(null);
+    // Nếu đang chạy trên trình duyệt và TransferState có profile, hãy sử dụng ngay lập tức
+    const transferred = this.profileTransfer.getProfileOnBrowser();
+    if (transferred) {
+      this.profile.set(transferred as UserProfileSafe);
+      this.status.set('loaded');
+      this.lastFetchedAt = Date.now();
+      return this.profile();
+    }
 
-    this.pendingPromise = this.api
-      .getProfile()
+    // Chuyển Observable trả về từ api.getProfile() thành Promise.
+    // Trên server, giới hạn thời gian chờ (timeout ngắn)
+    // để tránh chặn SSR quá lâu. Trên client, sử dụng timeout của Observable
+    // (được định nghĩa trong AuthApiService) và chờ kết quả.
+    const obsPromise = firstValueFrom(this.api.getProfile());
+
+    const isServer = isPlatformServer(this.platformId);
+    const serverTimeoutMs = 700; // short timeout for SSR to keep TTFB small
+
+    const effectivePromise: Promise<UserProfileSafe | null> = isServer
+      ? Promise.race([
+          obsPromise,
+          new Promise<UserProfileSafe | null>((resolve) =>
+            setTimeout(() => resolve(null), serverTimeoutMs),
+          ),
+        ])
+      : obsPromise;
+
+    this.pendingPromise = effectivePromise
       .then((p) => {
+        // Nếu đang chạy trên server và nhận được profile, ghi nó vào TransferState
+        try {
+          this.profileTransfer.setProfileOnServer(p);
+        } catch {
+          /* ignore */
+        }
         this.profile.set(p);
         this.status.set('loaded');
         this.lastFetchedAt = Date.now();

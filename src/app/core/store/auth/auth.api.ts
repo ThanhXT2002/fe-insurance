@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { firstValueFrom, Observable, of } from 'rxjs';
+import { catchError, map, timeout } from 'rxjs/operators';
 import { UserProfileSafe } from './auth.types';
 import { environment } from '../../../../environments/environment';
 import { updateProfile } from '@/core/interfaces/user.interface';
@@ -12,12 +12,15 @@ export class AuthApiService {
   private http = inject(HttpClient);
   private base = environment.apiUrl + '/auth';
 
-  async getProfile(): Promise<UserProfileSafe> {
-    const res = await firstValueFrom(
-      this.http.get<{ data: UserProfileSafe }>(`${this.base}/profile`),
+getProfile(): Observable<UserProfileSafe | null> {
+  return this.http
+    .get<{ data: UserProfileSafe }>(`${this.base}/profile`)
+    .pipe(
+      timeout(5000), // server-side or client-side: fail after 5s
+      map(res => (res as any)?.data || null),
+      catchError(() => of(null))
     );
-    return (res && (res as any).data) || (null as any);
-  }
+}
 
   updateProfile(data: updateProfile): Observable<ApiResponse<UserProfileSafe>> {
     return this.http.put<ApiResponse<UserProfileSafe>>(
