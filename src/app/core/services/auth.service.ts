@@ -75,6 +75,10 @@ export class AuthService {
       provider: 'google',
       options: {
         redirectTo: window.location.origin, // sau khi login sẽ quay lại app
+        queryParams: {
+          prompt: 'select_account', // bắt chọn tài khoản
+          access_type: 'offline' // nếu cần refresh token (tuỳ case)
+        }
       },
     });
     if (error) throw error;
