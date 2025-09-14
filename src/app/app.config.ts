@@ -68,37 +68,22 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     provideClientHydration(withEventReplay()),
-    provideAppInitializer(async () => {
+    provideAppInitializer(() => {
+      // Make profile loading non-blocking to avoid delaying app bootstrap.
+      // If a token exists, trigger loadProfile but don't await it here.
       const authStore = inject(AuthStore);
       const authService = inject(AuthService);
-      try {
-        const token = await authService.getAccessToken();
-        if (token) {
-          // try loadProfile with a simple retry (2 attempts)
-          let attempts = 0;
-          const maxAttempts = 2;
-          while (attempts < maxAttempts) {
-            attempts++;
-            try {
-              await authStore.loadProfile();
-              break;
-            } catch (err) {
-              console.warn(
-                `auth initializer loadProfile attempt ${attempts} failed`,
-                err,
-              );
-              if (attempts >= maxAttempts) {
-                console.error('auth initializer failed to load profile');
-              } else {
-                // small backoff
-                await new Promise((r) => setTimeout(r, 300));
-              }
-            }
+      (async () => {
+        try {
+          const token = await authService.getAccessToken();
+          if (token) {
+            // Fire-and-forget: authStore.loadProfile handles timeouts/caching internally
+            authStore.loadProfile().catch(() => {});
           }
+        } catch (e) {
+          console.warn('auth initializer error', e);
         }
-      } catch (e) {
-        console.warn('auth initializer error', e);
-      }
+      })();
     }),
   ],
 };
