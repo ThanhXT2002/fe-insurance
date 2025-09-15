@@ -12,15 +12,14 @@ export class AuthApiService {
   private http = inject(HttpClient);
   private base = environment.apiUrl + '/auth';
 
-getProfile(): Observable<UserProfileSafe | null> {
-  return this.http
-    .get<{ data: UserProfileSafe }>(`${this.base}/profile`)
-    .pipe(
-      timeout(5000), // server-side or client-side: fail after 5s
-      map(res => (res as any)?.data || null),
-      catchError(() => of(null))
-    );
-}
+  getProfile(): Observable<UserProfileSafe | null> {
+    return this.http
+      .get<{ data: UserProfileSafe }>(`${this.base}/profile`)
+      .pipe(
+        timeout(5000), // server-side or client-side: fail after 5s
+        map((res) => (res as any)?.data || null),
+      );
+  }
 
   updateProfile(data: updateProfile): Observable<ApiResponse<UserProfileSafe>> {
     return this.http.put<ApiResponse<UserProfileSafe>>(

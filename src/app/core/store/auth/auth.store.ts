@@ -92,10 +92,12 @@ export class AuthStore {
         return p;
       })
       .catch((err: any) => {
+        console.log('Auth error detected, signing out...', err?.message || err);
         // Nếu server trả 401/403 => token không hợp lệ hoặc tài khoản bị khoá
         const status = err?.status ?? err?.statusCode ?? err?.response?.status;
         if (status === 401 || status === 403) {
           try {
+            console.log('Auth error detected, signing out...', status, err?.message || err);
             const msg =
               status === 403
                 ? 'Tài khoản của bạn đã bị khóa hoặc đang gặp vấn đề nghiêm trọng'
