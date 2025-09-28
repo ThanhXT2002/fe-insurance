@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SectionIntro } from "../section-intro/section-intro";
 import { IconBoxWrapper } from "../icon-box-wrapper/icon-box-wrapper";
+import { CompanyInfoService } from '@/core/services/company-info.service';
 
 interface TeamMember {
   id: number;
@@ -16,6 +17,9 @@ interface TeamMember {
 })
 export class OurSupportTeamSection {
 
+    infoService = inject(CompanyInfoService)
+
+
   teamMembers: TeamMember[] = [
     { id: 1, name: 'Nguyễn Văn A', avatar: 'assets/images/team/support-team-img-1.webp' },
     { id: 2, name: 'Trần Thị B', avatar: 'assets/images/team/support-team-img-2.webp' },
@@ -26,5 +30,9 @@ export class OurSupportTeamSection {
     { id: 7, name: 'Đặng Văn G', avatar: 'assets/images/team/support-team-img-7.webp' },
     { id: 8, name: 'Bùi Thị H', avatar: 'assets/images/team/support-team-img-8.webp' }
   ];
+
+
+  emailSupport = this.infoService.companyInfo().emailSupport;
+  numberPhone = this.infoService.companyInfo().numberPhone;
 
 }

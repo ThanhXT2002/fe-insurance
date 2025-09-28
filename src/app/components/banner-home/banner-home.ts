@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewIni
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BtnCommon } from "../btn-common/btn-common";
 import { IconBoxWrapper } from "../icon-box-wrapper/icon-box-wrapper";
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-banner-home',
@@ -13,6 +15,8 @@ import { IconBoxWrapper } from "../icon-box-wrapper/icon-box-wrapper";
 export class BannerHome implements AfterViewInit {
 
   @ViewChild('bgVideo') bgVideo!: ElementRef<HTMLVideoElement>;
+
+  private router = inject(Router);
 
   private platformId = inject(PLATFORM_ID);
 
@@ -28,6 +32,15 @@ export class BannerHome implements AfterViewInit {
         });
       }
     }
+  }
+
+  redirectToConsultation(){
+    const phone = environment.numberPhone;
+    window.open(`https://zalo.me/${encodeURIComponent(phone)}`, '_blank');
+  }
+
+  redirectToContact(){
+    this.router.navigate(['/contact']);
   }
 
 }

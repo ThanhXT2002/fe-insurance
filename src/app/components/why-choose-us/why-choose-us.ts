@@ -1,9 +1,9 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { SectionLabel } from "../section-label/section-label";
 import { SectionIntro } from "../section-intro/section-intro";
 import { FeatureList } from "../feature-list/feature-list";
 import { BtnCommon } from "../btn-common/btn-common";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-why-choose-us',
@@ -14,6 +14,8 @@ import { BtnCommon } from "../btn-common/btn-common";
 export class WhyChooseUs implements AfterViewInit {
   @ViewChild('boxBackground') boxBackground!: ElementRef;
   @ViewChild('boxImg') boxImg!: ElementRef;
+
+  private router = inject(Router);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -35,5 +37,9 @@ export class WhyChooseUs implements AfterViewInit {
       const newHeight = imgHeight + 100; // Thêm 100px
       this.boxBackground.nativeElement.style.height = `${newHeight}px`;
     }
+  }
+
+  redirectToContact(){
+    this.router.navigate(['/contact']);
   }
 }

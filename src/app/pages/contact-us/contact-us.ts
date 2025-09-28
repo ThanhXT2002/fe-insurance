@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BreadcrumbImg } from "@/components/breadcrumb-img/breadcrumb-img";
 import { ContactForm } from "@/components/contact-form/contact-form";
 import { SectionIntro } from "@/components/section-intro/section-intro";
 import { environment } from 'src/environments/environment';
+import { CompanyInfoService } from '@/core/services/company-info.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -12,9 +13,11 @@ import { environment } from 'src/environments/environment';
 })
 export class ContactUs {
 
+  infoService = inject(CompanyInfoService)
+
   title = 'Liên hệ với chúng tôi';
-  emailSupport = environment.emailSupport;
-  numberPhone = environment.numberPhone;
-  address = environment.address;
+  emailSupport = this.infoService.companyInfo().emailSupport;
+  numberPhone = this.infoService.companyInfo().numberPhone;
+  address = this.infoService.companyInfo().address;
 
 }

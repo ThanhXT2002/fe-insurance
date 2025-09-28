@@ -56,6 +56,11 @@ export class ProductsService {
     return this.http.get<ProductItem[]>('assets/json/products.json');
   }
 
+  // viết thêm endpoint lấy sản phẩm nổi bật cho trang chủ ở đây
+  getFeaturedProducts(): Observable<ProductItem[]> {
+    return this.http.get<ProductItem[]>('assets/json/products.json')
+  }
+
   /**
    * Làm mới lại dữ liệu sản phẩm (gọi lại API)
    */
