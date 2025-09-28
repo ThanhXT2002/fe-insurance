@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { AuthLayout } from '../../components/auth-layout/auth-layout';
 import { CommonModule } from '@angular/common';
-import { AutoFocusModule } from 'primeng/autofocus';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -29,7 +28,6 @@ import { AuthStore } from '@/core/store/auth/auth.store';
     FormsModule,
     FloatLabelModule,
     PasswordModule,
-    AutoFocusModule,
     CommonModule,
   ],
   templateUrl: './login.html',
