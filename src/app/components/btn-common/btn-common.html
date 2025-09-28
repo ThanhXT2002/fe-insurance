@@ -1,11 +1,22 @@
 <button
-  class="btn-common {{ typeClass }} {{ extraClass || '' }}"
+  class="btn-common"
+  [class]="
+    ('btn-common ' + (typeClass || '') + ' ' + (extraClass || '')).trim()
+  "
   [attr.aria-label]="ariaLabel"
   [disabled]="disabled"
 >
-  <ng-container *ngIf="icon">
+  @if (icon) {
     <i [class]="icon"></i>
-  </ng-container>
-  <span *ngIf="text">{{ text }}</span>
+  }
+
+  @if (isLoading) {
+    <i class="ri-loader-2-line text-2xl animate-spin" aria-hidden="true"></i>
+  }
+
+  @if (text) {
+    <span>{{ text }}</span>
+  }
+
   <ng-content></ng-content>
 </button>

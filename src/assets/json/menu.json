@@ -17,7 +17,7 @@
   },
   {
     "id": 2,
-    "label": "Sản phẩm",
+    "label": "Dịch vụ",
     "icon": "ri-shopping-bag-3-line",
     "link": "/products",
     "isBlank": false,
@@ -163,9 +163,9 @@
   },
   {
     "id": 3,
-    "label": "Bài viết",
+    "label": "Tin tức",
     "icon": "ri-article-line",
-    "link": "/blogs",
+    "link": "/posts",
     "isBlank": false,
     "note": "Tin tức, bài viết"
   },

@@ -1,0 +1,57 @@
+<div class="flex flex-col">
+  @if (label) {
+    <label class="mb-1 text-sm font-medium text-slate-700">{{ label }}</label>
+  }
+
+  @if (control) {
+    <!-- Use textarea when multiline is true -->
+    @if (multiline) {
+      <textarea
+        [id]="id"
+        [placeholder]="placeholder"
+        [formControl]="control"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        [rows]="rows"
+        class="ip-common"
+        [ngClass]="{
+          'border-red-500': showError(),
+          'text-red-600': showError(),
+        }"
+        [attr.aria-invalid]="showError()"
+        [attr.aria-describedby]="errorId"
+      ></textarea>
+    } @else {
+      <input
+        [id]="id"
+        [type]="type"
+        [placeholder]="placeholder"
+        [formControl]="control"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        class="ip-common"
+        [ngClass]="{
+          'border-red-500': showError(),
+          'text-red-600': showError(),
+        }"
+        [attr.aria-invalid]="showError()"
+        [attr.aria-describedby]="errorId"
+      />
+    }
+  } @else {
+    <input
+      [type]="type"
+      [placeholder]="placeholder || 'No FormControl passed'"
+      disabled
+      class="px-3 py-2 border rounded-md bg-slate-50 text-slate-400"
+    />
+  }
+
+  @if (showError()) {
+    <div class="mt-1 text-sm" [id]="errorId">
+      @for (msg of errorMessages(); track $index) {
+        <div class="text-red-600">{{ msg }}</div>
+      }
+    </div>
+  }
+</div>

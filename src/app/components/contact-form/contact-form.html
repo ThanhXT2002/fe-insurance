@@ -1,0 +1,47 @@
+<div class="w-full h-full bg-third rounded-common overflow-hidden p-10 md:p-14">
+  <h2 class="title-bold">Liên hệ với chúng tôi</h2>
+  <p class="text-description">
+    Hoàn thành biểu mẫu để nhận tư vấn và hỗ trợ từ đội ngũ của chúng tôi.
+  </p>
+
+  <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col gap-y-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <app-input-common
+        [control]="nameControl"
+        id="contact-name"
+        placeholder="Nhập họ và tên"
+      ></app-input-common>
+
+      <app-input-common
+        [control]="phoneControl"
+        id="contact-phone"
+        placeholder="Nhập số điện thoại"
+        type="tel"
+      ></app-input-common>
+    </div>
+
+    <app-input-common
+      [control]="emailControl"
+      id="contact-email"
+      placeholder="Nhập email"
+      type="email"
+    ></app-input-common>
+
+    <app-input-common
+      [control]="messageControl"
+      id="contact-message"
+      placeholder="Lời nhắn của bạn"
+      [multiline]="true"
+      [rows]="5"
+    ></app-input-common>
+
+    <div class="mt-6">
+      <app-btn-common
+        text="Gửi liên hệ"
+        extraClass="w-full flex__middle !py-2.5 !font-bold"
+        [disabled]="isLoading"
+        [isLoading]="isLoading"
+      ></app-btn-common>
+    </div>
+  </form>
+</div>

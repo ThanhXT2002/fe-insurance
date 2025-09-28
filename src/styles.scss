@@ -55,6 +55,8 @@
   .container-layer {
     @apply max-w-7xl px-3 md:px-5 lg:px-3  mx-auto;
   }
+
+
 }
 
 /* Ensure media do not overflow horizontally */
@@ -167,6 +169,14 @@
   }
   .bgUrlCustom {
     @apply bg-[url('/assets/images/section-bg-shape.svg')]  bg-bottom bg-no-repeat bg-contain;
+  }
+
+  .title-bold {
+    @apply text-3xl md:text-4xl font-bold text-secondary mb-6;
+  }
+
+  .text-description {
+    @apply text-sm  text-fourth mb-8 leading-relaxed;
   }
 }
 

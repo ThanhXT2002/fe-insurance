@@ -2,13 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-blog-detail',
+  selector: 'app-post-detail',
   imports: [],
-  templateUrl: './blog-detail.html',
-  styleUrl: './blog-detail.scss'
+  templateUrl: './post-detail.html',
+  styleUrl: './post-detail.scss'
 })
-export class BlogDetail {
-  private route = inject(ActivatedRoute);
+export class PostDetail {
+
+   private route = inject(ActivatedRoute);
   slug = signal<string>('');
 
   constructor() {
@@ -18,4 +19,5 @@ export class BlogDetail {
       this.slug.set(slugParam);
     }
   }
+
 }

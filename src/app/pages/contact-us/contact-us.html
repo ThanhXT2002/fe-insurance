@@ -1,1 +1,59 @@
-<p>contact-us works!</p>
+<app-breadcrumb-img title="{{ title }}" />
+<div class="bg-white py-20">
+  <div class="container-layer">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+      <div class="w-full">
+        <app-section-intro
+          title="{{ title }}"
+          firstText="Hỗ trợ và tư vấn"
+          highlightText="bảo hiểm cá nhân hóa"
+          lastText="ngay hôm nay"
+          description="Liên hệ với đội ngũ của chúng tôi để nhận các giải pháp bảo hiểm phù hợp, tư vấn chuyên nghiệp và hỗ trợ kịp thời cho mọi nhu cầu về quyền lợi bảo hiểm của bạn."
+          introClass=""
+        />
+        <div class="flex__start gap-6 mb-10">
+          <img
+            src="assets/icons/position.svg"
+            alt="icon_position"
+            class="w-6 h-6"
+          />
+          <span
+            >{{address}}</span
+          >
+        </div>
+
+        <div class="relative w-full rounded-common overflow-hidden group ">
+          <img
+            src="/assets/images/contact/contact-cta-bg-img.webp"
+            class="group-hover:scale-110 transition-transform duration-700 w-full "
+            alt=""
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-teal-900/90 via-teal-700/40 to-transparent"
+          >
+          <div class="flex flex-col h-full p-10 md:p-20 text-white">
+            <div class="flex__start gap-x-5">
+              <i class="fa-solid fa-phone-volume text-4xl"></i>
+              <div>
+                <p>Số điện thoại:</p>
+                <p class="font-bold text-xl">{{numberPhone}}</p>
+              </div>
+            </div>
+            <hr class="border-white/40 h-1 w-[60%] my-5 md:my-8" />
+            <div class="flex__start gap-x-5">
+             <i class="fa-solid fa-envelope-open-text text-4xl"></i>
+              <div>
+                <p>Email:</p>
+                <p class="font-bold text-xl">{{emailSupport}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="w-full h-full">
+        <app-contact-form></app-contact-form>
+      </div>
+    </div>
+  </div>
+</div>

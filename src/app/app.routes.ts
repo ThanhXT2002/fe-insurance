@@ -23,14 +23,14 @@ export const routes: Routes = [
         data: { title: 'Giới thiệu' },
       },
       {
-        path: 'blogs',
-        loadComponent: () => import('./pages/blogs/blogs').then((m) => m.Blogs),
+        path: 'posts',
+        loadComponent: () => import('./pages/posts/posts').then((m) => m.Posts),
         data: { title: 'Bài viết' },
       },
       {
-        path: 'blog/:slug',
+        path: 'post/:slug',
         loadComponent: () =>
-          import('./pages/blog-detail/blog-detail').then((m) => m.BlogDetail),
+          import('./pages/post-detail/post-detail').then((m) => m.PostDetail),
         data: { title: 'Chi tiết bài viết' },
       },
       {

@@ -11,6 +11,7 @@ import { Component, Input, computed } from '@angular/core';
 })
 export class BtnCommon {
 @Input() icon?: string;
+@Input() isLoading = false;
   @Input() text?: string;
   @Input() type: 'primary' | 'secondary' | 'black' | 'white' = 'primary';
   @Input() ariaLabel?: string;
