@@ -2,14 +2,25 @@
   <div class="container-layer">
     <app-product-list [items]="products()" />
 
-    <div class="mt-8 flex justify-center" *ngIf="hasMore()">
-      <button
+    @if(hasMore()){
+      <div class="mt-8 flex justify-center" >
+         <app-btn-common
+          [text]="loadingMore() || loading() ? 'Đang tải...' : 'Tải thêm'"
+          type="primary"
+          [isLoading]="loadingMore() || loading()"
+          [disabled]="loadingMore() || loading()"
+         (click)="loadMore()"
+        ></app-btn-common>
+      <!-- <button
         class="px-6 py-3 bg-primary text-white rounded-md"
         (click)="loadMore()"
         [disabled]="loadingMore() || loading()"
       >
         {{ loadingMore() || loading() ? "Đang tải..." : "Tải thêm" }}
-      </button>
+      </button> -->
     </div>
+    }
+
+
   </div>
 </div>
