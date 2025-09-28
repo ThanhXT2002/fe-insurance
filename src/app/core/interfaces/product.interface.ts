@@ -1,29 +1,38 @@
+import { Seo } from './seo.interface';
+
 export interface ProductItem {
   id: number;
-  slug: string;
-  icon: string;
-  imgs: string[];
+  sku?: string | null;
   name: string;
-  description: string;
-  detail: string;
-  isPublish: boolean;
-  status: ProductStatus;
-  createdAt: string;
-  updatedAt: string;
-  priority: number;
-  tags: string[];
-  isPromotion: boolean;
-  features: string[];
-  createdBy: string;
-  updatedBy: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string[];
-  ogImage?: string;
-  canonicalUrl?: string;
+  slug?: string | null;
+  description?: string | null;
+  shortContent?: string | null;
+  content?: string | null;
+  price?: number | null;
+  coverage?: string | null;
+  term?: string | null;
+  targetLink?: string | null;
+  targetFile?: string | null;
+  imgs?: string[] | null;
+  details?: string | null;
+  icon?: string | null;
+  priority?: number | null;
+  isHighlighted?: boolean | null;
+  isFeatured?: boolean | null;
+  isSaleOnline?: boolean | null;
+  active?: boolean | null;
+  tags?: string[] | null;
+  isPromotion?: boolean | null;
+  promotionDetails?: string | null;
+  metaKeywords?: string[] | null;
+  note?: string | null;
+  seoMeta?: Seo | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }
+
 export enum ProductStatus {
   active = 'active',
   inactive = 'inactive',
-  archived = 'archived'
+  archived = 'archived',
 }

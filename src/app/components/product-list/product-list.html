@@ -7,18 +7,18 @@
       <!-- Content wrapper with relative positioning -->
       <div class="relative z-10 ">
         <app-icon-box-wrapper
-          [iconSrc]="item.icon"
+          [iconSrc]="item.icon || ''"
           iconImgClass="group-hover:invert transition-all duration-300"
           bgWidth="w-[60px] lg:w-[70px]"
           [title]="item.name"
-          [description]="item.description"
+          [description]="item.description || ''"
           flexClass="flex"
           flexDirection="flex-col"
           titleSize="text-lg"
           titleColor="text-secondary group-hover:text-white"
           gapClass="gap-6"
           hoverBgColor="whiteColor"
-          descriptionClass="text-fourth group-hover:text-white/90 text-sm leading-relaxed mt-3 transition-colors duration-300"
+          descriptionClass="text-fourth group-hover:text-white/90 text-sm leading-relaxed mt-3 transition-colors duration-300 line-clamp-3"
         >
           <hr class="border-gray-200 group-hover:border-white/30 my-7 4xl:my-9 transition-colors duration-300" />
 

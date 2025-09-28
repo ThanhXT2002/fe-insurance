@@ -1,6 +1,5 @@
-import { Component, inject, input, OnInit, computed } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { IconBoxWrapper } from '../icon-box-wrapper/icon-box-wrapper';
-import { ProductsService } from '../../core/services/api/products';
 
 @Component({
   selector: 'app-product-list',
@@ -9,17 +8,17 @@ import { ProductsService } from '../../core/services/api/products';
   styleUrl: './product-list.scss',
 })
 export class ProductList {
-  protected readonly productService = inject(ProductsService);
+  // Nhận danh sách sản phẩm từ component cha thông qua input
+  readonly items = input<Array<any> | undefined>(undefined);
 
   // Input để nhận số lượng item cần hiển thị từ component cha
   readonly itemCount = input<number | undefined>(undefined); // Cho phép undefined
 
   // Computed signal để lấy số lượng products giới hạn theo itemCount
   readonly limitedProducts = computed(() => {
-    const products = this.productService.products();
+    const products = this.items() ?? [];
     const count = this.itemCount();
-    if (!products) return [];
-    // Nếu count là undefined/null/0 hoặc lớn hơn số lượng sản phẩm thì trả về tất cả
+    if (!products || products.length === 0) return [];
     if (
       count === undefined ||
       count === null ||

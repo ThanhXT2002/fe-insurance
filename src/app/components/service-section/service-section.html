@@ -1,5 +1,5 @@
 <section
-  class="xl:h-[calc(100vh-var(--header-height))] 4xl:h-[750px] flex__start flex-col bg-third lg:bgUrlCustom"
+  class="xl:h-[calc(100vh-var(--header-height))] 4xl:h-[750px] flex__start flex-col bg-third lg:bgUrlCustom !mb-10"
 >
   <div class="container-layer flex__middle flex-col">
     <div class="mt-16 4xl:mt-20">
@@ -11,12 +11,10 @@
         description=" Các dịch vụ bảo hiểm toàn diện của chúng tôi được thiết kế để mang lại cho
       bạn sự an tâm, bất kể nhu cầu của bạn là gì."
         introClass="flex__middle flex-col"
-        />
+      />
     </div>
     <div class="mt-12 4xl:mt-20 w-full">
-       <app-product-list
-       [itemCount]="4"
-       />
+      <app-product-list [items]="products()" [itemCount]="4" />
     </div>
   </div>
 </section>

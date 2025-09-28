@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, computed } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProductItem } from '../../interfaces/product.interface';
+import { env } from 'process';
+import { environment } from 'src/environments/environment';
+import { ApiResponse } from '@/core/interfaces/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +12,13 @@ import { ProductItem } from '../../interfaces/product.interface';
 export class ProductsService {
   // Signal lưu trữ toàn bộ danh sách sản phẩm
   private readonly productsSignal = signal<ProductItem[] | null>(null);
+  apiUrl =  environment.apiUrl;
 
   // Signal lấy 4 sản phẩm đầu tiên (ưu tiên theo priority tăng dần)
   readonly top4Products = computed(() => {
     const products = this.productsSignal();
     return products
-      ? [...products].sort((a, b) => a.priority - b.priority).slice(0, 4)
+      ? [...products]
       : [];
   });
 
@@ -29,12 +33,6 @@ export class ProductsService {
     this.http
       .get<ProductItem[]>('assets/json/products.json')
       .pipe(
-        // Lọc và sắp xếp ngay trong pipeline
-        map((products) =>
-          products
-            .filter((item) => item.isPublish)
-            .sort((a, b) => a.priority - b.priority),
-        ),
       )
       .subscribe({
         next: (data) => this.productsSignal.set(data),
@@ -56,9 +54,9 @@ export class ProductsService {
     return this.http.get<ProductItem[]>('assets/json/products.json');
   }
 
-  // viết thêm endpoint lấy sản phẩm nổi bật cho trang chủ ở đây
-  getFeaturedProducts(): Observable<ProductItem[]> {
-    return this.http.get<ProductItem[]>('assets/json/products.json')
+  // viết thêm endpoint lấy sản phẩm nổi bật cho trang chủ
+  getFeaturedProducts(limit: number = 4): Observable<ApiResponse<ProductItem[]>> {
+    return this.http.get<ApiResponse<ProductItem[]>>(`${this.apiUrl}/products/home?limit=${limit}`);
   }
 
   /**
