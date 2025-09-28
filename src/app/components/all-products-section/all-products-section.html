@@ -1,5 +1,15 @@
 <div class="py-20 bg-white">
   <div class="container-layer">
     <app-product-list [items]="products()" />
+
+    <div class="mt-8 flex justify-center" *ngIf="hasMore()">
+      <button
+        class="px-6 py-3 bg-primary text-white rounded-md"
+        (click)="loadMore()"
+        [disabled]="loadingMore() || loading()"
+      >
+        {{ loadingMore() || loading() ? "Đang tải..." : "Tải thêm" }}
+      </button>
+    </div>
   </div>
 </div>

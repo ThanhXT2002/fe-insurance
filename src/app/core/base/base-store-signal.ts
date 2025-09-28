@@ -81,14 +81,14 @@ export abstract class BaseStoreSignal<S> {
   }
 
   /**
-   * Helper to fetch data with retry logic and update loading/error signals.
-   * - fetcher: async fn that returns T
-   * - retries: number of retries when result is empty/null/undefined or error occurs
-   * - shouldRetryPredicate: optional function to determine whether to retry based on returned value
+   * Hàm tiện ích để fetch dữ liệu với logic retry và cập nhật trạng thái loading/error.
+   * - fetcher: hàm async trả về T
+   * - retries: số lần thử lại khi kết quả trả về là empty/null/undefined hoặc có lỗi
+   * - shouldRetryPredicate: hàm tùy chọn để xác định có nên retry dựa trên giá trị trả về
    */
   async fetchWithRetry<T>(
     fetcher: () => Promise<T>,
-    retries = 2,
+    retries = 1,
     shouldRetryPredicate?: (value: T | null | undefined) => boolean,
   ): Promise<T> {
     let attempt = 0;

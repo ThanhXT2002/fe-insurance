@@ -52,16 +52,8 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
           return payload.data as ProductItem[];
         return [];
       } catch (err) {
-        // fallback to local json
-        // Fallback sang file JSON local nếu backend lỗi hoặc timeout
-        try {
-          const data = await firstValueFrom(
-            this.productsService.getProductLists$().pipe(timeout(5000)) as any,
-          );
-          return Array.isArray(data) ? data : [];
-        } catch {
-          return [];
-        }
+        // Nếu API lỗi hoặc timeout thì trả về mảng rỗng (không dùng fallback JSON nữa)
+        return [];
       }
     };
 

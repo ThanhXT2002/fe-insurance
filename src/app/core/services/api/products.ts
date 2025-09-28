@@ -10,53 +10,35 @@ import { ApiResponse } from '@/core/interfaces/api-response.interface';
   providedIn: 'root',
 })
 export class ProductsService {
-  // Signal lưu trữ toàn bộ danh sách sản phẩm
-  private readonly productsSignal = signal<ProductItem[] | null>(null);
-  apiUrl =  environment.apiUrl;
+  apiUrl = environment.apiUrl;
 
-  // Signal lấy 4 sản phẩm đầu tiên (ưu tiên theo priority tăng dần)
-  readonly top4Products = computed(() => {
-    const products = this.productsSignal();
-    return products
-      ? [...products]
-      : [];
-  });
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.fetchProducts(); // Tự động gọi fetchProducts khi khởi tạo service
-  }
-
-  /**
-   * Lấy danh sách sản phẩm từ file json và lưu vào signal
-   */
-  fetchProducts(): void {
-    this.http
-      .get<ProductItem[]>('assets/json/products.json')
-      .pipe(
-      )
-      .subscribe({
-        next: (data) => this.productsSignal.set(data),
-        error: () => this.productsSignal.set([]),
-      });
-  }
-
-  /**
-   * Trả về signal chứa toàn bộ danh sách sản phẩm
-   */
-  get products() {
-    return this.productsSignal;
-  }
-
-  /**
-   * Trả về observable danh sách sản phẩm (nếu cần dùng dạng observable)
-   */
-  getProductLists$(): Observable<ProductItem[]> {
-    return this.http.get<ProductItem[]>('assets/json/products.json');
+  fetchProducts(query?: {
+    page?: number;
+    limit?: number;
+    keyword?: string;
+    active?: boolean;
+  }) {
+    const params: any = {};
+    if (query?.page != null) params.page = query.page;
+    if (query?.limit != null) params.limit = query.limit;
+    if (query?.keyword) params.keyword = query.keyword;
+    if (query?.active !== undefined && query?.active !== null)
+      params.active = String(query.active);
+    return this.http.get<ApiResponse<{ rows: ProductItem[]; total: number }>>(
+      `${this.apiUrl}/products/`,
+      { params },
+    );
   }
 
   // viết thêm endpoint lấy sản phẩm nổi bật cho trang chủ
-  getFeaturedProducts(limit: number = 4): Observable<ApiResponse<ProductItem[]>> {
-    return this.http.get<ApiResponse<ProductItem[]>>(`${this.apiUrl}/products/home?limit=${limit}`);
+  getFeaturedProducts(
+    limit: number = 4,
+  ): Observable<ApiResponse<ProductItem[]>> {
+    return this.http.get<ApiResponse<ProductItem[]>>(
+      `${this.apiUrl}/products/home?limit=${limit}`,
+    );
   }
 
   /**

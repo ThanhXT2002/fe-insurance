@@ -1,20 +1,44 @@
 import { Component, computed, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ProductList } from '../product-list/product-list';
-import { ProductStore } from '../../core/store/product.store';
+import { ProductListStore } from '../../core/store/product-list.store';
 
 @Component({
   selector: 'app-all-products-section',
-  imports: [ProductList],
+  imports: [CommonModule, ProductList],
   templateUrl: './all-products-section.html',
   styleUrl: './all-products-section.scss',
 })
 export class AllProductsSection {
-  private readonly productStore = inject(ProductStore);
-  readonly products = computed(() => this.productStore.list());
+  private readonly productListStore = inject(ProductListStore);
+  readonly products = computed(() => this.productListStore.rows());
+  readonly loading = this.productListStore.loading;
+  // use store-provided signals for hasMore and loadingMore
+  readonly hasMore = computed(() => this.productListStore.hasMore());
+  readonly loadingMore = computed(() => this.productListStore.loadingMore());
 
   constructor() {
+    // Load first page in microtask.
+    // Note: loadInitial() will return cached rows if present (so when navigating back
+    // to this page the list is preserved). To force a refresh pass { force: true }.
     Promise.resolve().then(() => {
-      this.productStore.loadHome().catch(() => {});
+      this.productListStore.loadInitial().catch(() => {});
     });
+  }
+
+  // handler for load more button
+  async loadMore() {
+    // prevent double clicks - store maintains loadingMore
+    if (this.productListStore.loadingMore()) return;
+    try {
+      await this.productListStore.loadMore();
+    } catch (err) {
+      // error is already set on the store
+    }
+  }
+
+  // expose refresh for UI if needed
+  async refresh() {
+    await this.productListStore.refresh();
   }
 }
