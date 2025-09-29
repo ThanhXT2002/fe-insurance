@@ -26,5 +26,26 @@
         ]
       }
     }
-  ]
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": [
+        "https://xtbh.tranxuanthanhtxt.com/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "1h",
+        "timeout": "5s",
+        "maxSize": 100
+      }
+    }
+  ],
+   "navigationUrls": [
+    "/**",
+    "!/**/*.*",
+    "!/**/*__*",
+    "!/**/*__*/**"
+  ],
+  "navigationRequestStrategy": "freshness"
 }
