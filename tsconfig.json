@@ -15,11 +15,12 @@
     "target": "ES2022",
     "module": "preserve",
     "baseUrl": "./",
-        "paths": {
-            "@/*": [
-                "src/app/*"
-            ]
-        }
+    "paths": {
+      "@/*": ["src/app/*"]
+    },
+    "types": [
+        "./worker-configuration.d.ts"
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -5,6 +5,7 @@ import {
   isDevMode,
   provideAppInitializer,
   inject,
+  provideZoneChangeDetection,
 } from '@angular/core';
 import {
   provideRouter,
@@ -67,6 +68,7 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(withEventReplay()),
     provideAppInitializer(() => {
       // Make profile loading non-blocking to avoid delaying app bootstrap.
