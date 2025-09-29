@@ -94,7 +94,7 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
 
     // ensure page is 1
     const limit = query?.limit ?? this.snapshot().limit;
-    const res = await this.load({ ...(query || {}), page: 1, limit });
+    const res = await this.load({ ...(query || {}), page: 1, limit, active: true });
     return res;
   }
 
