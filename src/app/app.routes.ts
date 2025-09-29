@@ -114,7 +114,7 @@ export const routes: Routes = [
         data: { title: 'Sản phẩm' },
       },
       {
-        path: 'product-detail/:id',
+        path: 'product/:slug',
         loadComponent: () =>
           import('./pages/product-detail/product-detail').then(
             (m) => m.ProductDetail,

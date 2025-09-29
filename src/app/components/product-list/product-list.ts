@@ -1,5 +1,7 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { IconBoxWrapper } from '../icon-box-wrapper/icon-box-wrapper';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-product-list',
@@ -8,6 +10,7 @@ import { IconBoxWrapper } from '../icon-box-wrapper/icon-box-wrapper';
   styleUrl: './product-list.scss',
 })
 export class ProductList {
+  private router = inject(Router);
   // Nhận danh sách sản phẩm từ component cha thông qua input
   readonly items = input<Array<any> | undefined>(undefined);
 
@@ -29,4 +32,8 @@ export class ProductList {
     }
     return products.slice(0, count);
   });
+
+  onProductClick(slug:string){
+    this.router.navigate(['/product', slug]);
+  }
 }

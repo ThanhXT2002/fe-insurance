@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductList } from '../product-list/product-list';
-import { ProductListStore } from '../../core/store/product-list.store';
-import { BtnCommon } from "../btn-common/btn-common";
+import { ProductListStore } from '../../core/store/products/product-list.store';
+import { BtnCommon } from '../btn-common/btn-common';
 
 @Component({
   selector: 'app-all-products-section',

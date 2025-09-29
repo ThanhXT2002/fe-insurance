@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductList } from '../product-list/product-list';
 import { SectionIntro } from '../section-intro/section-intro';
-import { ProductStore } from '../../core/store/product.store';
+import { ProductStore } from '../../core/store/products/product.store';
 
 @Component({
   selector: 'app-service-section',

@@ -10,7 +10,7 @@ import { ApiResponse } from '@/core/interfaces/api-response.interface';
   providedIn: 'root',
 })
 export class ProductsService {
-  apiUrl = environment.apiUrl;
+  apiUrl = environment.apiUrl + '/products';
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +27,7 @@ export class ProductsService {
     if (query?.active !== undefined && query?.active !== null)
       params.active = String(query.active);
     return this.http.get<ApiResponse<{ rows: ProductItem[]; total: number }>>(
-      `${this.apiUrl}/products/`,
+      `${this.apiUrl}`,
       { params },
     );
   }
@@ -37,7 +37,14 @@ export class ProductsService {
     limit: number = 4,
   ): Observable<ApiResponse<ProductItem[]>> {
     return this.http.get<ApiResponse<ProductItem[]>>(
-      `${this.apiUrl}/products/home?limit=${limit}`,
+      `${this.apiUrl}/home?limit=${limit}`,
+    );
+  }
+
+  //endpoit get product detail by slug
+  getProductBySlug(slug: string): Observable<ApiResponse<ProductItem>> {
+    return this.http.get<ApiResponse<ProductItem>>(
+      `${this.apiUrl}/slug/${slug}`,
     );
   }
 

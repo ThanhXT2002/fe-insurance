@@ -1,9 +1,9 @@
 import { Injectable, inject, Signal, computed, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { timeout } from 'rxjs/operators';
-import { BaseStoreSignal } from '../base/base-store-signal';
-import { ProductsService } from '../services/api/products';
-import { ProductItem } from '../interfaces/product.interface';
+import { BaseStoreSignal } from '../../base/base-store-signal';
+import { ProductsService } from '../../services/api/products';
+import { ProductItem } from '../../interfaces/product.interface';
 
 interface ProductListState {
   rows: ProductItem[];
