@@ -1,5 +1,6 @@
 import { Injectable, inject, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 export interface SEOConfig {
@@ -22,7 +23,7 @@ export interface StructuredData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SEOService {
   private readonly meta = inject(Meta);
@@ -30,26 +31,49 @@ export class SEOService {
   private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
 
-  // Default SEO config cho toàn site
+  // Default SEO config cho toàn site (chuẩn hóa đầy đủ trường)
   private readonly defaultConfig: SEOConfig = {
-    siteName: 'SecureGuard Insurance',
-    type: 'website',
-    image: '/assets/images/og-default.jpg',
-    author: 'SecureGuard Team'
+    title: environment.seoTitle,
+    description: environment.seoDescription,
+    keywords: environment.seoKeywords,
+    image: environment.seoImage,
+    url: environment.seoUrl,
+    type: environment.seoType as 'website' | 'article' | 'product',
+    siteName: environment.seoSiteName,
+    author: environment.seoAuthor,
+    publishedTime: environment.seoPublishedTime,
+    modifiedTime: environment.seoModifiedTime,
   };
 
   /**
-   * Set complete SEO meta tags cho page
+   * Set SEO meta tags cho mọi loại page (động/tĩnh)
+   * Nếu không truyền hoặc thiếu trường, sẽ tự động dùng dữ liệu mặc định
+   * Có thể truyền thêm preset cho từng loại trang nếu muốn
    */
-  setSEO(config: SEOConfig): void {
-    const fullConfig = { ...this.defaultConfig, ...config };
+  setSEO(
+    config?: Partial<SEOConfig>,
+    preset?: keyof ReturnType<SEOService['getPageSEO']>,
+  ): void {
+    let presetConfig: SEOConfig = {};
+    if (preset) {
+      const pageSEO = this.getPageSEO();
+      if (typeof pageSEO[preset] === 'function') {
+        presetConfig = pageSEO[preset]() || {};
+      }
+    }
+    // Ưu tiên: defaultConfig < presetConfig < config
+    const fullConfig: SEOConfig = {
+      ...this.defaultConfig,
+      ...presetConfig,
+      ...config,
+    };
     const currentUrl = `${this.document.location.origin}${this.router.url}`;
 
     // Set page title
-    if (fullConfig.title) {
-      const pageTitle = `${fullConfig.title} | ${fullConfig.siteName}`;
-      this.title.setTitle(pageTitle);
-    }
+    const pageTitle = fullConfig.title
+      ? `${fullConfig.title} | ${fullConfig.siteName}`
+      : fullConfig.siteName || '';
+    this.title.setTitle(pageTitle);
 
     // Basic meta tags
     this.setBasicMeta(fullConfig);
@@ -62,6 +86,28 @@ export class SEOService {
 
     // Additional SEO tags
     this.setAdditionalMeta(fullConfig, currentUrl);
+  }
+
+  /**
+   * Chuyển dữ liệu động từ API (product-detail) sang SEOConfig
+   */
+  mapProductDetailToSEOConfig(product: any): SEOConfig {
+    if (!product) return { ...this.defaultConfig };
+    const seoMeta = product.seoMeta || {};
+    return {
+      title: seoMeta.seoTitle || product.name,
+      description: seoMeta.metaDescription || product.description,
+      keywords:
+        seoMeta.focusKeyword ||
+        (product.metaKeywords ? product.metaKeywords.join(', ') : undefined),
+      image: product.imgs?.[0] || product.icon,
+      url: seoMeta.canonicalUrl,
+      type: seoMeta.ogType || 'product',
+      siteName: this.defaultConfig.siteName,
+      author: product.updatedBy || this.defaultConfig.author,
+      publishedTime: product.createdAt,
+      modifiedTime: product.updatedAt,
+    };
   }
 
   /**
@@ -88,7 +134,9 @@ export class SEOService {
     script.text = JSON.stringify(data);
 
     // Remove existing structured data
-    const existingScript = this.document.querySelector('script[type="application/ld+json"]');
+    const existingScript = this.document.querySelector(
+      'script[type="application/ld+json"]',
+    );
     if (existingScript) {
       existingScript.remove();
     }
@@ -100,10 +148,13 @@ export class SEOService {
    * Set canonical URL
    */
   setCanonicalUrl(url?: string): void {
-    const canonicalUrl = url || `${this.document.location.origin}${this.router.url}`;
+    const canonicalUrl =
+      url || `${this.document.location.origin}${this.router.url}`;
 
     // Remove existing canonical
-    const existingCanonical = this.document.querySelector('link[rel="canonical"]');
+    const existingCanonical = this.document.querySelector(
+      'link[rel="canonical"]',
+    );
     if (existingCanonical) {
       existingCanonical.remove();
     }
@@ -127,12 +178,21 @@ export class SEOService {
    */
   clearSEO(): void {
     const tagsToRemove = [
-      'description', 'keywords', 'author',
-      'og:title', 'og:description', 'og:image', 'og:url', 'og:type',
-      'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image'
+      'description',
+      'keywords',
+      'author',
+      'og:title',
+      'og:description',
+      'og:image',
+      'og:url',
+      'og:type',
+      'twitter:card',
+      'twitter:title',
+      'twitter:description',
+      'twitter:image',
     ];
 
-    tagsToRemove.forEach(tag => {
+    tagsToRemove.forEach((tag) => {
       this.meta.removeTag(`name="${tag}"`);
       this.meta.removeTag(`property="${tag}"`);
     });
@@ -159,7 +219,10 @@ export class SEOService {
     }
 
     if (config.description) {
-      this.meta.updateTag({ property: 'og:description', content: config.description });
+      this.meta.updateTag({
+        property: 'og:description',
+        content: config.description,
+      });
     }
 
     if (config.image) {
@@ -169,23 +232,38 @@ export class SEOService {
       this.meta.updateTag({ property: 'og:image', content: imageUrl });
     }
 
-    this.meta.updateTag({ property: 'og:url', content: config.url || currentUrl });
-    this.meta.updateTag({ property: 'og:type', content: config.type || 'website' });
+    this.meta.updateTag({
+      property: 'og:url',
+      content: config.url || currentUrl,
+    });
+    this.meta.updateTag({
+      property: 'og:type',
+      content: config.type || 'website',
+    });
 
     if (config.siteName) {
-      this.meta.updateTag({ property: 'og:site_name', content: config.siteName });
+      this.meta.updateTag({
+        property: 'og:site_name',
+        content: config.siteName,
+      });
     }
   }
 
   private setTwitterMeta(config: SEOConfig, currentUrl: string): void {
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    });
 
     if (config.title) {
       this.meta.updateTag({ name: 'twitter:title', content: config.title });
     }
 
     if (config.description) {
-      this.meta.updateTag({ name: 'twitter:description', content: config.description });
+      this.meta.updateTag({
+        name: 'twitter:description',
+        content: config.description,
+      });
     }
 
     if (config.image) {
@@ -198,15 +276,24 @@ export class SEOService {
 
   private setAdditionalMeta(config: SEOConfig, currentUrl: string): void {
     // Viewport for mobile
-    this.meta.updateTag({ name: 'viewport', content: 'width=device-width, initial-scale=1' });
+    this.meta.updateTag({
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1',
+    });
 
     // Published/Modified time for articles
     if (config.publishedTime) {
-      this.meta.updateTag({ property: 'article:published_time', content: config.publishedTime });
+      this.meta.updateTag({
+        property: 'article:published_time',
+        content: config.publishedTime,
+      });
     }
 
     if (config.modifiedTime) {
-      this.meta.updateTag({ property: 'article:modified_time', content: config.modifiedTime });
+      this.meta.updateTag({
+        property: 'article:modified_time',
+        content: config.modifiedTime,
+      });
     }
 
     // Set canonical URL
@@ -220,38 +307,47 @@ export class SEOService {
     return {
       homepage: (): SEOConfig => ({
         title: 'Bảo hiểm toàn diện cho cuộc sống an toàn',
-        description: 'SecureGuard Insurance cung cấp các giải pháp bảo hiểm toàn diện: sức khỏe, nhân thọ, tài sản, doanh nghiệp. Bảo vệ những điều quan trọng nhất với quy trình nhanh chóng, minh bạch.',
-        keywords: 'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm nhân thọ, bảo hiểm tài sản, SecureGuard',
-        type: 'website'
+        description:
+          'SecureGuard Insurance cung cấp các giải pháp bảo hiểm toàn diện: sức khỏe, nhân thọ, tài sản, doanh nghiệp. Bảo vệ những điều quan trọng nhất với quy trình nhanh chóng, minh bạch.',
+        keywords:
+          'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm nhân thọ, bảo hiểm tài sản, SecureGuard',
+        type: 'website',
       }),
 
       about: (): SEOConfig => ({
         title: 'Giới thiệu về SecureGuard Insurance',
-        description: 'Tìm hiểu về SecureGuard Insurance - công ty bảo hiểm hàng đầu Việt Nam với hơn 10 năm kinh nghiệm, cam kết bảo vệ khách hàng với dịch vụ chuyên nghiệp.',
-        keywords: 'giới thiệu, về chúng tôi, SecureGuard Insurance, công ty bảo hiểm',
-        type: 'website'
+        description:
+          'Tìm hiểu về SecureGuard Insurance - công ty bảo hiểm hàng đầu Việt Nam với hơn 10 năm kinh nghiệm, cam kết bảo vệ khách hàng với dịch vụ chuyên nghiệp.',
+        keywords:
+          'giới thiệu, về chúng tôi, SecureGuard Insurance, công ty bảo hiểm',
+        type: 'website',
       }),
 
       products: (): SEOConfig => ({
         title: 'Sản phẩm bảo hiểm đa dạng',
-        description: 'Khám phá các sản phẩm bảo hiểm của SecureGuard: bảo hiểm sức khỏe, nhân thọ, ô tô, du lịch, doanh nghiệp. Lựa chọn phù hợp cho mọi nhu cầu bảo vệ.',
-        keywords: 'sản phẩm bảo hiểm, gói bảo hiểm, bảo hiểm sức khỏe, bảo hiểm ô tô',
-        type: 'website'
+        description:
+          'Khám phá các sản phẩm bảo hiểm của SecureGuard: bảo hiểm sức khỏe, nhân thọ, ô tô, du lịch, doanh nghiệp. Lựa chọn phù hợp cho mọi nhu cầu bảo vệ.',
+        keywords:
+          'sản phẩm bảo hiểm, gói bảo hiểm, bảo hiểm sức khỏe, bảo hiểm ô tô',
+        type: 'website',
       }),
 
       contact: (): SEOConfig => ({
         title: 'Liên hệ tư vấn bảo hiểm',
-        description: 'Liên hệ với đội ngũ chuyên gia SecureGuard Insurance để được tư vấn miễn phí. Hotline: 1800-BAO-HIEM. Hỗ trợ 24/7.',
+        description:
+          'Liên hệ với đội ngũ chuyên gia SecureGuard Insurance để được tư vấn miễn phí. Hotline: 1800-BAO-HIEM. Hỗ trợ 24/7.',
         keywords: 'liên hệ, tư vấn bảo hiểm, hotline, hỗ trợ khách hàng',
-        type: 'website'
+        type: 'website',
       }),
 
       blog: (title?: string, description?: string): SEOConfig => ({
         title: title || 'Tin tức & Kiến thức Bảo hiểm',
-        description: description || 'Cập nhật tin tức mới nhất về bảo hiểm, kiến thức hữu ích, mẹo tiết kiệm và lựa chọn sản phẩm bảo hiểm phù hợp.',
+        description:
+          description ||
+          'Cập nhật tin tức mới nhất về bảo hiểm, kiến thức hữu ích, mẹo tiết kiệm và lựa chọn sản phẩm bảo hiểm phù hợp.',
         keywords: 'tin tức bảo hiểm, kiến thức bảo hiểm, blog, mẹo tiết kiệm',
-        type: 'article'
-      })
+        type: 'article',
+      }),
     };
   }
 
@@ -263,65 +359,72 @@ export class SEOService {
       organization: (): StructuredData => ({
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        'name': 'SecureGuard Insurance',
-        'url': this.document.location.origin,
-        'logo': `${this.document.location.origin}/assets/images/logo.png`,
-        'contactPoint': {
+        name: 'SecureGuard Insurance',
+        url: this.document.location.origin,
+        logo: `${this.document.location.origin}/assets/images/logo.png`,
+        contactPoint: {
           '@type': 'ContactPoint',
-          'telephone': '+84-1800-BAO-HIEM',
-          'contactType': 'customer service'
+          telephone: '+84-1800-BAO-HIEM',
+          contactType: 'customer service',
         },
-        'address': {
+        address: {
           '@type': 'PostalAddress',
-          'streetAddress': '123 Đường Bảo Hiểm',
-          'addressLocality': 'Hà Nội',
-          'addressCountry': 'VN'
-        }
+          streetAddress: '123 Đường Bảo Hiểm',
+          addressLocality: 'Hà Nội',
+          addressCountry: 'VN',
+        },
       }),
 
       website: (): StructuredData => ({
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        'name': 'SecureGuard Insurance',
-        'url': this.document.location.origin,
-        'potentialAction': {
+        name: 'SecureGuard Insurance',
+        url: this.document.location.origin,
+        potentialAction: {
           '@type': 'SearchAction',
-          'target': `${this.document.location.origin}/search?q={search_term_string}`,
-          'query-input': 'required name=search_term_string'
-        }
+          target: `${this.document.location.origin}/search?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
       }),
 
-      breadcrumb: (items: Array<{name: string, url: string}>): StructuredData => ({
+      breadcrumb: (
+        items: Array<{ name: string; url: string }>,
+      ): StructuredData => ({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
-        'itemListElement': items.map((item, index) => ({
+        itemListElement: items.map((item, index) => ({
           '@type': 'ListItem',
-          'position': index + 1,
-          'name': item.name,
-          'item': `${this.document.location.origin}${item.url}`
-        }))
+          position: index + 1,
+          name: item.name,
+          item: `${this.document.location.origin}${item.url}`,
+        })),
       }),
 
-      article: (title: string, description: string, publishedTime: string, author: string = 'SecureGuard Team'): StructuredData => ({
+      article: (
+        title: string,
+        description: string,
+        publishedTime: string,
+        author: string = 'SecureGuard Team',
+      ): StructuredData => ({
         '@context': 'https://schema.org',
         '@type': 'Article',
-        'headline': title,
-        'description': description,
-        'author': {
+        headline: title,
+        description: description,
+        author: {
           '@type': 'Person',
-          'name': author
+          name: author,
         },
-        'publisher': {
+        publisher: {
           '@type': 'Organization',
-          'name': 'SecureGuard Insurance',
-          'logo': {
+          name: 'SecureGuard Insurance',
+          logo: {
             '@type': 'ImageObject',
-            'url': `${this.document.location.origin}/assets/images/logo.png`
-          }
+            url: `${this.document.location.origin}/assets/images/logo.png`,
+          },
         },
-        'datePublished': publishedTime,
-        'dateModified': publishedTime
-      })
+        datePublished: publishedTime,
+        dateModified: publishedTime,
+      }),
     };
   }
 }
