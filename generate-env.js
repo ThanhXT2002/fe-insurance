@@ -29,7 +29,7 @@ const devEnvContent = `export const environment = {
   seoAuthor: '${process.env.SEO_AUTHOR || "XTBH Team"}',
   seoPublishedTime: '${process.env.SEO_PUBLISHED_TIME || "2025-07-01T00:00:00.000Z"}',
   seoModifiedTime: '${process.env.SEO_MODIFIED_TIME || "2025-09-30T00:00:00.000Z"}',
-
+  seoLocale: 'vi_VN',
 };`;
 
 // Production environment file
@@ -55,7 +55,7 @@ const prodEnvContent = `export const environment = {
   seoAuthor: '${process.env.SEO_AUTHOR || "XTBH Team"}',
   seoPublishedTime: '${process.env.SEO_PUBLISHED_TIME || "2025-07-01T00:00:00.000Z"}',
   seoModifiedTime: '${process.env.SEO_MODIFIED_TIME || "2025-09-30T00:00:00.000Z"}',
-
+  seoLocale: 'vi_VN',
 };`;
 
 // Write both environment files

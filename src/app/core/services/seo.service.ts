@@ -9,11 +9,22 @@ export interface SEOConfig {
   keywords?: string;
   image?: string;
   url?: string;
+  canonicalUrl?: string;
   type?: 'website' | 'article' | 'product';
   siteName?: string;
   author?: string;
   publishedTime?: string;
   modifiedTime?: string;
+  // Additional social/SEO helpers
+  noindex?: boolean;
+  nofollow?: boolean;
+  ogLocale?: string; // e.g. 'vi_VN'
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  twitterSite?: string; // e.g. '@xtbh'
+  twitterCreator?: string; // e.g. '@author'
+  fbAppId?: string;
 }
 
 export interface StructuredData {
@@ -86,6 +97,14 @@ export class SEOService {
 
     // Additional SEO tags
     this.setAdditionalMeta(fullConfig, currentUrl);
+
+    // Robots handling (noindex/nofollow)
+    if (fullConfig.noindex || fullConfig.nofollow) {
+      const robotsParts: string[] = [];
+      robotsParts.push(fullConfig.noindex ? 'noindex' : 'index');
+      robotsParts.push(fullConfig.nofollow ? 'nofollow' : 'follow');
+      this.setRobots(robotsParts.join(', '));
+    }
   }
 
   /**
@@ -230,6 +249,25 @@ export class SEOService {
         ? config.image
         : `${this.document.location.origin}${config.image}`;
       this.meta.updateTag({ property: 'og:image', content: imageUrl });
+      // image alt and dimensions
+      if (config.imageAlt) {
+        this.meta.updateTag({
+          property: 'og:image:alt',
+          content: config.imageAlt,
+        });
+      }
+      if (config.imageWidth) {
+        this.meta.updateTag({
+          property: 'og:image:width',
+          content: String(config.imageWidth),
+        });
+      }
+      if (config.imageHeight) {
+        this.meta.updateTag({
+          property: 'og:image:height',
+          content: String(config.imageHeight),
+        });
+      }
     }
 
     this.meta.updateTag({
@@ -240,6 +278,16 @@ export class SEOService {
       property: 'og:type',
       content: config.type || 'website',
     });
+
+    // Locale
+    if (config.ogLocale) {
+      this.meta.updateTag({ property: 'og:locale', content: config.ogLocale });
+    }
+
+    // Facebook App ID (optional)
+    if (config.fbAppId) {
+      this.meta.updateTag({ property: 'fb:app_id', content: config.fbAppId });
+    }
 
     if (config.siteName) {
       this.meta.updateTag({
@@ -271,6 +319,21 @@ export class SEOService {
         ? config.image
         : `${this.document.location.origin}${config.image}`;
       this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+    }
+
+    // twitter site and creator
+    if (config.twitterSite) {
+      this.meta.updateTag({
+        name: 'twitter:site',
+        content: config.twitterSite,
+      });
+    }
+
+    if (config.twitterCreator) {
+      this.meta.updateTag({
+        name: 'twitter:creator',
+        content: config.twitterCreator,
+      });
     }
   }
 
@@ -312,6 +375,10 @@ export class SEOService {
         keywords:
           'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm nhân thọ, bảo hiểm tài sản, SecureGuard',
         type: 'website',
+        image: this.defaultConfig.image,
+        url: this.defaultConfig.url,
+        siteName: this.defaultConfig.siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       about: (): SEOConfig => ({
@@ -321,6 +388,10 @@ export class SEOService {
         keywords:
           'giới thiệu, về chúng tôi, SecureGuard Insurance, công ty bảo hiểm',
         type: 'website',
+        image: this.defaultConfig.image,
+        url: `${this.defaultConfig.url}/about`,
+        siteName: this.defaultConfig.siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       products: (): SEOConfig => ({
@@ -330,6 +401,10 @@ export class SEOService {
         keywords:
           'sản phẩm bảo hiểm, gói bảo hiểm, bảo hiểm sức khỏe, bảo hiểm ô tô',
         type: 'website',
+        image: this.defaultConfig.image,
+        url: `${this.defaultConfig.url}/products`,
+        siteName: this.defaultConfig.siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       contact: (): SEOConfig => ({
@@ -338,6 +413,10 @@ export class SEOService {
           'Liên hệ với đội ngũ chuyên gia SecureGuard Insurance để được tư vấn miễn phí. Hotline: 1800-BAO-HIEM. Hỗ trợ 24/7.',
         keywords: 'liên hệ, tư vấn bảo hiểm, hotline, hỗ trợ khách hàng',
         type: 'website',
+        image: this.defaultConfig.image,
+        url: `${this.defaultConfig.url}/contact`,
+        siteName: this.defaultConfig.siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       blog: (title?: string, description?: string): SEOConfig => ({
@@ -347,84 +426,12 @@ export class SEOService {
           'Cập nhật tin tức mới nhất về bảo hiểm, kiến thức hữu ích, mẹo tiết kiệm và lựa chọn sản phẩm bảo hiểm phù hợp.',
         keywords: 'tin tức bảo hiểm, kiến thức bảo hiểm, blog, mẹo tiết kiệm',
         type: 'article',
+        image: this.defaultConfig.image,
+        url: `${this.defaultConfig.url}/blog`,
+        siteName: this.defaultConfig.siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
       }),
     };
   }
 
-  /**
-   * Structured data generators
-   */
-  getStructuredData() {
-    return {
-      organization: (): StructuredData => ({
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'SecureGuard Insurance',
-        url: this.document.location.origin,
-        logo: `${this.document.location.origin}/assets/images/logo.png`,
-        contactPoint: {
-          '@type': 'ContactPoint',
-          telephone: '+84-1800-BAO-HIEM',
-          contactType: 'customer service',
-        },
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: '123 Đường Bảo Hiểm',
-          addressLocality: 'Hà Nội',
-          addressCountry: 'VN',
-        },
-      }),
-
-      website: (): StructuredData => ({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'SecureGuard Insurance',
-        url: this.document.location.origin,
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: `${this.document.location.origin}/search?q={search_term_string}`,
-          'query-input': 'required name=search_term_string',
-        },
-      }),
-
-      breadcrumb: (
-        items: Array<{ name: string; url: string }>,
-      ): StructuredData => ({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: items.map((item, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          name: item.name,
-          item: `${this.document.location.origin}${item.url}`,
-        })),
-      }),
-
-      article: (
-        title: string,
-        description: string,
-        publishedTime: string,
-        author: string = 'SecureGuard Team',
-      ): StructuredData => ({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: title,
-        description: description,
-        author: {
-          '@type': 'Person',
-          name: author,
-        },
-        publisher: {
-          '@type': 'Organization',
-          name: 'SecureGuard Insurance',
-          logo: {
-            '@type': 'ImageObject',
-            url: `${this.document.location.origin}/assets/images/logo.png`,
-          },
-        },
-        datePublished: publishedTime,
-        dateModified: publishedTime,
-      }),
-    };
-  }
 }
