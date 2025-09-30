@@ -582,15 +582,20 @@ export class SEOService {
       // For homepage we prefer the canonical site-level title/description from environment
       // so we return an empty preset and let defaultConfig carry the canonical values.
       homepage: (): SEOConfig => ({
-        // no explicit title here — use defaultConfig.title (canonical site title)
-        title: 'Trang chủ',
-        description: baseDesc,
-        keywords: baseKeywords,
+        // Use canonical site title from environment but keep this preset's
+        // description/keywords exactly as provided by the user.
+        title: this.defaultConfig.title || siteName,
+        description:
+          'XTBH cung cấp giải pháp bảo hiểm uy tín, bảo vệ sức khỏe, tài sản, doanh nghiệp và cá nhân. Đăng ký nhanh, hỗ trợ tận tâm.',
+        keywords:
+          'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm tài sản, bảo hiểm doanh nghiệp, bảo hiểm xe máy - ô tô, XTBH',
         type: 'website',
         image: baseImage,
         url: baseUrl,
         siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
+        // suggest large image preview on robots
+        maxImagePreview: 'large',
       }),
 
       about: (): SEOConfig => ({
@@ -606,10 +611,10 @@ export class SEOService {
 
       products: (): SEOConfig => ({
         title: 'Sản phẩm',
-        description: `Danh mục sản phẩm bảo hiểm tại ${siteName}. ${baseDesc}`,
-        keywords: baseKeywords
-          ? `${baseKeywords}, sản phẩm, bảo hiểm`
-          : 'sản phẩm, bảo hiểm',
+        description:
+          'Danh mục sản phẩm bảo hiểm tại XTBH. XTBH cung cấp giải pháp bảo hiểm uy tín, bảo vệ sức khỏe, tài sản, doanh nghiệp và cá nhân. Đăng ký nhanh, hỗ trợ tận tâm.',
+        keywords:
+          'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm tài sản, bảo hiểm doanh nghiệp, bảo hiểm xe máy - ô tô, XTBH, sản phẩm, bảo hiểm',
         type: 'website',
         image: baseImage,
         url: `${baseUrl}/products`,
