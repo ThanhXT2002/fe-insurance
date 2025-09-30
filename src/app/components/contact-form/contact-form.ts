@@ -62,12 +62,11 @@ export class ContactForm {
         // Xử lý phản hồi thành công từ server
         this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Gửi liên hệ thành công!' });
         this.form.reset(); // Đặt lại biểu mẫu sau khi gửi thành công
+         this.isLoading = false;
       },
       error: (error) => {
         // Xử lý lỗi từ server
         this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Đã xảy ra lỗi khi gửi liên hệ. Vui lòng thử lại sau.' });
-      },
-      complete: () => {
         this.isLoading = false;
       }
     });
