@@ -249,6 +249,27 @@ export class SEOService {
         ? config.image
         : `${this.document.location.origin}${config.image}`;
       this.meta.updateTag({ property: 'og:image', content: imageUrl });
+      // Add additional image tags to improve compatibility with crawlers (Zalo, some messengers)
+      this.meta.updateTag({ property: 'og:image:url', content: imageUrl });
+      this.meta.updateTag({
+        property: 'og:image:secure_url',
+        content: imageUrl,
+      });
+      // Optional: content type if available (assume image/webp for modern assets)
+      this.meta.updateTag({ property: 'og:image:type', content: 'image/webp' });
+
+      // Also ensure a link rel="image_src" is present for older crawlers
+      // Remove existing link[rel="image_src"] if any
+      const existingImageSrc = this.document.querySelector(
+        'link[rel="image_src"]',
+      );
+      if (existingImageSrc) {
+        existingImageSrc.remove();
+      }
+      const imageLink = this.document.createElement('link');
+      imageLink.setAttribute('rel', 'image_src');
+      imageLink.setAttribute('href', imageUrl);
+      this.document.head.appendChild(imageLink);
       // image alt and dimensions
       if (config.imageAlt) {
         this.meta.updateTag({
@@ -433,5 +454,4 @@ export class SEOService {
       }),
     };
   }
-
 }
