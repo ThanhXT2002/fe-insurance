@@ -1,8 +1,15 @@
 {
+  "version": 2,
+  "public": true,
   "buildCommand": "npm ci --legacy-peer-deps && npm run build:vercel",
   "rewrites": [
-    { "source": "/__/auth/handler", "destination": "/" }
+   { "source": "/(.*)", "destination": "/api" }
   ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "dist/fe-insurance/server/**/*"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
