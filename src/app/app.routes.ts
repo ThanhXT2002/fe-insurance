@@ -119,6 +119,12 @@ export const routes: Routes = [
           import('./pages/product-detail/product-detail').then(
             (m) => m.ProductDetail,
           ),
+        resolve: {
+          product: () =>
+            import('./core/resolvers/product-resolver').then(
+              (m) => m.ProductResolver,
+            ),
+        },
       },
       {
         path: 'profile',
@@ -137,7 +143,7 @@ export const routes: Routes = [
         path: 'settings',
         loadComponent: () =>
           import('./pages/settings/settings').then((m) => m.Settings),
-        data: { title: 'Cài đặt' }
+        data: { title: 'Cài đặt' },
       },
       {
         path: 'terms-of-service',
