@@ -12,11 +12,6 @@ export const routes: Routes = [
         data: { title: 'Home' },
       },
       {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home').then((m) => m.Home),
-        data: { title: 'Trang chủ' },
-      },
-      {
         path: 'about',
         loadComponent: () =>
           import('./pages/about-us/about-us').then((m) => m.AboutUs),
