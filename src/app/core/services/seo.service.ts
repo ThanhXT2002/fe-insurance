@@ -583,6 +583,7 @@ export class SEOService {
       // so we return an empty preset and let defaultConfig carry the canonical values.
       homepage: (): SEOConfig => ({
         // no explicit title here — use defaultConfig.title (canonical site title)
+        title: 'Trang chủ',
         description: baseDesc,
         keywords: baseKeywords,
         type: 'website',
