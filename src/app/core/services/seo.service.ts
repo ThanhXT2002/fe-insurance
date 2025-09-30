@@ -25,6 +25,18 @@ export interface SEOConfig {
   twitterSite?: string; // e.g. '@xtbh'
   twitterCreator?: string; // e.g. '@author'
   fbAppId?: string;
+  // Additional fields from header-chuẩn-seo.html
+  formatDetection?: string; // e.g. 'telephone=no'
+  maxImagePreview?: 'none' | 'standard' | 'large' | string; // used in robots meta: max-image-preview:large
+  fbPages?: string | string[];
+  articleAuthorUrl?: string; // absolute URL of author facebook/profile
+  articlePublisherUrl?: string; // absolute URL of publisher FB page
+  resourceType?: string; // e.g. 'Document'
+  distribution?: string; // e.g. 'Global'
+  revisitAfter?: string; // e.g. '1 days'
+  contentLanguage?: string; // e.g. 'vi'
+  appleMobileWebAppCapable?: string; // e.g. 'yes'
+  appleMobileWebAppTitle?: string;
 }
 
 export interface StructuredData {
@@ -78,7 +90,16 @@ export class SEOService {
       ...presetConfig,
       ...config,
     };
-    const currentUrl = `${this.document.location.origin}${this.router.url}`;
+    // Compute current URL in a safe way. During very early server initialization
+    // Router may not have a resolved url yet; fall back to environment.seoUrl.
+    let currentUrl = environment.seoUrl || '';
+    try {
+      if (this.document?.location?.origin && this.router?.url) {
+        currentUrl = `${this.document.location.origin}${this.router.url}`;
+      }
+    } catch (e) {
+      // ignore and use fallback
+    }
 
     // Set page title
     const pageTitle = fullConfig.title
@@ -99,12 +120,14 @@ export class SEOService {
     this.setAdditionalMeta(fullConfig, currentUrl);
 
     // Robots handling (noindex/nofollow)
-    if (fullConfig.noindex || fullConfig.nofollow) {
-      const robotsParts: string[] = [];
-      robotsParts.push(fullConfig.noindex ? 'noindex' : 'index');
-      robotsParts.push(fullConfig.nofollow ? 'nofollow' : 'follow');
-      this.setRobots(robotsParts.join(', '));
+    // Always set robots baseline and optionally include max-image-preview
+    const robotsParts: string[] = [];
+    robotsParts.push(fullConfig.noindex ? 'noindex' : 'index');
+    robotsParts.push(fullConfig.nofollow ? 'nofollow' : 'follow');
+    if (fullConfig.maxImagePreview) {
+      robotsParts.push(`max-image-preview:${fullConfig.maxImagePreview}`);
     }
+    this.setRobots(robotsParts.join(', '));
   }
 
   /**
@@ -142,6 +165,39 @@ export class SEOService {
    */
   setDescription(description: string): void {
     this.meta.updateTag({ name: 'description', content: description });
+    this.createOrUpdateMeta('name', 'description', description);
+  }
+
+  /**
+   * Ensure a meta tag exists in the DOM. This uses direct DOM manipulation as a
+   * fallback for server-side rendering so meta tags are serialized into the
+   * prerendered HTML even if Meta.updateTag doesn't create them in time.
+   */
+  private createOrUpdateMeta(
+    attr: 'name' | 'property' | 'http-equiv',
+    key: string,
+    content?: string,
+  ): void {
+    if (!content) return;
+    try {
+      const selector =
+        attr === 'http-equiv'
+          ? `meta[http-equiv="${key}"]`
+          : `meta[${attr}="${key}"]`;
+      const existing = this.document.head.querySelector(
+        selector,
+      ) as HTMLMetaElement | null;
+      if (existing) {
+        existing.setAttribute('content', content);
+        return;
+      }
+      const meta = this.document.createElement('meta');
+      meta.setAttribute(attr, key);
+      meta.setAttribute('content', content);
+      this.document.head.appendChild(meta);
+    } catch (e) {
+      // ignore DOM issues in non-browser environments
+    }
   }
 
   /**
@@ -183,6 +239,7 @@ export class SEOService {
     link.setAttribute('rel', 'canonical');
     link.setAttribute('href', canonicalUrl);
     this.document.head.appendChild(link);
+    // also ensure <link rel="canonical"> is present as link element already added
   }
 
   /**
@@ -190,6 +247,7 @@ export class SEOService {
    */
   setRobots(robots: string = 'index, follow'): void {
     this.meta.updateTag({ name: 'robots', content: robots });
+    this.createOrUpdateMeta('name', 'robots', robots);
   }
 
   /**
@@ -221,14 +279,64 @@ export class SEOService {
   private setBasicMeta(config: SEOConfig): void {
     if (config.description) {
       this.meta.updateTag({ name: 'description', content: config.description });
+      this.createOrUpdateMeta('name', 'description', config.description);
     }
 
     if (config.keywords) {
       this.meta.updateTag({ name: 'keywords', content: config.keywords });
+      this.createOrUpdateMeta('name', 'keywords', config.keywords);
     }
 
     if (config.author) {
       this.meta.updateTag({ name: 'author', content: config.author });
+      this.createOrUpdateMeta('name', 'author', config.author);
+    }
+    // mobile / apple tags
+    if (config.appleMobileWebAppCapable) {
+      this.meta.updateTag({
+        name: 'apple-mobile-web-app-capable',
+        content: config.appleMobileWebAppCapable,
+      });
+      this.createOrUpdateMeta(
+        'name',
+        'apple-mobile-web-app-capable',
+        config.appleMobileWebAppCapable,
+      );
+    }
+    if (config.appleMobileWebAppTitle) {
+      this.meta.updateTag({
+        name: 'apple-mobile-web-app-title',
+        content: config.appleMobileWebAppTitle,
+      });
+      this.createOrUpdateMeta(
+        'name',
+        'apple-mobile-web-app-title',
+        config.appleMobileWebAppTitle,
+      );
+    }
+    // format-detection
+    if (config.formatDetection) {
+      this.meta.updateTag({
+        name: 'format-detection',
+        content: config.formatDetection,
+      });
+      this.createOrUpdateMeta(
+        'name',
+        'format-detection',
+        config.formatDetection,
+      );
+    }
+    // content language
+    if (config.contentLanguage) {
+      this.meta.updateTag({
+        'http-equiv': 'content-language',
+        content: config.contentLanguage,
+      });
+      this.createOrUpdateMeta(
+        'http-equiv',
+        'content-language',
+        config.contentLanguage,
+      );
     }
   }
 
@@ -249,12 +357,15 @@ export class SEOService {
         ? config.image
         : `${this.document.location.origin}${config.image}`;
       this.meta.updateTag({ property: 'og:image', content: imageUrl });
+      this.createOrUpdateMeta('property', 'og:image', imageUrl);
       // Add additional image tags to improve compatibility with crawlers (Zalo, some messengers)
       this.meta.updateTag({ property: 'og:image:url', content: imageUrl });
+      this.createOrUpdateMeta('property', 'og:image:url', imageUrl);
       this.meta.updateTag({
         property: 'og:image:secure_url',
         content: imageUrl,
       });
+      this.createOrUpdateMeta('property', 'og:image:secure_url', imageUrl);
       // Optional: content type if available (assume image/webp for modern assets)
       this.meta.updateTag({ property: 'og:image:type', content: 'image/webp' });
 
@@ -276,18 +387,29 @@ export class SEOService {
           property: 'og:image:alt',
           content: config.imageAlt,
         });
+        this.createOrUpdateMeta('property', 'og:image:alt', config.imageAlt);
       }
       if (config.imageWidth) {
         this.meta.updateTag({
           property: 'og:image:width',
           content: String(config.imageWidth),
         });
+        this.createOrUpdateMeta(
+          'property',
+          'og:image:width',
+          String(config.imageWidth),
+        );
       }
       if (config.imageHeight) {
         this.meta.updateTag({
           property: 'og:image:height',
           content: String(config.imageHeight),
         });
+        this.createOrUpdateMeta(
+          'property',
+          'og:image:height',
+          String(config.imageHeight),
+        );
       }
     }
 
@@ -295,19 +417,33 @@ export class SEOService {
       property: 'og:url',
       content: config.url || currentUrl,
     });
+    this.createOrUpdateMeta('property', 'og:url', config.url || currentUrl);
     this.meta.updateTag({
       property: 'og:type',
       content: config.type || 'website',
     });
+    this.createOrUpdateMeta('property', 'og:type', config.type || 'website');
 
     // Locale
     if (config.ogLocale) {
       this.meta.updateTag({ property: 'og:locale', content: config.ogLocale });
+      this.createOrUpdateMeta('property', 'og:locale', config.ogLocale);
     }
 
     // Facebook App ID (optional)
     if (config.fbAppId) {
       this.meta.updateTag({ property: 'fb:app_id', content: config.fbAppId });
+      this.createOrUpdateMeta('property', 'fb:app_id', config.fbAppId);
+    }
+
+    // Facebook pages
+    if (config.fbPages) {
+      const pages = Array.isArray(config.fbPages)
+        ? config.fbPages
+        : [config.fbPages];
+      // set first fb:pages tag (most crawlers look for this)
+      this.meta.updateTag({ property: 'fb:pages', content: pages[0] });
+      this.createOrUpdateMeta('property', 'fb:pages', pages[0]);
     }
 
     if (config.siteName) {
@@ -315,6 +451,7 @@ export class SEOService {
         property: 'og:site_name',
         content: config.siteName,
       });
+      this.createOrUpdateMeta('property', 'og:site_name', config.siteName);
     }
   }
 
@@ -323,9 +460,11 @@ export class SEOService {
       name: 'twitter:card',
       content: 'summary_large_image',
     });
+    this.createOrUpdateMeta('name', 'twitter:card', 'summary_large_image');
 
     if (config.title) {
       this.meta.updateTag({ name: 'twitter:title', content: config.title });
+      this.createOrUpdateMeta('name', 'twitter:title', config.title);
     }
 
     if (config.description) {
@@ -333,6 +472,11 @@ export class SEOService {
         name: 'twitter:description',
         content: config.description,
       });
+      this.createOrUpdateMeta(
+        'name',
+        'twitter:description',
+        config.description,
+      );
     }
 
     if (config.image) {
@@ -340,6 +484,7 @@ export class SEOService {
         ? config.image
         : `${this.document.location.origin}${config.image}`;
       this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+      this.createOrUpdateMeta('name', 'twitter:image', imageUrl);
     }
 
     // twitter site and creator
@@ -348,6 +493,7 @@ export class SEOService {
         name: 'twitter:site',
         content: config.twitterSite,
       });
+      this.createOrUpdateMeta('name', 'twitter:site', config.twitterSite);
     }
 
     if (config.twitterCreator) {
@@ -355,6 +501,7 @@ export class SEOService {
         name: 'twitter:creator',
         content: config.twitterCreator,
       });
+      this.createOrUpdateMeta('name', 'twitter:creator', config.twitterCreator);
     }
   }
 
@@ -380,6 +527,42 @@ export class SEOService {
       });
     }
 
+    // article author/publisher
+    if (config.articleAuthorUrl) {
+      this.meta.updateTag({
+        property: 'article:author',
+        content: config.articleAuthorUrl,
+      });
+    }
+    if (config.articlePublisherUrl) {
+      this.meta.updateTag({
+        property: 'article:publisher',
+        content: config.articlePublisherUrl,
+      });
+    }
+
+    // Resource metadata and distribution
+    if (config.resourceType) {
+      this.meta.updateTag({
+        name: 'resource-type',
+        content: config.resourceType,
+      });
+    }
+    if (config.distribution) {
+      this.meta.updateTag({
+        name: 'distribution',
+        content: config.distribution,
+      });
+    }
+
+    // revisit-after
+    if (config.revisitAfter) {
+      this.meta.updateTag({
+        name: 'revisit-after',
+        content: config.revisitAfter,
+      });
+    }
+
     // Set canonical URL
     this.setCanonicalUrl(config.url || currentUrl);
   }
@@ -388,68 +571,59 @@ export class SEOService {
    * Predefined SEO configs cho các page types
    */
   getPageSEO() {
+    const siteName = this.defaultConfig.siteName || environment.seoSiteName;
+    const baseDesc =
+      this.defaultConfig.description || environment.seoDescription;
+    const baseKeywords = this.defaultConfig.keywords || environment.seoKeywords;
+    const baseImage = this.defaultConfig.image || environment.seoImage;
+    const baseUrl = this.defaultConfig.url || environment.seoUrl;
+
     return {
+      // For homepage we prefer the canonical site-level title/description from environment
+      // so we return an empty preset and let defaultConfig carry the canonical values.
       homepage: (): SEOConfig => ({
-        title: 'Bảo hiểm toàn diện cho cuộc sống an toàn',
-        description:
-          'SecureGuard Insurance cung cấp các giải pháp bảo hiểm toàn diện: sức khỏe, nhân thọ, tài sản, doanh nghiệp. Bảo vệ những điều quan trọng nhất với quy trình nhanh chóng, minh bạch.',
-        keywords:
-          'bảo hiểm, bảo hiểm sức khỏe, bảo hiểm nhân thọ, bảo hiểm tài sản, SecureGuard',
+        // no explicit title here — use defaultConfig.title (canonical site title)
+        description: baseDesc,
+        keywords: baseKeywords,
         type: 'website',
-        image: this.defaultConfig.image,
-        url: this.defaultConfig.url,
-        siteName: this.defaultConfig.siteName,
+        image: baseImage,
+        url: baseUrl,
+        siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       about: (): SEOConfig => ({
-        title: 'Giới thiệu về SecureGuard Insurance',
-        description:
-          'Tìm hiểu về SecureGuard Insurance - công ty bảo hiểm hàng đầu Việt Nam với hơn 10 năm kinh nghiệm, cam kết bảo vệ khách hàng với dịch vụ chuyên nghiệp.',
-        keywords:
-          'giới thiệu, về chúng tôi, SecureGuard Insurance, công ty bảo hiểm',
+        title: 'Giới thiệu',
+        description: `Giới thiệu về ${siteName}. ${baseDesc}`,
+        keywords: baseKeywords ? `${baseKeywords}, giới thiệu` : 'giới thiệu',
         type: 'website',
-        image: this.defaultConfig.image,
-        url: `${this.defaultConfig.url}/about`,
-        siteName: this.defaultConfig.siteName,
+        image: baseImage,
+        url: `${baseUrl}/about`,
+        siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       products: (): SEOConfig => ({
-        title: 'Sản phẩm bảo hiểm đa dạng',
-        description:
-          'Khám phá các sản phẩm bảo hiểm của SecureGuard: bảo hiểm sức khỏe, nhân thọ, ô tô, du lịch, doanh nghiệp. Lựa chọn phù hợp cho mọi nhu cầu bảo vệ.',
-        keywords:
-          'sản phẩm bảo hiểm, gói bảo hiểm, bảo hiểm sức khỏe, bảo hiểm ô tô',
+        title: 'Sản phẩm',
+        description: `Danh mục sản phẩm bảo hiểm tại ${siteName}. ${baseDesc}`,
+        keywords: baseKeywords
+          ? `${baseKeywords}, sản phẩm, bảo hiểm`
+          : 'sản phẩm, bảo hiểm',
         type: 'website',
-        image: this.defaultConfig.image,
-        url: `${this.defaultConfig.url}/products`,
-        siteName: this.defaultConfig.siteName,
+        image: baseImage,
+        url: `${baseUrl}/products`,
+        siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
       }),
 
       contact: (): SEOConfig => ({
-        title: 'Liên hệ tư vấn bảo hiểm',
-        description:
-          'Liên hệ với đội ngũ chuyên gia SecureGuard Insurance để được tư vấn miễn phí. Hotline: 1800-BAO-HIEM. Hỗ trợ 24/7.',
-        keywords: 'liên hệ, tư vấn bảo hiểm, hotline, hỗ trợ khách hàng',
+        title: 'Liên hệ',
+        description: `Liên hệ ${siteName} để được tư vấn và hỗ trợ về các giải pháp bảo hiểm. ${baseDesc}`,
+        keywords: baseKeywords ? `${baseKeywords}, liên hệ` : 'liên hệ',
         type: 'website',
-        image: this.defaultConfig.image,
-        url: `${this.defaultConfig.url}/contact`,
-        siteName: this.defaultConfig.siteName,
-        ogLocale: environment.seoLocale || 'vi_VN',
-      }),
-
-      blog: (title?: string, description?: string): SEOConfig => ({
-        title: title || 'Tin tức & Kiến thức Bảo hiểm',
-        description:
-          description ||
-          'Cập nhật tin tức mới nhất về bảo hiểm, kiến thức hữu ích, mẹo tiết kiệm và lựa chọn sản phẩm bảo hiểm phù hợp.',
-        keywords: 'tin tức bảo hiểm, kiến thức bảo hiểm, blog, mẹo tiết kiệm',
-        type: 'article',
-        image: this.defaultConfig.image,
-        url: `${this.defaultConfig.url}/blog`,
-        siteName: this.defaultConfig.siteName,
+        image: baseImage,
+        url: `${baseUrl}/contact`,
+        siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
       }),
     };
