@@ -134,10 +134,6 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
     }
   }
 
-  /**
-   * Returns whether there are more items to load based on total returned by API
-   */
-  // hasMore is exposed as a computed signal above
 
   /**
    * Refresh the list: reset pagination and reload first page.

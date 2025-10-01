@@ -1,12 +1,10 @@
 <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-  @for(item of limitedProducts(); track item.id) {
+
+   @for(item of limitedProducts(); track item.id) {
     <div
      (click)="onProductClick(item.slug)"
-    class="product-card group relative bg-white rounded-t-3xl rounded-e-3xl shadow-sm drop-shadow-lg p-5 md:p-7 lg:p-10 transition-all duration-500 hover:shadow-xl overflow-hidden">
-      <!-- Gradient overlay for hover effect with dynamic rounded - initially transparent -->
+    class="product-card group  bg-white rounded-t-3xl rounded-e-3xl shadow-sm drop-shadow-lg p-5 md:p-7 lg:p-10 transition-all duration-500 hover:shadow-xl overflow-hidden">
       <div class="gradient-overlay absolute inset-0 bg-transparent group-hover:bg-gradient-to-br group-hover:from-primary group-hover:via-primary/90 group-hover:to-secondary"></div>
-
-      <!-- Content wrapper with relative positioning -->
       <div
       class="relative z-10 flex h-full cursor-pointer">
         <app-icon-box-wrapper
@@ -37,6 +35,14 @@
       </div>
     </div>
   }
+
+  @if(loading() || loadingMore()) {
+    @for(i of skeletonArray; track $index) {
+      <app-product-card-skeleton></app-product-card-skeleton>
+    }
+  }
+
+
 </div>
 
 

@@ -1,6 +1,6 @@
 <div class="py-20 bg-white">
   <div class="container-layer">
-    <app-product-list [items]="products()" />
+    <app-product-list [items]="products()"  [loading]="loading()" [loadingMore]="loadingMore()"   />
 
     @if(hasMore()){
       <div class="mt-8 flex justify-center" >
