@@ -1,1 +1,6 @@
-<p>product-detail works!</p>
+@if (data(); as product) {
+  <app-breadcrumb-img
+    [title]="product.name || ''"
+    [bgUrl]="product.imgs?.[0] || 'assets/images/banners/page-header-bg.jpg'"
+  />
+}

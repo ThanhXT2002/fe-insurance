@@ -28,7 +28,7 @@ export const productResolver: ResolveFn<ProductItem | null> = (
 
   // Chuyển Promise thành Observable với timeout ngắn để tránh block navigation
   return from(store.load(slug)).pipe(
-    timeout(800), // Chỉ chờ 800ms, sau đó fallback về component load
+    timeout(500), // Chỉ chờ 500ms, sau đó fallback về component load
     catchError(() => {
       // Timeout hoặc lỗi → trả về null, component sẽ tự handle
       return of(null);
