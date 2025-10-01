@@ -7,12 +7,13 @@ import { DrawerHeader } from "./drawer-header/drawer-header";
 import { MenuService } from '../../core/services/api/menu';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
 import { BtnAuthNavigation } from "./btn-auth-navigation/btn-auth-navigation";
+import { ProgressLoading } from "../progress-loading/progress-loading";
 
 
 
 @Component({
   selector: 'app-header',
-  imports: [Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader, BtnAuthNavigation],
+  imports: [Logo, RouterLink, RouterLinkActive, CommonModule, DrawerHeader, BtnAuthNavigation, ProgressLoading],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

@@ -2,6 +2,7 @@ import { Component, computed, inject, input, Signal } from '@angular/core';
 import { IconBoxWrapper } from '../icon-box-wrapper/icon-box-wrapper';
 import { Router } from '@angular/router';
 import { ProductCardSkeleton } from "../product-card-skeleton/product-card-skeleton";
+import { LoadingService } from '@/core/services/loading.service';
 
 
 
@@ -13,6 +14,7 @@ import { ProductCardSkeleton } from "../product-card-skeleton/product-card-skele
   styleUrl: './product-list.scss',
 })
 export class ProductList {
+  private loadingService = inject(LoadingService);
   private router = inject(Router);
   // Nhận danh sách sản phẩm từ component cha thông qua input
   readonly items = input<Array<any> | undefined>(undefined);
@@ -54,6 +56,7 @@ export class ProductList {
   });
 
   onProductClick(slug:string){
+    this.loadingService.show();
     this.router.navigate(['/product', slug]);
   }
 }

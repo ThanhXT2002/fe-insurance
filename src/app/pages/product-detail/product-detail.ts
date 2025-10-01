@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SEOService } from '../../core/services/seo.service';
 import { ProductDetailStore } from '../../core/store/products/product-detail.store';
 import { environment } from '../../../environments/environment';
+import { LoadingService } from '@/core/services/loading.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,8 +15,9 @@ export class ProductDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly seo = inject(SEOService);
   private readonly store = inject(ProductDetailStore);
+  private loadingService = inject(LoadingService);
 
-  ngOnInit(): void {
+  constructor() {
     // Lắng nghe dữ liệu từ resolver (quan trọng cho SSR)
     this.route.data.subscribe((data) => {
       try {
@@ -32,6 +34,11 @@ export class ProductDetail implements OnInit {
         // Bỏ qua lỗi để không làm crash trang
       }
     });
+    this.loadingService.hide();
+  }
+
+  ngOnInit(): void {
+
   }
 
   /**
