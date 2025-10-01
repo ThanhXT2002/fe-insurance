@@ -1,0 +1,56 @@
+[
+  {
+    "id": 0,
+    "label": "Bảo hiểm TNDS xe máy",
+    "icon": "ri-home-4-line",
+    "link": "/product/bao-hiem-trach-nhiem-dan-su-xe-may",
+    "isBlank": false,
+    "note": "Trang chính",
+    "order": 1
+  },
+  {
+    "id": 1,
+    "label": "Bảo hiểm TNDS ô tô",
+    "icon": "ri-information-line",
+    "link": "/product/bao-hiem-trach-nhiem-dan-su-o-to",
+    "isBlank": false,
+    "note": "Thông tin về công ty",
+    "order": 2
+  },
+  {
+    "id": 2,
+    "label": "Bảo hiểm thân vỏ xe ô tô",
+    "icon": "ri-shopping-bag-3-line",
+    "link": "/product/bao-hiem-than-vo-xe-o-to",
+    "isBlank": false,
+    "note": "Danh sách sản phẩm",
+    "order": 3
+  },
+  {
+    "id": 3,
+    "label": "Bảo hiểm y tế",
+    "icon": "ri-article-line",
+    "link": "/product/bao-hiem-y-te",
+    "isBlank": false,
+    "note": "Bảo vệ sức khỏe toàn diện",
+    "order": 4
+  },
+  {
+    "id": 4,
+    "label": "Bảo hiểm nhân thọ",
+    "icon": "ri-contacts-line",
+    "link": "/product/bao-hiem-nhan-tho",
+    "isBlank": false,
+    "note": "Liên hệ với chúng tôi",
+    "order": 5
+  },
+  {
+    "id": 5,
+    "label": "Bảo hiểm tài sản",
+    "icon": "ri-contacts-line",
+    "link": "/product/bao-hiem-tai-san",
+    "isBlank": false,
+    "note": "Liên hệ với chúng tôi",
+    "order": 6
+  }
+]

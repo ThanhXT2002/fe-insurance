@@ -11,5 +11,8 @@ export class BreadcrumbImg {
   // Chỉ cần các thuộc tính cơ bản
   bgUrl = input<string>('assets/images/banners/page-header-bg.jpg');
   showOverlay = input<boolean>(true);
+  pageBeforeTitle = input<string>('');
+  pageBeforeLink = input<string>('');
   title = input<string>('');
+  
 }
