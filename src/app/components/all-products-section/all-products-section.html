@@ -5,8 +5,9 @@
     @if(hasMore()){
       <div class="mt-8 flex justify-center" >
          <app-btn-common
-          [text]="loadingMore() || loading() ? 'Đang tải...' : 'Tải thêm'"
+          [text]="loadingMore() || loading() ? '' : 'Tải thêm'"
           type="primary"
+          extraClass="!py-2.5 w-40 flex__middle"
           [isLoading]="loadingMore() || loading()"
           [disabled]="loadingMore() || loading()"
          (click)="loadMore()"
