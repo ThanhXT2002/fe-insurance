@@ -17,13 +17,15 @@ import { environment } from '../../../environments/environment';
       downloadFileName="privacy-policy.pdf"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrivacyPolicy {
   private privacyPolicyService = inject(PrivacyPolicyService);
   private readonly seo = inject(SEOService);
 
-  readonly dataSource = computed(() => this.privacyPolicyService.getPrivacyPolicyData());
+  readonly dataSource = computed(() =>
+    this.privacyPolicyService.getPrivacyPolicyData(),
+  );
 
   constructor() {
     // Set SEO with server-safe URL resolution
@@ -38,7 +40,9 @@ export class PrivacyPolicy {
           const baseUrl = isServer
             ? environment.seoUrl || 'https://xtbh.tranxuanthanhtxt.com'
             : '';
-          const fullUrl = isServer ? `${baseUrl}/privacy-policy` : '/privacy-policy';
+          const fullUrl = isServer
+            ? `${baseUrl}/privacy-policy`
+            : '/privacy-policy';
 
           this.seo.setSEO({
             title: data.title || 'Chính sách bảo mật',

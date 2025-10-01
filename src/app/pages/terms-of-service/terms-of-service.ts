@@ -21,7 +21,9 @@ export class TermsOfService {
   private readonly termOfServiceService = inject(TermOfServiceService);
   private readonly seo = inject(SEOService);
 
-  readonly dataSource = computed(() => this.termOfServiceService.getTermOfServiceData());
+  readonly dataSource = computed(() =>
+    this.termOfServiceService.getTermOfServiceData(),
+  );
 
   constructor() {
     // Set SEO with server-safe URL resolution
@@ -36,7 +38,9 @@ export class TermsOfService {
           const baseUrl = isServer
             ? environment.seoUrl || 'https://xtbh.tranxuanthanhtxt.com'
             : '';
-          const fullUrl = isServer ? `${baseUrl}/terms-of-service` : '/terms-of-service';
+          const fullUrl = isServer
+            ? `${baseUrl}/terms-of-service`
+            : '/terms-of-service';
 
           this.seo.setSEO({
             title: data.title || 'Điều khoản sử dụng',
