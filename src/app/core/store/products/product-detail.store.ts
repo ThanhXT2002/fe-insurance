@@ -91,18 +91,28 @@ export class ProductDetailStore extends BaseStoreSignal<ProductDetailState> {
 
     const p = (async () => {
       try {
+        console.log(`[ProductDetailStore] Loading product with slug: ${slug}`);
         // Dùng firstValueFrom thay cho toPromise() vì toPromise() đã bị deprecated
         const resp = await firstValueFrom(
           this.productsService.getProductBySlug(slug),
         );
-        // ApiResponse<ProductItem> hoặc trả trực tiếp; hỗ trợ cả hai dạng
+        console.log(`[ProductDetailStore] API Response:`, resp);
+
+        // Handle ApiResponse<ProductItem> structure
         const payload: any = resp;
         const data: ProductItem | null =
-          payload && payload.data ? payload.data : (payload ?? null);
-        // lưu vào cache
+          payload && payload.status && payload.data ? payload.data : null;
+
+        console.log(
+          `[ProductDetailStore] Extracted data:`,
+          data ? 'Found' : 'Null',
+        );
+
+        // lưu vào cache (even if null to prevent repeated calls)
         this.setEntry(slug, data);
         return data;
       } catch (err) {
+        console.error(`[ProductDetailStore] Error in load():`, err);
         // Không cache khi lỗi; trả về null
         return null;
       } finally {

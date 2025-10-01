@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, loginGuard } from './core/guards/auth.guard';
+import { productResolver } from './core/resolvers/product-resolver';
 
 export const routes: Routes = [
   {
@@ -120,10 +121,7 @@ export const routes: Routes = [
             (m) => m.ProductDetail,
           ),
         resolve: {
-          product: () =>
-            import('./core/resolvers/product-resolver').then(
-              (m) => m.ProductResolver,
-            ),
+          product: productResolver,
         },
       },
       {

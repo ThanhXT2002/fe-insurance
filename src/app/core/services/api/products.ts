@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, computed } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, catchError, of, timeout } from 'rxjs';
 import { ProductItem } from '../../interfaces/product.interface';
 import { env } from 'process';
 import { environment } from 'src/environments/environment';
@@ -41,11 +41,40 @@ export class ProductsService {
     );
   }
 
-  //endpoit get product detail by slug
+  //endpoint get product detail by slug with robust error handling for SSR
   getProductBySlug(slug: string): Observable<ApiResponse<ProductItem>> {
-    return this.http.get<ApiResponse<ProductItem>>(
-      `${this.apiUrl}/slug/${slug}`,
+    const isServer = typeof window === 'undefined';
+    console.log(
+      `[ProductsService] Environment: ${isServer ? 'Server' : 'Client'}`,
     );
+    console.log(`[ProductsService] Fetching product by slug: ${slug}`);
+    console.log(`[ProductsService] API URL: ${this.apiUrl}/slug/${slug}`);
+
+    return this.http
+      .get<ApiResponse<ProductItem>>(`${this.apiUrl}/slug/${slug}`)
+      .pipe(
+        timeout(5000), // 5 second timeout for SSR
+        catchError((error: HttpErrorResponse) => {
+          console.error(`[ProductsService] HTTP Error for slug ${slug}:`, {
+            status: error.status,
+            statusText: error.statusText,
+            message: error.message,
+            url: error.url,
+            name: error.name,
+          });
+
+          // Return a proper ApiResponse structure that won't break the resolver
+          const emptyResponse: ApiResponse<ProductItem> = {
+            status: false,
+            code: error.status || 500,
+            data: undefined,
+            message: `Failed to load product: ${error.message}`,
+            timestamp: new Date().toISOString(),
+          };
+
+          return of(emptyResponse);
+        }),
+      );
   }
 
   /**
