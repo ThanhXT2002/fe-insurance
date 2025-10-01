@@ -94,9 +94,8 @@ export class SEOService {
     // Router may not have a resolved url yet; fall back to environment.seoUrl.
     let currentUrl = environment.seoUrl || '';
     try {
-      if (this.document?.location?.origin && this.router?.url) {
-        currentUrl = `${this.document.location.origin}${this.router.url}`;
-      }
+      const resolved = this.resolveUrl(this.router?.url || '');
+      if (resolved) currentUrl = resolved;
     } catch (e) {
       // ignore and use fallback
     }
@@ -204,42 +203,67 @@ export class SEOService {
    * Add structured data (JSON-LD) cho Google
    */
   addStructuredData(data: StructuredData): void {
-    const script = this.document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(data);
+    try {
+      const script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      // JSON.stringify may throw on circular refs
+      script.text = JSON.stringify(data);
 
-    // Remove existing structured data
-    const existingScript = this.document.querySelector(
-      'script[type="application/ld+json"]',
-    );
-    if (existingScript) {
-      existingScript.remove();
+      // Remove all existing structured data scripts to avoid duplicates
+      const existingScripts = this.document.querySelectorAll(
+        'script[type="application/ld+json"]',
+      );
+      existingScripts.forEach((s) => s.remove());
+
+      this.document.head.appendChild(script);
+    } catch (e) {
+      // Avoid throwing in production for malformed structured data or on server
+      // environments where document may not be available.
+      // eslint-disable-next-line no-console
+      console.warn('Failed to add structured data', e);
     }
-
-    this.document.head.appendChild(script);
   }
 
   /**
    * Set canonical URL
    */
   setCanonicalUrl(url?: string): void {
-    const canonicalUrl =
-      url || `${this.document.location.origin}${this.router.url}`;
+    try {
+      const canonicalUrl =
+        url || `${this.document.location.origin}${this.router.url}`;
 
-    // Remove existing canonical
-    const existingCanonical = this.document.querySelector(
-      'link[rel="canonical"]',
-    );
-    if (existingCanonical) {
-      existingCanonical.remove();
+      // Remove existing canonical
+      const existingCanonical = this.document.querySelector(
+        'link[rel="canonical"]',
+      );
+      if (existingCanonical) {
+        existingCanonical.remove();
+      }
+
+      // Add new canonical
+      const link = this.document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      link.setAttribute('href', canonicalUrl);
+      this.document.head.appendChild(link);
+    } catch (e) {
+      // ignore DOM issues in non-browser environments
     }
+  }
 
-    // Add new canonical
-    const link = this.document.createElement('link');
-    link.setAttribute('rel', 'canonical');
-    link.setAttribute('href', canonicalUrl);
-    this.document.head.appendChild(link);
-    // also ensure <link rel="canonical"> is present as link element already added
+  /**
+   * Resolve a possibly-relative URL to an absolute URL using document.location.origin.
+   * Falls back to returning the original value if resolution isn't possible.
+   */
+  private resolveUrl(path?: string): string | undefined {
+    if (!path) return undefined;
+    try {
+      if (path.startsWith('http')) return path;
+      if (this.document?.location?.origin)
+        return `${this.document.location.origin}${path}`;
+    } catch (e) {
+      // ignore
+    }
+    return path;
   }
 
   /**
@@ -353,9 +377,7 @@ export class SEOService {
     }
 
     if (config.image) {
-      const imageUrl = config.image.startsWith('http')
-        ? config.image
-        : `${this.document.location.origin}${config.image}`;
+      const imageUrl = this.resolveUrl(config.image) || config.image;
       this.meta.updateTag({ property: 'og:image', content: imageUrl });
       this.createOrUpdateMeta('property', 'og:image', imageUrl);
       // Add additional image tags to improve compatibility with crawlers (Zalo, some messengers)
@@ -480,9 +502,7 @@ export class SEOService {
     }
 
     if (config.image) {
-      const imageUrl = config.image.startsWith('http')
-        ? config.image
-        : `${this.document.location.origin}${config.image}`;
+      const imageUrl = this.resolveUrl(config.image) || config.image;
       this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
       this.createOrUpdateMeta('name', 'twitter:image', imageUrl);
     }
@@ -610,7 +630,7 @@ export class SEOService {
       }),
 
       products: (): SEOConfig => ({
-        title: 'Sản phẩm',
+        title: 'Dịch vụ - Sản phẩm',
         description:
           'Danh mục sản phẩm bảo hiểm tại XTBH. XTBH cung cấp giải pháp bảo hiểm uy tín, bảo vệ sức khỏe, tài sản, doanh nghiệp và cá nhân. Đăng ký nhanh, hỗ trợ tận tâm.',
         keywords:
@@ -629,6 +649,16 @@ export class SEOService {
         type: 'website',
         image: baseImage,
         url: `${baseUrl}/contact`,
+        siteName,
+        ogLocale: environment.seoLocale || 'vi_VN',
+      }),
+      posts: (): SEOConfig => ({
+        title: 'Bài viết',
+        description: `Khám phá các bài viết về bảo hiểm tại ${siteName}. ${baseDesc}`,
+        keywords: baseKeywords ? `${baseKeywords}, bài viết` : 'bài viết',
+        type: 'website',
+        image: baseImage,
+        url: `${baseUrl}/posts`,
         siteName,
         ogLocale: environment.seoLocale || 'vi_VN',
       }),
