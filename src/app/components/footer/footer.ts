@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FooterService } from '../../core/services/api/footer';
 import { FooterData } from '../../core/interfaces/footer.interface';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
+import { CompanyInfoService } from '@/core/services/company-info.service';
 
 @Component({
   selector: 'app-footer',
@@ -17,6 +18,11 @@ export class Footer  {
   private readonly footerService = inject(FooterService);
   readonly footerData = signal<FooterData | null>(null);
   private platformId = inject(PLATFORM_ID);
+  infoService = inject(CompanyInfoService);
+
+  emailSupport = this.infoService.companyInfo().emailSupport;
+  numberPhone = this.infoService.companyInfo().numberPhone;
+  address = this.infoService.companyInfo().address;
 
   constructor() {
     effect(() => {
@@ -25,6 +31,7 @@ export class Footer  {
       });
     });
   }
+
 
   // Helper method để mở link external
   openExternalLink(item: AppMenuItem) {

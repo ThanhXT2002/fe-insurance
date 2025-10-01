@@ -97,14 +97,14 @@
     <div class="flex flex-col items-center w-full">
       <i class="ri-mail-send-line text-4xl text-green-600 mb-2"></i>
       <div class="title">Hỗ trợ &amp; Email</div>
-      <div class="text-gray-500 text-sm">xtbh&#64;insurance.com</div>
+      <div class="text-gray-500 text-sm">{{ emailSupport }}</div>
     </div>
     <hr class="w-full border-gray-200" />
     <!-- Phone -->
     <div class="flex flex-col items-center w-full">
       <i class="ri-phone-line text-4xl text-green-600 mb-2"></i>
       <div class="title">Tổng đài hỗ trợ</div>
-      <div class="text-gray-500 text-sm">(+84) 789 345 012</div>
+      <div class="text-gray-500 text-sm">{{ numberPhone }}</div>
     </div>
     <hr class="w-full border-gray-200" />
     <!-- Location -->
@@ -112,7 +112,7 @@
       <i class="ri-map-pin-line text-4xl text-green-600 mb-2"></i>
       <div class="title">Địa chỉ</div>
       <div class="text-gray-500 text-sm text-center">
-        123 Nguyễn Thị Minh Khai, Quận 1, TP.HCM
+       {{ address }}
       </div>
     </div>
     <hr class="w-full border-gray-200" />

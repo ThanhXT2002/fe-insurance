@@ -8,21 +8,35 @@ import {
 } from '@angular/core';
 import { AppMenuItem } from '../../../core/interfaces/menu.interface';
 import { DrawerModule } from 'primeng/drawer';
-import { Logo } from "../../logo/logo";
+import { Logo } from '../../logo/logo';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { SocialMediaIcon } from "../../social-media-icon/social-media-icon";
+import { SocialMediaIcon } from '../../social-media-icon/social-media-icon';
+import { CompanyInfoService } from '@/core/services/company-info.service';
 
 @Component({
   selector: 'app-drawer-header',
-  imports: [CommonModule, DrawerModule, Logo, RouterLink, RouterLinkActive, SocialMediaIcon],
+  imports: [
+    CommonModule,
+    DrawerModule,
+    Logo,
+    RouterLink,
+    RouterLinkActive,
+    SocialMediaIcon,
+  ],
   templateUrl: './drawer-header.html',
   styleUrl: './drawer-header.scss',
 })
 export class DrawerHeader implements OnChanges {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
-  isShowMenu :boolean = false;
+  infoService = inject(CompanyInfoService);
+
+  emailSupport = this.infoService.companyInfo().emailSupport;
+  numberPhone = this.infoService.companyInfo().numberPhone;
+  address = this.infoService.companyInfo().address;
+
+  isShowMenu: boolean = false;
   isShowContact: boolean = false;
   isMobile: boolean = false;
 
@@ -37,7 +51,11 @@ export class DrawerHeader implements OnChanges {
   }
 
   constructor() {
-    this.breakpointObserver.observe(['(max-width: 1023px)']).subscribe((screenSize) => { this.isMobile = screenSize.matches; });
+    this.breakpointObserver
+      .observe(['(max-width: 1023px)'])
+      .subscribe((screenSize) => {
+        this.isMobile = screenSize.matches;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,10 +64,10 @@ export class DrawerHeader implements OnChanges {
     }
   }
 
-  toggleMenu(){
-    if(this.isMobile){
+  toggleMenu() {
+    if (this.isMobile) {
       this.isShowMenu = !this.isShowMenu;
-    }else{
+    } else {
       this.isShowContact = !this.isShowContact;
     }
   }
@@ -61,6 +79,6 @@ export class DrawerHeader implements OnChanges {
   }
 
   isCurrentRoute(route: string): boolean {
-  return this.router.url === route;
-}
+    return this.router.url === route;
+  }
 }
