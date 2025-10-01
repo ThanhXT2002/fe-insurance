@@ -17,19 +17,10 @@ export class ProductDetail implements OnInit {
     this.route.data.subscribe((data) => {
       try {
         const product = data['product'] || null;
-        console.log(
-          '[ProductDetail] Received product from resolver:',
-          product ? 'Found' : 'Not found',
-        );
 
         if (product) {
           const cfg = this.seo.mapProductDetailToSEOConfig(product);
-          console.log('[ProductDetail] SEO config:', cfg);
           this.seo.setSEO(cfg);
-        } else {
-          console.log(
-            '[ProductDetail] No product data available, using default SEO',
-          );
         }
       } catch (e) {
         console.error('[ProductDetail] Error setting SEO:', e);

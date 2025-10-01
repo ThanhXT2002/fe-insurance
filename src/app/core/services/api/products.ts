@@ -43,13 +43,6 @@ export class ProductsService {
 
   //endpoint get product detail by slug with robust error handling for SSR
   getProductBySlug(slug: string): Observable<ApiResponse<ProductItem>> {
-    const isServer = typeof window === 'undefined';
-    console.log(
-      `[ProductsService] Environment: ${isServer ? 'Server' : 'Client'}`,
-    );
-    console.log(`[ProductsService] Fetching product by slug: ${slug}`);
-    console.log(`[ProductsService] API URL: ${this.apiUrl}/slug/${slug}`);
-
     return this.http
       .get<ApiResponse<ProductItem>>(`${this.apiUrl}/slug/${slug}`)
       .pipe(
