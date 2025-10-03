@@ -28,6 +28,19 @@
     pointer-events: none;
   }
 
+      .group:hover &::before {
+    width: 120%;
+    height: 120%;
+    opacity: 1;
+  }
+ 
+  .group:not(:hover) &::before {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  }
+
   /* Use :host-context so ancestor .group hover (e.g. product-card) affects this component's pseudo-element
      This keeps your original width/height animation but allows hover anywhere on the product card to trigger it. */
   :host-context(.group:hover) &::before {
@@ -47,6 +60,8 @@
     //   height 0.38s cubic-bezier(0.55, 0.06, 0.68, 0.19),
     //   opacity 0.28s ease;
   }
+
+
 
   i {
     position: relative;
