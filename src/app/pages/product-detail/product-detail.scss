@@ -1,0 +1,27 @@
+// Main Layout
+.main-content {
+  @apply container mx-auto py-8 md:py-12;
+}
+
+.content-grid {
+  @apply lg:flex lg:space-x-8;
+}
+
+// Sidebar
+.sidebar {
+  @apply lg:w-full lg:max-w-[350px] mb-8 lg:mb-0;
+}
+
+.sticky-toc {
+  @apply lg:sticky lg:top-24;
+}
+
+
+// Content Area
+.content-area {
+  @apply lg:w-full;
+}
+
+.content-card {
+  @apply bg-white rounded-lg shadow-md p-6 md:p-8;
+}

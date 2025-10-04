@@ -4,7 +4,7 @@ import { Logo } from "../logo/logo";
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DrawerHeader } from "./drawer-header/drawer-header";
-import { MenuService } from '../../core/services/api/menu';
+import { MenuService } from '../../core/services/api/menu.service';
 import { AppMenuItem } from '../../core/interfaces/menu.interface';
 import { BtnAuthNavigation } from "./btn-auth-navigation/btn-auth-navigation";
 import { ProgressLoading } from "../progress-loading/progress-loading";

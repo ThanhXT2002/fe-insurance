@@ -14,10 +14,12 @@ import { LoadingService } from '@/core/services/loading.service';
 import { ProductItem } from '@/core/interfaces/product.interface';
 import { BreadcrumbImg } from '@/components/breadcrumb-img/breadcrumb-img';
 import { isPlatformServer } from '@angular/common';
+import { MenuProduct } from "@/components/menu-product/menu-product";
+import { BtnCommon } from "@/components/btn-common/btn-common";
 
 @Component({
   selector: 'app-product-detail',
-  imports: [BreadcrumbImg],
+  imports: [BreadcrumbImg, MenuProduct, BtnCommon],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
@@ -107,6 +109,11 @@ export class ProductDetail implements OnInit {
         // Thiết lập SEO mặc định nếu có lỗi
         this.setDefaultSEO(slug, baseUrl, this.isServer);
       });
+  }
+
+
+  onClickBuyNow(){
+
   }
 
   /**

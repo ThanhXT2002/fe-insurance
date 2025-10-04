@@ -1,0 +1,19 @@
+
+.loading,
+.error {
+  text-align: center;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.loading {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+

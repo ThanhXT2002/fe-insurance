@@ -6,31 +6,24 @@
     [bgUrl]="product.imgs?.[0] || 'assets/images/banners/page-header-bg.jpg'"
   />
 
-  <div class="w-full">
+  <div class="w-full bg-gray-50">
     <div class="container-layer">
       <div class="main-content">
         <div class="content-grid">
           <div class="sidebar">
             <div class="sticky-toc">
-              <div class="table-of-contents">
-                <h3 class="toc-title">Dịch vụ của chúng tôi</h3>
-                <ul class="toc-list">
-                  <!-- @for (section of sections(); track section.id; let i = $index) {
-                    <li>
-                      <a [href]="'#' + section.id" class="toc-link">
-                        {{ i + 1 }}. {{ section.heading }}
-                      </a>
-                    </li>
-                  } -->
-                </ul>
-              </div>
-               <div class="content-area">
-                
-               </div>
-
-              <!-- Download Button -->
-
+              <app-btn-common
+                text="Mua ngay"
+                type="primary"
+                extraClass="!p-3 w-full flex__middle mb-5"
+                (click)="onClickBuyNow()"
+              ></app-btn-common>
+              <app-menu-product></app-menu-product>
             </div>
+          </div>
+
+          <div class="content-area">
+            <div class="content-card"></div>
           </div>
         </div>
       </div>
