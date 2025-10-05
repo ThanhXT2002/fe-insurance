@@ -78,14 +78,14 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
           2,
           (v) => !v || (Array.isArray(v) && v.length === 0),
         );
-        
+
         this.set({ items: res });
-        
+
         // SERVER: Lưu vào TransferState
         if (!isBrowser && res && res.length > 0) {
           this.transferState.set(stateKey, res);
         }
-        
+
         return res;
       } finally {
         this._loadPromise = null;
