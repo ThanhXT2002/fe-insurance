@@ -26,6 +26,7 @@ import { WhyOurPolicy } from '@/components/why-our-policy/why-our-policy';
 import { FAQSItems } from '@/components/faqs-items/faqs-items';
 import { SectionIntro } from '@/components/section-intro/section-intro';
 import { CheckItem } from '@/components/check-item/check-item';
+import { LoadingInPage } from "@/components/loading-in-page/loading-in-page";
 
 @Component({
   selector: 'app-product-detail',
@@ -39,7 +40,8 @@ import { CheckItem } from '@/components/check-item/check-item';
     FAQSItems,
     SectionIntro,
     CheckItem,
-  ],
+    LoadingInPage
+],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
@@ -47,7 +49,7 @@ export class ProductDetail implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly seo = inject(SEOService);
   private readonly store = inject(ProductDetailStore);
-  private loadingService = inject(LoadingService);
+  loadingService = inject(LoadingService);
   private platformId = inject(PLATFORM_ID);
   private isServer = isPlatformServer(this.platformId);
   private router = inject(Router);
