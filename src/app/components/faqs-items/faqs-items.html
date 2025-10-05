@@ -1,5 +1,5 @@
 <p-accordion [value]="activeIndex()" class="custom-accordion">
-          @for (faq of faqsList(); track faq.id) {
+          @for (faq of faqsList(); track $index) {
           <div class="mb-7">
              <p-accordion-panel [value]="faq.id">
               <p-accordion-header>

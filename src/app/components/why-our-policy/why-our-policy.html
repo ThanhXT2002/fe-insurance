@@ -6,7 +6,7 @@
   </h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 ">
-    @for(item of insuranceBenefits; track item.id) {
+    @for(item of insuranceBenefits; track $index) {
       <div
         class="border-gray-300"
          [ngClass]="getItemClasses(item)"

@@ -8,25 +8,29 @@
   <ul class="flex flex-col space-y-4">
     <!-- Loading state -->
     @if (isLoading()) {
-       <li
-
-          class="group flex__between rounded-xl bg-white h-4 cursor-pointer text-fourth hover:bg-secondary hover:text-white transition-colors"
-        >
-          <span class="text-sm font-medium">
-
-          </span>
-
-          <i
-            class="fa-solid fa-arrow-right text-secondary group-hover:text-white"
-          ></i>
+      @for (item of items; track item.id) {
+        <li class="animate-pulse flex__between rounded-xl p-4 bg-gray-400">
+          <p class="text-sm font-medium"></p>
+          <i class="fa-solid fa-arrow-right text-gray-200 animate-pulse"></i>
         </li>
+      }
     }
 
     <!-- Error state -->
     @if (error()) {
-      <div class="error">
-        <p>Không thể tải menu. Vui lòng thử lại sau.</p>
-      </div>
+      @for (item of menuFallback; track item.link) {
+        <li
+          [routerLink]="item.link"
+          class="group flex__between rounded-xl bg-white p-4 cursor-pointer text-fourth hover:bg-secondary hover:text-white transition-colors"
+        >
+          <span class="text-sm font-medium">
+            {{ item.title }}
+          </span>
+          <i
+            class="fa-solid fa-arrow-right text-secondary group-hover:text-white"
+          ></i>
+        </li>
+      }
     }
     @if (menuData(); as menu) {
       @for (item of menu.menus; track item.key) {

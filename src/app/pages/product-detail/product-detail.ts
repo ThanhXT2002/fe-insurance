@@ -2,6 +2,7 @@ import {
   Component,
   inject,
   OnInit,
+  OnDestroy,
   PLATFORM_ID,
   effect,
   signal,
@@ -9,6 +10,7 @@ import {
   computed,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { SEOService } from '../../core/services/seo.service';
 import { ProductDetailStore } from '../../core/store/products/product-detail.store';
 import { environment } from '../../../environments/environment';
@@ -20,11 +22,10 @@ import { MenuProduct } from '@/components/menu-product/menu-product';
 import { BtnCommon } from '@/components/btn-common/btn-common';
 import { InfoExtraPhone } from '@/components/info-extra-phone/info-extra-phone';
 import { GalleriaModule } from 'primeng/galleria';
-import { WhyOurPolicy } from "@/components/why-our-policy/why-our-policy";
-import { FAQSItems } from "@/components/faqs-items/faqs-items";
-import { SectionIntro } from "@/components/section-intro/section-intro";
-import { CheckItem } from "@/components/check-item/check-item";
-
+import { WhyOurPolicy } from '@/components/why-our-policy/why-our-policy';
+import { FAQSItems } from '@/components/faqs-items/faqs-items';
+import { SectionIntro } from '@/components/section-intro/section-intro';
+import { CheckItem } from '@/components/check-item/check-item';
 
 @Component({
   selector: 'app-product-detail',
@@ -37,12 +38,12 @@ import { CheckItem } from "@/components/check-item/check-item";
     WhyOurPolicy,
     FAQSItems,
     SectionIntro,
-    CheckItem
-],
+    CheckItem,
+  ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
-export class ProductDetail implements OnInit {
+export class ProductDetail implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly seo = inject(SEOService);
   private readonly store = inject(ProductDetailStore);
@@ -69,6 +70,7 @@ export class ProductDetail implements OnInit {
   // Chuyển data thành signal để tránh ExpressionChangedAfterItHasBeenCheckedError
   data = signal<ProductItem | null>(null);
   private slugSignal = signal('');
+  private routeSubscription?: Subscription;
 
   constructor() {
     // Theo dõi dữ liệu từ store signal và tự động cập nhật
@@ -110,25 +112,37 @@ export class ProductDetail implements OnInit {
   }
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug') || '';
-    if (!slug) return;
+    // Lắng nghe thay đổi slug từ route params (không dùng snapshot)
+    this.routeSubscription = this.route.params.subscribe((params) => {
+      const slug = params['slug'] || '';
+      if (!slug) return;
 
-    // Cập nhật signal để trigger effect
-    this.slugSignal.set(slug);
+      // Reset data trước khi load mới
+      this.data.set(null);
+      this.loadingService.show();
 
-    // Kiểm tra data từ resolver trước
-    const resolverData = this.route.snapshot.data['product'];
+      // Cập nhật signal để trigger effect
+      this.slugSignal.set(slug);
 
-    if (resolverData) {
-      // Resolver thành công (fast path < 800ms)
-      this.data.set(resolverData);
-      this.imgThumbnail.set(this.toGalleriaItems(resolverData.imgs));
-      this.setupSEOFromProduct(resolverData);
-    } else {
-      // Resolver timeout hoặc lỗi → load từ store
-      this.loadProductAndSetSEO();
-    }
-    this.loadingService.hide();
+      // Kiểm tra data từ resolver trước
+      const resolverData = this.route.snapshot.data['product'];
+
+      if (resolverData && resolverData.slug === slug) {
+        // Resolver thành công và đúng slug hiện tại
+        this.data.set(resolverData);
+        this.imgThumbnail.set(this.toGalleriaItems(resolverData.imgs));
+        this.setupSEOFromProduct(resolverData);
+        this.loadingService.hide();
+      } else {
+        // Resolver timeout, lỗi, hoặc slug không khớp → load từ store
+        this.loadProductAndSetSEO();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Cleanup subscription để tránh memory leak
+    this.routeSubscription?.unsubscribe();
   }
 
   /**
@@ -143,8 +157,11 @@ export class ProductDetail implements OnInit {
    * Load dữ liệu product và thiết lập SEO (dùng khi resolver timeout)
    */
   private loadProductAndSetSEO(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (!slug) return;
+    const slug = this.slugSignal(); // Dùng signal thay vì snapshot
+    if (!slug) {
+      this.loadingService.hide();
+      return;
+    }
 
     // Xác định environment để tạo URL phù hợp
     const baseUrl = this.isServer ? environment.seoUrl : '';
@@ -170,10 +187,14 @@ export class ProductDetail implements OnInit {
       .catch(() => {
         // Thiết lập SEO mặc định nếu có lỗi
         this.setDefaultSEO(slug, baseUrl, this.isServer);
+      })
+      .finally(() => {
+        // Luôn hide loading khi hoàn thành
+        this.loadingService.hide();
       });
   }
 
-  onClickBuyNow(url:string) {
+  onClickBuyNow(url: string) {
     console.log('Navigating to:', url);
     this.router.navigate([url]);
   }
@@ -196,13 +217,15 @@ export class ProductDetail implements OnInit {
 
   // computed tagsList trả về mảng đã xử lý
   tagsList = computed(() => {
-    const p = this.data()
-    if (!p) return []
-    const tags: unknown = (p as any).tags
+    const p = this.data();
+    if (!p) return [];
+    const tags: unknown = (p as any).tags;
 
     // nếu đã là mảng, trim từng phần tử
     if (Array.isArray(tags)) {
-      return (tags as unknown[]).map((t) => (t ?? '').toString().trim()).filter(Boolean)
+      return (tags as unknown[])
+        .map((t) => (t ?? '').toString().trim())
+        .filter(Boolean);
     }
 
     // nếu là string, tách theo dấu phẩy
@@ -210,12 +233,12 @@ export class ProductDetail implements OnInit {
       return tags
         .split(',')
         .map((s) => s.trim())
-        .filter(Boolean)
+        .filter(Boolean);
     }
 
-    return []
-  })
+    return [];
+  });
 
   // trackBy cho @for (dùng value + index)
-  trackByFeature = (index: number, feature: string) => `${index}:${feature}`
+  trackByFeature = (index: number, feature: string) => `${index}:${feature}`;
 }

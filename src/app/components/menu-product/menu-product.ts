@@ -12,7 +12,30 @@ import { MenuStore } from '@/core/store/menu/menu.store';
 })
 export class MenuProduct implements OnInit {
   private menuStore = inject(MenuStore);
-  private router = inject(Router)
+
+  // Mock items cho loading state - tạo array với unique identifiers
+  items = Array.from({ length: 6 }, (_, i) => ({ id: i, loading: true }));
+
+  menuFallback = [
+    {
+      title: 'Bảo hiểm TNDS xe máy',
+      link: '/product/bao-hiem-trach-nhiem-dan-su-xe-may',
+    },
+    {
+      title: 'Bảo hiểm TNDS ô tô',
+      link: '/product/bao-hiem-trach-nhiem-dan-su-o-to',
+    },
+    {
+      title: 'Bảo hiểm Thân vỏ ô tô',
+      link: '/product/bao-hiem-than-vo-xe-o-to',
+    },
+    {
+      title: 'Bảo hiểm tai nạn cá nhân',
+      link: '/product/bao-hiem-tai-nan-ca-nhan',
+    },
+    { title: 'Bảo hiểm y tế', link: '/product/bao-hiem-y-te' },
+    { title: 'Bảo hiểm thú cưng', link: '/product/bao-hiem-thu-cung' },
+  ];
 
   // Menu data và states
   readonly menuData = this.menuStore.getMenuByCategory('menu-product');
@@ -26,10 +49,5 @@ export class MenuProduct implements OnInit {
     } catch (error) {
       console.error('Failed to load product menu:', error);
     }
-  }
-
-  onNavigate(link?:string){
-    // this.router.navigate([link || '/']);
-    console.log('navigate', link);
   }
 }
