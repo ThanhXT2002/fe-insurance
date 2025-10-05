@@ -7,7 +7,7 @@ import {
   signal,
   model,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SEOService } from '../../core/services/seo.service';
 import { ProductDetailStore } from '../../core/store/products/product-detail.store';
 import { environment } from '../../../environments/environment';
@@ -19,6 +19,7 @@ import { MenuProduct } from '@/components/menu-product/menu-product';
 import { BtnCommon } from '@/components/btn-common/btn-common';
 import { InfoExtraPhone } from '@/components/info-extra-phone/info-extra-phone';
 import { GalleriaModule } from 'primeng/galleria';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -39,6 +40,7 @@ export class ProductDetail implements OnInit {
   private loadingService = inject(LoadingService);
   private platformId = inject(PLATFORM_ID);
   private isServer = isPlatformServer(this.platformId);
+  private router = inject(Router);
 
   imgThumbnail = model<{ itemImageSrc: string; thumbnailImageSrc: string }[]>(
     [],
@@ -162,7 +164,10 @@ export class ProductDetail implements OnInit {
       });
   }
 
-  onClickBuyNow() {}
+  onClickBuyNow(url:string) {
+    console.log('Navigating to:', url);
+    this.router.navigate([url]);
+  }
 
   /**
    * Thiết lập SEO mặc định khi không load được dữ liệu product

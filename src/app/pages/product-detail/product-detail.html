@@ -13,12 +13,12 @@
           <div class="sidebar">
             <div class="sticky-toc">
               <app-menu-product></app-menu-product>
-              @if (product.isSaleOnline) {
+              @if (product.isSaleOnline && product.targetLink) {
                 <app-btn-common
                   text="Mua ngay"
                   type="primary"
                   extraClass="!p-3 w-full flex__middle  animate-pulse"
-                  (click)="onClickBuyNow()"
+                  (click)="onClickBuyNow(product.targetLink)"
                 ></app-btn-common>
               }
               @if (product.price) {
