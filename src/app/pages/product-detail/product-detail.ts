@@ -26,7 +26,7 @@ import { WhyOurPolicy } from '@/components/why-our-policy/why-our-policy';
 import { FAQSItems } from '@/components/faqs-items/faqs-items';
 import { SectionIntro } from '@/components/section-intro/section-intro';
 import { CheckItem } from '@/components/check-item/check-item';
-import { LoadingInPage } from "@/components/loading-in-page/loading-in-page";
+import { LoadingInPage } from '@/components/loading-in-page/loading-in-page';
 
 @Component({
   selector: 'app-product-detail',
@@ -40,8 +40,8 @@ import { LoadingInPage } from "@/components/loading-in-page/loading-in-page";
     FAQSItems,
     SectionIntro,
     CheckItem,
-    LoadingInPage
-],
+    LoadingInPage,
+  ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
@@ -75,7 +75,6 @@ export class ProductDetail implements OnInit, OnDestroy {
   private routeSubscription?: Subscription;
 
   constructor() {
-    // Theo dõi dữ liệu từ store signal và tự động cập nhật
     effect(() => {
       const slug = this.slugSignal();
       if (!slug) return;
@@ -90,10 +89,6 @@ export class ProductDetail implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Convert product.imgs (comma-separated string or string[]) into an array
-   * acceptable by p-galleria: [{ itemImageSrc, thumbnailImageSrc }, ...]
-   */
   private toGalleriaItems(
     imgs?: string[] | string | null,
   ): { itemImageSrc: string; thumbnailImageSrc: string }[] {
@@ -103,7 +98,6 @@ export class ProductDetail implements OnInit, OnDestroy {
     if (Array.isArray(imgs)) {
       arr = imgs.filter(Boolean) as string[];
     } else if (typeof imgs === 'string') {
-      // Some responses provide a comma separated string
       arr = imgs
         .split(',')
         .map((s) => s.trim())
@@ -114,61 +108,59 @@ export class ProductDetail implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Lắng nghe thay đổi slug từ route params (không dùng snapshot)
+    const initialSlug = this.route.snapshot.paramMap.get('slug') || '';
+    if (initialSlug) {
+      this.handleSlugChange(initialSlug);
+    }
+    let isFirstEmit = true;
     this.routeSubscription = this.route.params.subscribe((params) => {
-      const slug = params['slug'] || '';
-      if (!slug) return;
+      const newSlug = params['slug'] || '';
+      const currentSlug = this.slugSignal();
 
-      // Reset data trước khi load mới
-      this.data.set(null);
-      this.loadingService.show();
+      if (isFirstEmit) {
+        isFirstEmit = false;
+        return;
+      }
 
-      // Cập nhật signal để trigger effect
-      this.slugSignal.set(slug);
-
-      // Kiểm tra data từ resolver trước
-      const resolverData = this.route.snapshot.data['product'];
-
-      if (resolverData && resolverData.slug === slug) {
-        // Resolver thành công và đúng slug hiện tại
-        this.data.set(resolverData);
-        this.imgThumbnail.set(this.toGalleriaItems(resolverData.imgs));
-        this.setupSEOFromProduct(resolverData);
-        this.loadingService.hide();
-      } else {
-        // Resolver timeout, lỗi, hoặc slug không khớp → load từ store
-        this.loadProductAndSetSEO();
+      if (newSlug && newSlug !== currentSlug) {
+        this.handleSlugChange(newSlug);
       }
     });
   }
 
+  private handleSlugChange(slug: string): void {
+    this.slugSignal.set(slug);
+
+    const cachedProduct = this.store.getSignal(slug)();
+    if (cachedProduct) {
+      this.data.set(cachedProduct);
+      this.imgThumbnail.set(this.toGalleriaItems(cachedProduct.imgs));
+      this.setupSEOFromProduct(cachedProduct);
+      this.loadingService.hide();
+      return;
+    }
+    this.data.set(null);
+    this.loadingService.show();
+    this.loadProductAndSetSEO();
+  }
+
   ngOnDestroy(): void {
-    // Cleanup subscription để tránh memory leak
     this.routeSubscription?.unsubscribe();
   }
 
-  /**
-   * Thiết lập SEO từ dữ liệu product đã có
-   */
   private setupSEOFromProduct(product: any): void {
     const cfg = this.seo.mapProductDetailToSEOConfig(product);
     this.seo.setSEO(cfg);
   }
 
-  /**
-   * Load dữ liệu product và thiết lập SEO (dùng khi resolver timeout)
-   */
   private loadProductAndSetSEO(): void {
-    const slug = this.slugSignal(); // Dùng signal thay vì snapshot
+    const slug = this.slugSignal();
     if (!slug) {
       this.loadingService.hide();
       return;
     }
 
-    // Xác định environment để tạo URL phù hợp
     const baseUrl = this.isServer ? environment.seoUrl : '';
-
-    // Component tự load dữ liệu với URL server-safe
     this.store
       .load(slug)
       .then((product) => {
@@ -176,34 +168,26 @@ export class ProductDetail implements OnInit, OnDestroy {
           this.data.set(product);
           this.imgThumbnail.set(this.toGalleriaItems(product.imgs));
           const cfg = this.seo.mapProductDetailToSEOConfig(product);
-          // Cập nhật URL để tương thích với server
           if (cfg.url && this.isServer) {
             cfg.url = baseUrl + cfg.url;
           }
           this.seo.setSEO(cfg);
         } else {
-          // Thiết lập SEO mặc định nếu không load được dữ liệu
           this.setDefaultSEO(slug, baseUrl, this.isServer);
         }
       })
       .catch(() => {
-        // Thiết lập SEO mặc định nếu có lỗi
         this.setDefaultSEO(slug, baseUrl, this.isServer);
       })
       .finally(() => {
-        // Luôn hide loading khi hoàn thành
         this.loadingService.hide();
       });
   }
 
   onClickBuyNow(url: string) {
-    console.log('Navigating to:', url);
     this.router.navigate([url]);
   }
 
-  /**
-   * Thiết lập SEO mặc định khi không load được dữ liệu product
-   */
   private setDefaultSEO(
     slug: string,
     baseUrl: string,
@@ -217,30 +201,26 @@ export class ProductDetail implements OnInit, OnDestroy {
     });
   }
 
-  // computed tagsList trả về mảng đã xử lý
   tagsList = computed(() => {
     const p = this.data();
     if (!p) return [];
     const tags: unknown = (p as any).tags;
 
-    // nếu đã là mảng, trim từng phần tử
     if (Array.isArray(tags)) {
       return (tags as unknown[])
         .map((t) => (t ?? '').toString().trim())
         .filter(Boolean);
     }
 
-    // nếu là string, tách theo dấu phẩy
     if (typeof tags === 'string') {
       return tags
         .split(',')
-        .map((s) => s.trim())
+        .map((s: string) => s.trim())
         .filter(Boolean);
     }
 
     return [];
   });
 
-  // trackBy cho @for (dùng value + index)
   trackByFeature = (index: number, feature: string) => `${index}:${feature}`;
 }
