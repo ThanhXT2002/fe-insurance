@@ -94,7 +94,12 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
 
     // ensure page is 1
     const limit = query?.limit ?? this.snapshot().limit;
-    const res = await this.load({ ...(query || {}), page: 1, limit, active: true });
+    const res = await this.load({
+      ...(query || {}),
+      page: 1,
+      limit,
+      active: true,
+    });
     return res;
   }
 
@@ -111,7 +116,11 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
       const s = this.snapshot();
       const nextPage = (s.page || 1) + 1;
 
-      const res = await this.fetchPage({ page: nextPage, limit: s.limit, active: true });
+      const res = await this.fetchPage({
+        page: nextPage,
+        limit: s.limit,
+        active: true,
+      });
 
       // append rows if any
       const currentRows = this.snapshot().rows || [];
@@ -133,7 +142,6 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
       this._loadingMore.set(false);
     }
   }
-
 
   /**
    * Refresh the list: reset pagination and reload first page.
