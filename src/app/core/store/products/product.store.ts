@@ -1,4 +1,6 @@
-import { Injectable, inject, Signal } from '@angular/core';
+import { Injectable, inject, Signal, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { TransferState, makeStateKey } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { BaseStoreSignal } from '../../base/base-store-signal';
@@ -16,7 +18,8 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
   }
 
   private readonly productsService = inject(ProductsService);
-  // Promise đang chạy để gom (dedupe) các request cùng lúc
+  private readonly transferState = inject(TransferState);
+  private readonly platformId = inject(PLATFORM_ID);
   private _loadPromise: Promise<ProductItem[]> | null = null;
 
   // selector: signal chứa items
@@ -28,13 +31,24 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
   }
 
   // Tải sản phẩm cho trang chủ: ưu tiên dùng cache, nếu không có thì gọi API (có retry)
-  async loadHome(limit?: number) {
-    // Nếu đã có cache và không rỗng thì trả về ngay
+  async loadHome(limit = 4) {
     const current = this.snapshot().items;
     if (current && Array.isArray(current) && current.length > 0) return current;
 
-    // Nếu đang có load đang tiến hành thì tái sử dụng promise đó (dedupe)
     if (this._loadPromise) return this._loadPromise;
+
+    const isBrowser = isPlatformBrowser(this.platformId);
+    const stateKey = makeStateKey<ProductItem[]>(`products-home-${limit}`);
+
+    // CLIENT: Kiểm tra TransferState trước
+    if (isBrowser) {
+      const serverData = this.transferState.get(stateKey, null);
+      if (serverData && Array.isArray(serverData) && serverData.length > 0) {
+        this.set({ items: serverData });
+        this.transferState.remove(stateKey);
+        return serverData;
+      }
+    }
 
     const fetcher = async (): Promise<ProductItem[]> => {
       // Gọi getFeaturedProducts (backend trả ApiResponse<ProductItem[]>)
@@ -57,7 +71,6 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
       }
     };
 
-    // Bắt đầu thực hiện fetch và lưu promise đang chạy để các lần gọi đồng thời cùng sử dụng
     this._loadPromise = (async () => {
       try {
         const res = await this.fetchWithRetry<ProductItem[]>(
@@ -65,13 +78,16 @@ export class ProductStore extends BaseStoreSignal<ProductHomeState> {
           2,
           (v) => !v || (Array.isArray(v) && v.length === 0),
         );
-        // Update store state
-        // Cập nhật state của store
+        
         this.set({ items: res });
+        
+        // SERVER: Lưu vào TransferState
+        if (!isBrowser && res && res.length > 0) {
+          this.transferState.set(stateKey, res);
+        }
+        
         return res;
       } finally {
-        // Clear in-flight promise regardless of success/failure
-        // Xóa _loadPromise dù thành công hay lỗi
         this._loadPromise = null;
       }
     })();
