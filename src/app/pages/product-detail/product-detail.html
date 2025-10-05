@@ -17,18 +17,39 @@
                 <app-btn-common
                   text="Mua ngay"
                   type="primary"
-                  extraClass="!p-3 w-full flex__middle"
+                  extraClass="!p-3 w-full flex__middle  animate-pulse"
                   (click)="onClickBuyNow()"
                 ></app-btn-common>
               }
+              @if (product.price) {
+                <div class="flex__between font-bold md:text-xl text-secondary ">
+                  <p class="">Giá chỉ từ:</p>
+                  <p>{{ product.price }} VNĐ / {{ product.priority }} năm</p>
+                </div>
+              }
 
-              <app-info-extra-phone class="hidden lg:block"/>
+              @if (product.isPromotion) {
+                <div class="">
+                  <p class="text-primary italic mt-2">
+                    {{ product.promotionDetails }}
+                  </p>
+                </div>
+              }
+              <app-info-extra-phone class="hidden lg:block" />
             </div>
           </div>
 
           <div class="content-area">
-            <h1 class="  text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10">{{ product.name }}</h1>
-            <div class="rounded-common overflow-hidden image-hover-effect max-h-[450px]">
+            <h1
+              class="text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10"
+            >
+              {{ product.name }}
+            </h1>
+
+            <div class="text-gray-950" [innerHTML]="product.shortContent"></div>
+            <div
+              class="rounded-common overflow-hidden image-hover-effect max-h-[450px] my-5 md:my-10"
+            >
               <p-galleria
                 [value]="imgThumbnail()"
                 [responsiveOptions]="responsiveOptions"
@@ -38,12 +59,19 @@
                 [showItemNavigators]="true"
               >
                 <ng-template #item let-item>
-                  <img [src]="item.itemImageSrc"  class="object-cover w-full h-full" />
+                  <img
+                    [src]="item.itemImageSrc"
+                    class="object-cover w-full h-full"
+                  />
                 </ng-template>
                 <!-- <ng-template #thumbnail let-item>
                   <img [src]="item.thumbnailImageSrc" />
                 </ng-template> -->
               </p-galleria>
+            </div>
+
+            <div class="text-gray-950" [innerHTML]="product.content">
+              {{ product.content }}
             </div>
           </div>
         </div>

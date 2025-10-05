@@ -1,17 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { MenuStore } from '@/core/store/menu/menu.store';
 
 @Component({
   selector: 'app-menu-product',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './menu-product.html',
   styleUrl: './menu-product.scss',
 })
 export class MenuProduct implements OnInit {
   private menuStore = inject(MenuStore);
+  private router = inject(Router)
 
   // Menu data và states
   readonly menuData = this.menuStore.getMenuByCategory('menu-product');
@@ -25,5 +26,10 @@ export class MenuProduct implements OnInit {
     } catch (error) {
       console.error('Failed to load product menu:', error);
     }
+  }
+
+  onNavigate(link?:string){
+    // this.router.navigate([link || '/']);
+    console.log('navigate', link);
   }
 }
