@@ -13,7 +13,7 @@
 }
 
 .sticky-toc {
-  @apply lg:sticky lg:top-24;
+  @apply lg:sticky lg:top-24 flex flex-col !space-y-5;
 }
 
 

@@ -5,6 +5,7 @@ import {
   PLATFORM_ID,
   effect,
   signal,
+  model,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SEOService } from '../../core/services/seo.service';
@@ -14,12 +15,20 @@ import { LoadingService } from '@/core/services/loading.service';
 import { ProductItem } from '@/core/interfaces/product.interface';
 import { BreadcrumbImg } from '@/components/breadcrumb-img/breadcrumb-img';
 import { isPlatformServer } from '@angular/common';
-import { MenuProduct } from "@/components/menu-product/menu-product";
-import { BtnCommon } from "@/components/btn-common/btn-common";
+import { MenuProduct } from '@/components/menu-product/menu-product';
+import { BtnCommon } from '@/components/btn-common/btn-common';
+import { InfoExtraPhone } from '@/components/info-extra-phone/info-extra-phone';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [BreadcrumbImg, MenuProduct, BtnCommon],
+  imports: [
+    BreadcrumbImg,
+    MenuProduct,
+    BtnCommon,
+    InfoExtraPhone,
+    GalleriaModule,
+  ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
@@ -30,6 +39,21 @@ export class ProductDetail implements OnInit {
   private loadingService = inject(LoadingService);
   private platformId = inject(PLATFORM_ID);
   private isServer = isPlatformServer(this.platformId);
+
+  imgThumbnail = model<{ itemImageSrc: string; thumbnailImageSrc: string }[]>(
+    [],
+  );
+
+  responsiveOptions: any[] = [
+    {
+      breakpoint: '1300px',
+      numVisible: 4,
+    },
+    {
+      breakpoint: '575px',
+      numVisible: 1,
+    },
+  ];
 
   // Chuyển data thành signal để tránh ExpressionChangedAfterItHasBeenCheckedError
   data = signal<ProductItem | null>(null);
@@ -44,9 +68,34 @@ export class ProductDetail implements OnInit {
       const product = this.store.getSignal(slug)();
       if (product) {
         this.data.set(product);
+        // Set galleria items from product imgs
+        this.imgThumbnail.set(this.toGalleriaItems(product.imgs));
         this.setupSEOFromProduct(product);
       }
     });
+  }
+
+  /**
+   * Convert product.imgs (comma-separated string or string[]) into an array
+   * acceptable by p-galleria: [{ itemImageSrc, thumbnailImageSrc }, ...]
+   */
+  private toGalleriaItems(
+    imgs?: string[] | string | null,
+  ): { itemImageSrc: string; thumbnailImageSrc: string }[] {
+    if (!imgs) return [];
+
+    let arr: string[] = [];
+    if (Array.isArray(imgs)) {
+      arr = imgs.filter(Boolean) as string[];
+    } else if (typeof imgs === 'string') {
+      // Some responses provide a comma separated string
+      arr = imgs
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+
+    return arr.map((url) => ({ itemImageSrc: url, thumbnailImageSrc: url }));
   }
 
   ngOnInit(): void {
@@ -62,6 +111,7 @@ export class ProductDetail implements OnInit {
     if (resolverData) {
       // Resolver thành công (fast path < 800ms)
       this.data.set(resolverData);
+      this.imgThumbnail.set(this.toGalleriaItems(resolverData.imgs));
       this.setupSEOFromProduct(resolverData);
     } else {
       // Resolver timeout hoặc lỗi → load từ store
@@ -94,6 +144,7 @@ export class ProductDetail implements OnInit {
       .then((product) => {
         if (product) {
           this.data.set(product);
+          this.imgThumbnail.set(this.toGalleriaItems(product.imgs));
           const cfg = this.seo.mapProductDetailToSEOConfig(product);
           // Cập nhật URL để tương thích với server
           if (cfg.url && this.isServer) {
@@ -111,10 +162,7 @@ export class ProductDetail implements OnInit {
       });
   }
 
-
-  onClickBuyNow(){
-
-  }
+  onClickBuyNow() {}
 
   /**
    * Thiết lập SEO mặc định khi không load được dữ liệu product

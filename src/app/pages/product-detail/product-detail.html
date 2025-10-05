@@ -12,18 +12,39 @@
         <div class="content-grid">
           <div class="sidebar">
             <div class="sticky-toc">
-              <app-btn-common
-                text="Mua ngay"
-                type="primary"
-                extraClass="!p-3 w-full flex__middle mb-5"
-                (click)="onClickBuyNow()"
-              ></app-btn-common>
               <app-menu-product></app-menu-product>
+              @if (product.isSaleOnline) {
+                <app-btn-common
+                  text="Mua ngay"
+                  type="primary"
+                  extraClass="!p-3 w-full flex__middle"
+                  (click)="onClickBuyNow()"
+                ></app-btn-common>
+              }
+
+              <app-info-extra-phone class="hidden lg:block"/>
             </div>
           </div>
 
           <div class="content-area">
-            <div class="content-card"></div>
+            <h1 class="  text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10">{{ product.name }}</h1>
+            <div class="rounded-common overflow-hidden image-hover-effect max-h-[450px]">
+              <p-galleria
+                [value]="imgThumbnail()"
+                [responsiveOptions]="responsiveOptions"
+                [showThumbnails]="false"
+                [autoPlay]="true"
+                [circular]="true"
+                [showItemNavigators]="true"
+              >
+                <ng-template #item let-item>
+                  <img [src]="item.itemImageSrc"  class="object-cover w-full h-full" />
+                </ng-template>
+                <!-- <ng-template #thumbnail let-item>
+                  <img [src]="item.thumbnailImageSrc" />
+                </ng-template> -->
+              </p-galleria>
+            </div>
           </div>
         </div>
       </div>
