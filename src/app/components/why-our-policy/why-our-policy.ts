@@ -11,41 +11,41 @@ export class WhyOurPolicy {
   insuranceBenefits = [
     {
       id: 1,
-      title: 'Kiểm soát chính sách bảo hiểm',
+      title: 'Bảo vệ toàn diện',
       description:
-        'Kiểm soát chính sách bảo hiểm của bạn thông qua phạm vi bảo vệ, phương thức thanh toán và điều khoản phù hợp với nhu cầu tùy chỉnh riêng biệt của bạn.',
+        'Bảo vệ toàn diện trước rủi ro tai nạn, ốm đau và biến cố tài chính với mức quyền lợi rõ ràng và nhanh chóng.',
     },
     {
       id: 2,
-      title: 'Kiểm soát chính sách bảo hiểm',
+      title: 'Thanh toán linh hoạt',
       description:
-        'Kiểm soát chính sách bảo hiểm của bạn thông qua phạm vi bảo vệ, phương thức thanh toán và điều khoản phù hợp với nhu cầu tùy chỉnh riêng biệt của bạn.',
+        'Lựa chọn nhiều phương thức thanh toán và kỳ hạn phù hợp với ngân sách của bạn — hàng tháng, quý hoặc cả năm.',
     },
     {
       id: 3,
-      title: 'Kiểm soát chính sách bảo hiểm',
+      title: 'Quyền lợi mở rộng',
       description:
-        'Kiểm soát chính sách bảo hiểm của bạn thông qua phạm vi bảo vệ, phương thức thanh toán và điều khoản phù hợp với nhu cầu tùy chỉnh riêng biệt của bạn.',
+        'Các quyền lợi bổ sung như hỗ trợ y tế, khám chữa bệnh tại các cơ sở liên kết và hoàn tiền cho dịch vụ y tế được chấp thuận.',
     },
     {
       id: 4,
-      title: 'Kiểm soát chính sách bảo hiểm',
+      title: 'Hỗ trợ 24/7',
       description:
-        'Kiểm soát chính sách bảo hiểm của bạn thông qua phạm vi bảo vệ, phương thức thanh toán và điều khoản phù hợp với nhu cầu tùy chỉnh riêng biệt của bạn.',
+        'Dịch vụ chăm sóc khách hàng và bảo lãnh viện nhanh chóng, sẵn sàng hỗ trợ bạn mọi lúc, mọi nơi.',
     },
   ];
 
-    itemMdClassMap: Record<number, string[]> = {
+  itemMdClassMap: Record<number, string[]> = {
     1: ['md:!pr-5', 'md:!pb-5', 'md:border-b', 'md:border-r'],
     2: ['md:!pl-5', 'md:!pb-5', 'md:border-b'],
     3: ['md:!pr-5', 'md:!pt-5', 'md:border-r'],
-    4: ['md:!pl-5', 'md:!pt-5']
-  }
+    4: ['md:!pl-5', 'md:!pt-5'],
+  };
 
   // Trả về các class: luôn có my-3 cho mobile (md trở xuống),
   // và các class md:... chỉ hoạt động trên md trở lên (Tailwind)
   getItemClasses(item: any): string[] {
-    const mdClasses = this.itemMdClassMap[item.id] || []
-    return ['my-3 md:my-0', ...mdClasses]
+    const mdClasses = this.itemMdClassMap[item.id] || [];
+    return ['my-3 md:my-0', ...mdClasses];
   }
 }

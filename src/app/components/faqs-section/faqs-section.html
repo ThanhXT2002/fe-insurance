@@ -58,38 +58,7 @@
       </div>
       <div class="tabs w-full">
         <div class="card">
-
-          <p-accordion [value]="activeIndex()" class="custom-accordion">
-          @for (faq of faqsList(); track faq.id) {
-          <div class="mb-7">
-             <p-accordion-panel [value]="faq.id">
-              <p-accordion-header>
-                 <ng-template #toggleicon let-active="active">
-                    <div class="h-6 w-6  rounded-md text-white flex__middle"
-                    [class]="active ? 'bg-white' : 'bg-secondary'"
-                    >
-                    <i class="pi  text-lg"
-                    [class]="active ? 'text-secondary pi-angle-up' : 'text-white pi-angle-down'"
-                    ></i>
-                      <!-- @if (active) {
-                        <i class="pi pi-angle-up text-lg"></i>
-                      } @else {
-                        <i class="pi  text-lg"></i>
-                      } -->
-                    </div>
-                  </ng-template>
-                <span class="flex items-center justify-between w-full ">
-                  <span class="font-bold"
-                  >{{ faq.id }}. {{ faq.title }}</span>
-                </span>
-              </p-accordion-header>
-             <p-accordion-content>
-                <p class="m-0 leading-relaxed text-sm">{{ faq.content }}</p>
-              </p-accordion-content>
-            </p-accordion-panel>
-          </div>
-          }
-        </p-accordion>
+          <app-faqs-items />
         </div>
       </div>
     </div>

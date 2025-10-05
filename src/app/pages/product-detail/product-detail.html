@@ -71,10 +71,24 @@
             </div>
 
             <div class="text-gray-950" [innerHTML]="product.content">
-              {{ product.content }}
             </div>
             <div class="my-5 md:my-8">
               <app-why-our-policy class="" />
+            </div>
+
+            <div class="my-5 md:my-10">
+
+            </div>
+
+            <div >
+              <app-section-intro
+                title="FAQs"
+                firstText="Những"
+                highlightText="Câu hỏi"
+                lastText="thường gặp"
+
+              />
+              <app-faqs-items class="lg:mt-10" />
             </div>
           </div>
         </div>

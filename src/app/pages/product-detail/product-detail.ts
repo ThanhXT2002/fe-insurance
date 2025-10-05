@@ -20,6 +20,8 @@ import { BtnCommon } from '@/components/btn-common/btn-common';
 import { InfoExtraPhone } from '@/components/info-extra-phone/info-extra-phone';
 import { GalleriaModule } from 'primeng/galleria';
 import { WhyOurPolicy } from "@/components/why-our-policy/why-our-policy";
+import { FAQSItems } from "@/components/faqs-items/faqs-items";
+import { SectionIntro } from "@/components/section-intro/section-intro";
 
 
 @Component({
@@ -30,7 +32,9 @@ import { WhyOurPolicy } from "@/components/why-our-policy/why-our-policy";
     BtnCommon,
     InfoExtraPhone,
     GalleriaModule,
-    WhyOurPolicy
+    WhyOurPolicy,
+    FAQSItems,
+    SectionIntro
 ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
