@@ -19,6 +19,7 @@ import { MenuProduct } from '@/components/menu-product/menu-product';
 import { BtnCommon } from '@/components/btn-common/btn-common';
 import { InfoExtraPhone } from '@/components/info-extra-phone/info-extra-phone';
 import { GalleriaModule } from 'primeng/galleria';
+import { WhyOurPolicy } from "@/components/why-our-policy/why-our-policy";
 
 
 @Component({
@@ -29,7 +30,8 @@ import { GalleriaModule } from 'primeng/galleria';
     BtnCommon,
     InfoExtraPhone,
     GalleriaModule,
-  ],
+    WhyOurPolicy
+],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })

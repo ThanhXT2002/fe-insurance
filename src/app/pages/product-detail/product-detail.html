@@ -22,7 +22,7 @@
                 ></app-btn-common>
               }
               @if (product.price) {
-                <div class="flex__between font-bold md:text-xl text-secondary ">
+                <div class="flex__between font-bold md:text-xl text-secondary">
                   <p class="">Giá chỉ từ:</p>
                   <p>{{ product.price }} VNĐ / {{ product.priority }} năm</p>
                 </div>
@@ -48,7 +48,7 @@
 
             <div class="text-gray-950" [innerHTML]="product.shortContent"></div>
             <div
-              class="rounded-common overflow-hidden image-hover-effect max-h-[450px] my-5 md:my-10"
+              class="rounded-common overflow-hidden image-hover-effect max-h-[450px] my-5 md:my-8"
             >
               <p-galleria
                 [value]="imgThumbnail()"
@@ -72,6 +72,9 @@
 
             <div class="text-gray-950" [innerHTML]="product.content">
               {{ product.content }}
+            </div>
+            <div class="my-5 md:my-8">
+              <app-why-our-policy class="" />
             </div>
           </div>
         </div>
