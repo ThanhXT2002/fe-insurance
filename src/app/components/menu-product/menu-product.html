@@ -3,23 +3,32 @@
     Dịch Vụ Của Chúng Tôi
   </h3>
 
-  <!-- Loading state -->
-  @if (isLoading()) {
-    <div class="loading">
-      <p>Đang tải menu...</p>
-    </div>
-  }
-
-  <!-- Error state -->
-  @if (error()) {
-    <div class="error">
-      <p>Không thể tải menu. Vui lòng thử lại sau.</p>
-    </div>
-  }
-
   <!-- Menu list -->
-  @if (menuData(); as menu) {
-    <ul class="flex flex-col space-y-4">
+
+  <ul class="flex flex-col space-y-4">
+    <!-- Loading state -->
+    @if (isLoading()) {
+       <li
+
+          class="group flex__between rounded-xl bg-white h-4 cursor-pointer text-fourth hover:bg-secondary hover:text-white transition-colors"
+        >
+          <span class="text-sm font-medium">
+
+          </span>
+
+          <i
+            class="fa-solid fa-arrow-right text-secondary group-hover:text-white"
+          ></i>
+        </li>
+    }
+
+    <!-- Error state -->
+    @if (error()) {
+      <div class="error">
+        <p>Không thể tải menu. Vui lòng thử lại sau.</p>
+      </div>
+    }
+    @if (menuData(); as menu) {
       @for (item of menu.menus; track item.key) {
         <li
           [routerLink]="[item.data.routerLink]"
@@ -32,25 +41,8 @@
           <i
             class="fa-solid fa-arrow-right text-secondary group-hover:text-white"
           ></i>
-
-          <!-- Sub menu nếu có
-          @if (item.children && item.children.length > 0) {
-            <ul class="sub-menu">
-              @for (child of item.children; track child.key) {
-                <li>
-                  <a
-                    [routerLink]="child.data.routerLink"
-                    [target]="child.data.isBlank ? '_blank' : '_self'"
-                    class="sub-link"
-                  >
-                    {{ child.label }}
-                  </a>
-                </li>
-              }
-            </ul>
-          } -->
         </li>
       }
-    </ul>
-  }
+    }
+  </ul>
 </div>

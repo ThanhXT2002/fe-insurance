@@ -6,6 +6,7 @@ import {
   effect,
   signal,
   model,
+  computed,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SEOService } from '../../core/services/seo.service';
@@ -22,6 +23,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { WhyOurPolicy } from "@/components/why-our-policy/why-our-policy";
 import { FAQSItems } from "@/components/faqs-items/faqs-items";
 import { SectionIntro } from "@/components/section-intro/section-intro";
+import { CheckItem } from "@/components/check-item/check-item";
 
 
 @Component({
@@ -34,7 +36,8 @@ import { SectionIntro } from "@/components/section-intro/section-intro";
     GalleriaModule,
     WhyOurPolicy,
     FAQSItems,
-    SectionIntro
+    SectionIntro,
+    CheckItem
 ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
@@ -190,4 +193,29 @@ export class ProductDetail implements OnInit {
       type: 'product',
     });
   }
+
+  // computed tagsList trả về mảng đã xử lý
+  tagsList = computed(() => {
+    const p = this.data()
+    if (!p) return []
+    const tags: unknown = (p as any).tags
+
+    // nếu đã là mảng, trim từng phần tử
+    if (Array.isArray(tags)) {
+      return (tags as unknown[]).map((t) => (t ?? '').toString().trim()).filter(Boolean)
+    }
+
+    // nếu là string, tách theo dấu phẩy
+    if (typeof tags === 'string') {
+      return tags
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+    }
+
+    return []
+  })
+
+  // trackBy cho @for (dùng value + index)
+  trackByFeature = (index: number, feature: string) => `${index}:${feature}`
 }

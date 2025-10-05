@@ -11,4 +11,8 @@ export class InfoExtraPhone {
 
     numberPhone = environment.numberPhone;
 
+    callPhone(){
+      window.location.href = `tel:${environment.numberPhone}`;
+    }
+
 }
