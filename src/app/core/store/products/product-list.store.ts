@@ -111,7 +111,7 @@ export class ProductListStore extends BaseStoreSignal<ProductListState> {
       const s = this.snapshot();
       const nextPage = (s.page || 1) + 1;
 
-      const res = await this.fetchPage({ page: nextPage, limit: s.limit });
+      const res = await this.fetchPage({ page: nextPage, limit: s.limit, active: true });
 
       // append rows if any
       const currentRows = this.snapshot().rows || [];

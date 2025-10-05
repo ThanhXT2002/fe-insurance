@@ -23,7 +23,7 @@ export class AllProductsSection {
     // Note: loadInitial() will return cached rows if present (so when navigating back
     // to this page the list is preserved). To force a refresh pass { force: true }.
     Promise.resolve().then(() => {
-      this.productListStore.loadInitial().catch(() => {});
+      this.productListStore.loadInitial({ active: true }).catch(() => {});
     });
   }
 
@@ -40,6 +40,6 @@ export class AllProductsSection {
 
   // expose refresh for UI if needed
   async refresh() {
-    await this.productListStore.refresh();
+    await this.productListStore.refresh({ active: true });
   }
 }
