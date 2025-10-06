@@ -28,6 +28,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/posts/posts').then((m) => m.Posts),
         data: { title: 'Bài viết' },
       },
+       {
+        path: 'post',
+        redirectTo: 'posts',
+        pathMatch: 'full',
+      },
       {
         path: 'post/:slug',
         loadComponent: () =>
@@ -113,6 +118,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/products/products').then((m) => m.Products),
         data: { title: 'Sản phẩm' },
+      },
+      {
+        path: 'product',
+        redirectTo: 'products',
+        pathMatch: 'full',
       },
       {
         path: 'product/:slug',

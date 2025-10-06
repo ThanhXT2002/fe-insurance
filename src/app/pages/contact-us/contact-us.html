@@ -1,5 +1,5 @@
 <app-breadcrumb-img title="{{ title }}" />
-<div class="bg-white py-20">
+<div class="bg-white py-10 lg:py-20">
   <div class="container-layer">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
       <div class="w-full">
@@ -17,38 +17,36 @@
             alt="icon_position"
             class="w-6 h-6"
           />
-          <span
-            >{{address}}</span
-          >
+          <span>{{ address }}</span>
         </div>
 
-        <div class="relative w-full rounded-common overflow-hidden group ">
+        <div class="relative w-full rounded-common overflow-hidden group">
           <img
             src="/assets/images/contact/contact-cta-bg-img.webp"
-            class="group-hover:scale-110 transition-transform duration-700 w-full "
+            class="group-hover:scale-110 transition-transform duration-700 w-full"
             alt=""
           />
           <div
             class="absolute inset-0 bg-gradient-to-r from-teal-900/90 via-teal-700/40 to-transparent"
           >
-          <div class="flex flex-col h-full p-10 md:p-20 text-white">
-            <div class="flex__start gap-x-5">
-              <i class="fa-solid fa-phone-volume text-4xl"></i>
-              <div>
-                <p>Gọi cho chúng tôi:</p>
-                <p class="font-bold text-xl">{{numberPhone}}</p>
+            <div class="flex flex-col h-full p-10 md:p-20 text-white">
+              <div class="flex__start gap-x-5">
+                <i class="fa-solid fa-phone-volume text-4xl"></i>
+                <div>
+                  <p>Gọi cho chúng tôi:</p>
+                  <p class="font-bold text-xl">{{ numberPhone }}</p>
+                </div>
               </div>
-            </div>
-            <hr class="border-white/40 h-1 w-[60%] my-5 md:my-8" />
-            <div class="flex__start gap-x-5">
-             <i class="fa-solid fa-envelope-open-text text-4xl"></i>
-              <div>
-                <p>Email cho chúng tôi:</p>
-                <p class="font-bold text-xl">{{emailSupport}}</p>
+              <hr class="border-white/40 h-1 w-[60%] my-5 md:my-8" />
+              <div class="flex__start gap-x-5">
+                <i class="fa-solid fa-envelope-open-text text-4xl"></i>
+                <div>
+                  <p>Email cho chúng tôi:</p>
+                  <p class="font-bold text-xl">{{ emailSupport }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <div class="w-full h-full">
@@ -56,4 +54,15 @@
       </div>
     </div>
   </div>
+</div>
+<div class="w-full h-[500px] pb-10 lg:pb-20 bg-white">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.067630106253!2d105.77639387471447!3d21.02997978773778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345579b9b1870f%3A0x8737d15d92299bc1!2sSunshine%20Center!5e0!3m2!1svi!2s!4v1759784705301!5m2!1svi!2s"
+    width="100%"
+    height="100%"
+    style="border: 0"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
 </div>
