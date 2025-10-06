@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BlogPost } from '../../core/interfaces/blog.interface';
+import { PostItem } from '@/core/interfaces/post.interface';
 
 @Component({
   selector: 'app-item-post',
@@ -11,7 +12,7 @@ import { BlogPost } from '../../core/interfaces/blog.interface';
 })
 export class ItemPost {
   // Input signals
-  readonly post = input.required<BlogPost>();
+  readonly post = input.required<PostItem>();
   readonly showFullContent = input(false);
   readonly excerptLength = input(100);
 
@@ -27,7 +28,7 @@ export class ItemPost {
 
   readonly formattedDate = computed(() => {
     const post = this.post();
-    const date = new Date(post.published_at);
+    const date = new Date(post.publishedAt);
     return date.toLocaleDateString('vi-VN', {
       year: 'numeric',
       month: 'long',
@@ -35,10 +36,6 @@ export class ItemPost {
     });
   });
 
-  readonly primaryTag = computed(() => {
-    const post = this.post();
-    return post.tags[0] || '';
-  });
 
   readonly blogUrl = computed(() => {
     const post = this.post();

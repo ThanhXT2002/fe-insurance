@@ -12,7 +12,7 @@
       </div>
       <div class="w-full">
         <!-- Featured Posts Layout: 1 large + 2 small -->
-        @if (featuredPosts().length >= 3) {
+        @if (featuredPosts().length >= 3 ; ) {
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
             <!-- Main Featured Post (Left Side) -->
             <article
@@ -23,7 +23,7 @@
                 class="relative h-full w-full overflow-hidden image-hover-effect"
               >
                 <img
-                  [src]="featuredPosts()[0].thumbnails[0]"
+                  [src]="featuredPosts()[0].featuredImage"
                   [alt]="featuredPosts()[0].title"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
@@ -35,7 +35,7 @@
                   <!-- Meta info -->
                   <div class="mb-2">
                     <i class="far fa-calendar-alt mr-1"></i>
-                    {{ formatDate(featuredPosts()[0].published_at) }}
+                    {{ formatDate(featuredPosts()[0].publishedAt) }}
                   </div>
 
                   <!-- Title -->

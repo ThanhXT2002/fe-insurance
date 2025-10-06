@@ -18,7 +18,7 @@ interface PostHomeState {
 }
 
 @Injectable({ providedIn: 'root' })
-export class PostStore extends BaseStoreSignal<PostHomeState> {
+export class PostListHomeStore extends BaseStoreSignal<PostHomeState> {
   protected getInitialState(): PostHomeState {
     return { items: null };
   }

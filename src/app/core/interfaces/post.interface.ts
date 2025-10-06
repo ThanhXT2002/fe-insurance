@@ -4,7 +4,7 @@ export interface PostItem {
   id:number;
   title: string
   slug?: string
-  excerpt?: string
+  excerpt: string
   shortContent?: string
   content: string
   featuredImage?: string
@@ -17,7 +17,7 @@ export interface PostItem {
   isFeatured?: boolean
   scheduledAt?: Date | string
   expiredAt?: Date | string
-  publishedAt?: Date | string
+  publishedAt: string
   targetAudience?: string[]
   relatedProductIds?: number[]
   metaKeywords?: string[]
