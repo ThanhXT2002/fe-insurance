@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Input,
   Output,
   EventEmitter,
   ElementRef,
@@ -13,6 +12,8 @@ import {
   ContentChild,
   TemplateRef,
   ChangeDetectorRef,
+  computed,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -23,34 +24,51 @@ import {
   styleUrls: ['./custom-carousel.scss'],
 })
 export class CustomCarousel implements AfterViewInit, OnDestroy {
-  @Input() items: any[] = [];
-  @Input() autoplayInterval: number = 5000;
-  @Input() circular: boolean = true;
-  @Input() showNavigators: boolean = true;
+  // Use input signals instead of @Input
+  items = input<any[]>([]);
+  autoplayInterval = input<number>(5000);
+  circular = input<boolean>(true);
+  showNavigators = input<boolean>(true);
+
   @Output() onSlideChange = new EventEmitter<number>();
 
   @ViewChild('carouselTrack', { static: false }) carouselTrack!: ElementRef;
   @ContentChild(TemplateRef) itemTemplate!: TemplateRef<any>;
 
-  displayItems: any[] = [];
+  // Use computed for displayItems - now it will be reactive!
+  displayItems = computed(() => {
+    const itemsArray = this.items();
+    if (this.circular() && itemsArray.length > 0) {
+      return [...itemsArray, ...itemsArray, ...itemsArray];
+    }
+    return [...itemsArray];
+  });
+
   currentIndex = signal(0);
-  realIndex = 0; // Real index without clones
+  currentTranslate = signal(0);
   isDragging = false;
   startPos = 0;
-  currentTranslate = 0;
   prevTranslate = 0;
   autoplayTimer: any;
   isTransitioning = false;
 
   constructor(private cdr: ChangeDetectorRef) {
     effect(() => {
-      const realIdx = this.currentIndex() % this.items.length;
-      this.onSlideChange.emit(realIdx);
+      const itemsArray = this.items();
+      if (itemsArray.length > 0) {
+        const realIdx = this.currentIndex() % itemsArray.length;
+        this.onSlideChange.emit(realIdx);
+      }
     });
   }
 
   ngAfterViewInit() {
-    this.setupCircularItems();
+    // Set initial index for circular mode
+    const itemsArray = this.items();
+    if (this.circular() && itemsArray.length > 0) {
+      this.currentIndex.set(itemsArray.length);
+    }
+
     // Use setTimeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.setPositionByIndex();
@@ -61,19 +79,6 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopAutoplay();
-  }
-
-  setupCircularItems() {
-    if (this.circular && this.items.length > 0) {
-      // Clone items: [...items, ...items, ...items] for seamless loop
-      this.displayItems = [...this.items, ...this.items, ...this.items];
-      // Start at the middle set to allow seamless prev/next
-      this.currentIndex.set(this.items.length);
-      this.realIndex = this.items.length;
-    } else {
-      this.displayItems = [...this.items];
-      this.currentIndex.set(0);
-    }
   }
 
   onTouchStart(event: TouchEvent | MouseEvent) {
@@ -98,14 +103,14 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
     }
 
     const diff = currentPosition - this.startPos;
-    this.currentTranslate = this.prevTranslate + diff;
+    this.currentTranslate.set(this.prevTranslate + diff);
   }
 
   onTouchEnd() {
     if (!this.isDragging) return;
     this.isDragging = false;
 
-    const movedBy = this.currentTranslate - this.prevTranslate;
+    const movedBy = this.currentTranslate() - this.prevTranslate;
     const threshold = 50;
 
     if (movedBy < -threshold) {
@@ -150,10 +155,11 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
   }
 
   checkAndResetPosition() {
-    if (!this.circular || this.items.length === 0) return;
+    const itemsArray = this.items();
+    if (!this.circular() || itemsArray.length === 0) return;
 
     const currentIdx = this.currentIndex();
-    const itemsLength = this.items.length;
+    const itemsLength = itemsArray.length;
 
     // We have 3 sets of items: [0-3][4-7][8-11] for 4 items
     // Start at set 1 (index 4), allow movement to set 0 or set 2
@@ -195,20 +201,22 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
 
   setPositionByIndex() {
     const slideWidth = this.carouselTrack?.nativeElement?.offsetWidth || 0;
-    this.currentTranslate = this.currentIndex() * -slideWidth;
-    this.prevTranslate = this.currentTranslate;
+    const newTranslate = this.currentIndex() * -slideWidth;
+    this.currentTranslate.set(newTranslate);
+    this.prevTranslate = newTranslate;
   }
 
   getTransform() {
-    return `translateX(${this.currentTranslate}px)`;
+    return `translateX(${this.currentTranslate()}px)`;
   }
 
   startAutoplay() {
-    if (this.autoplayInterval > 0) {
+    const interval = this.autoplayInterval();
+    if (interval > 0) {
       this.stopAutoplay();
       this.autoplayTimer = setInterval(() => {
         this.goToNextSlide();
-      }, this.autoplayInterval);
+      }, interval);
     }
   }
 

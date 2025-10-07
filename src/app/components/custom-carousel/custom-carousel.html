@@ -13,7 +13,7 @@
       (mouseup)="onTouchEnd()"
       (mouseleave)="onTouchEnd()"
     >
-      @for (item of displayItems; track $index; let i = $index) {
+      @for (item of displayItems(); track $index; let i = $index) {
         <div class="carousel-slide">
           <ng-container
             *ngTemplateOutlet="
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  @if (showNavigators) {
+  @if (showNavigators()) {
     <div class="carousel-navigation">
       <button
         (click)="goToPrevSlide()"
