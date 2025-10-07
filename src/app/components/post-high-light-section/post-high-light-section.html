@@ -1,3 +1,41 @@
+@if (loading()) {
+  <div class="h-full w-full">
+    <div class="grid grid-rows-1 lg:grid-cols-3 gap-10">
+      <div
+        class=" lg:col-span-2 w-full h-item rounded-common overflow-hidden animate-pulse bg-gray-200"
+      >
+       <div class="relative w-full h-full">
+         <div
+          class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-secondary to-transparent text-white z-50"
+        >
+          <div
+            class="h-full w-full flex flex-col justify-end px-3 md:px-10 pb-14"
+          >
+            <div
+              class="flex flex-col justify-end gap-6  transition-transform duration-300 cursor-pointer"
+            >
+              <div class="h-3 w-40 bg-gray-200 rounded animate-pulse"></div>
+              <div class="h-8 w-full bg-gray-200 rounded animate-pulse"></div>
+              <div class="h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+      <div class="lg:col-span-1 w-full h-full hidden lg:block">
+        <app-post-item-skeleton />
+      </div>
+    </div>
+
+    <div
+      class="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10"
+    >
+      @for (i of skeletonArray; track $index) {
+        <app-post-item-skeleton />
+      }
+    </div>
+  </div>
+}
 @if (highlightPosts()) {
   <div class="h-full w-full">
     <div class="grid grid-rows-1 lg:grid-cols-3 gap-10">
