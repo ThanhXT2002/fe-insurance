@@ -1,0 +1,45 @@
+<div class="carousel-container">
+  <div class="carousel-wrapper">
+    <div
+      #carouselTrack
+      class="carousel-track"
+      [style.transform]="getTransform()"
+      [class.is-dragging]="isDragging"
+      (touchstart)="onTouchStart($event)"
+      (touchmove)="onTouchMove($event)"
+      (touchend)="onTouchEnd()"
+      (mousedown)="onTouchStart($event)"
+      (mousemove)="onTouchMove($event)"
+      (mouseup)="onTouchEnd()"
+      (mouseleave)="onTouchEnd()"
+    >
+      @for (item of displayItems; track $index; let i = $index) {
+        <div class="carousel-slide">
+          <ng-container
+            *ngTemplateOutlet="
+              itemTemplate;
+              context: { $implicit: item, index: i }
+            "
+          ></ng-container>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (showNavigators) {
+    <div class="carousel-navigation">
+      <button
+        (click)="goToPrevSlide()"
+        class="carousel-nav-btn carousel-prev-btn"
+      >
+        <i class="fa-solid fa-arrow-left text-2xl text-white"></i>
+      </button>
+      <button
+        (click)="goToNextSlide()"
+        class="carousel-nav-btn carousel-next-btn"
+      >
+        <i class="fa-solid fa-arrow-right text-2xl text-white"></i>
+      </button>
+    </div>
+  }
+</div>

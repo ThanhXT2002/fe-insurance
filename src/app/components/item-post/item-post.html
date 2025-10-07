@@ -1,11 +1,12 @@
 <article
   [routerLink]="blogUrl()"
   class="group bg-white rounded-common shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex !h-full w-full cursor-pointer"
-  [ngClass]="flexDireaction()"
+  [ngClass]="flexDirection()"
 >
   <!-- Image -->
   <div
-    class="relative   md:w-1/2 overflow-hidden flex-shrink-0 image-hover-effect"
+    class="relative    overflow-hidden flex-shrink-0 image-hover-effect"
+    [ngClass]="isPostPage()?'flex-1 w-full':'md:w-1/2'"
   >
     <img
       [src]="post().featuredImage"
@@ -26,7 +27,7 @@
 
       <!-- Title -->
       <h3
-        class="text-lg font-bold text-primary my-2 line-clamp-2 group-hover:text-secondary transition-colors duration-200"
+        class="text-lg font-bold text-primary my-2 line-clamp-2 group-hover:text-secondary transition-colors duration-200 h-16 line-clamp-2"
       >
         {{ post().title }}
       </h3>

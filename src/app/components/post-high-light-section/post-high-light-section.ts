@@ -1,16 +1,18 @@
 import { PostListFeaturedStore } from '@/core/store/posts/post-list-featured.store';
 import { TimeFormatHelper } from '@/core/utils/time-format.helper';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
-import { CarouselModule } from 'primeng/carousel';
-import { ItemPost } from "../item-post/item-post";
+import { Component, computed, inject, ViewChild } from '@angular/core';
+import { ItemPost } from '../item-post/item-post';
+import { CustomCarousel } from '../custom-carousel/custom-carousel';
+
 @Component({
   selector: 'app-post-high-light-section',
-  imports: [CarouselModule, CommonModule, ItemPost],
+  imports: [CommonModule, ItemPost, CustomCarousel],
   templateUrl: './post-high-light-section.html',
   styleUrl: './post-high-light-section.scss',
 })
 export class PostHighLightSection {
+  @ViewChild('carousel') carousel?: CustomCarousel;
   private readonly postStore = inject(PostListFeaturedStore);
   readonly timeFormatHelper = new TimeFormatHelper();
 
@@ -27,6 +29,14 @@ export class PostHighLightSection {
           console.error('Failed to load highlighted posts');
         });
     });
+  }
+
+  goToPrevSlide() {
+    this.carousel?.goToPrevSlide();
+  }
+
+  goToNextSlide() {
+    this.carousel?.goToNextSlide();
   }
 
   getColorCategory(id: number) {

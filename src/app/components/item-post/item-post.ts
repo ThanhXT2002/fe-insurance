@@ -17,7 +17,8 @@ export class ItemPost {
   readonly post = input.required<PostItem>();
   readonly showFullContent = input(false);
   readonly excerptLength = input(100);
-  flexDireaction = input('flex-col lg:flex-row');
+  flexDirection = input('flex-col lg:flex-row');
+  isPostPage = input(false);
 
   // Computed signals
   readonly truncatedExcerpt = computed(() => {
