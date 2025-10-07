@@ -2,10 +2,12 @@ import { Component, ChangeDetectionStrategy, input, computed } from '@angular/co
 import { RouterLink } from '@angular/router';
 import { BlogPost } from '../../core/interfaces/blog.interface';
 import { PostItem } from '@/core/interfaces/post.interface';
+import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-item-post',
-  imports: [RouterLink],
+  imports: [RouterLink, NgClass],
   templateUrl: './item-post.html',
   styleUrl: './item-post.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -15,6 +17,7 @@ export class ItemPost {
   readonly post = input.required<PostItem>();
   readonly showFullContent = input(false);
   readonly excerptLength = input(100);
+  flexDireaction = input('flex-col lg:flex-row');
 
   // Computed signals
   readonly truncatedExcerpt = computed(() => {

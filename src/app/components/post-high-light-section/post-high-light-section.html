@@ -1,0 +1,66 @@
+@if (highlightPosts()) {
+  <div class="grid grid-rows-1 lg:grid-cols-3 gap-10">
+    <div
+      class="col-span-2 w-full h-item rounded-common overflow-hidden group hover:shadow-lg hover:drop-shadow-2xl transition-all duration-500 cursor-pointer"
+    >
+      <p-carousel
+        [value]="highlightPosts().slice(0, 3)"
+        [showNavigators]="false"
+        [showIndicators]="false"
+        [numScroll]="1"
+        [circular]="true"
+        class="!h-full"
+      >
+        <ng-template let-post #item>
+          <div class="relative !h-full !w-full ">
+            <img
+              [src]="post.featuredImage"
+              [alt]="post.title"
+              class="w-full h-item object-cover "
+            />
+
+            <div
+              class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-secondary to-transparent text-white"
+            >
+              <div
+                class="h-full w-full flex flex-col justify-end px-3 md:px-10 py-6 gap-4 group-hover:translate-y-[-20px] transition-transform duration-300"
+              >
+                <p
+                  class="font-semibold capitalize text-sm"
+                  [ngClass]="getColorCategory(post.category.id)"
+                >
+                  <i class="fa-solid fa-circle text-[6px] lg:text-[8px]"></i>
+                  {{ post.category.name }}
+                </p>
+                <h3 class="font-bold">{{ post.title }}</h3>
+                <div class="mb-2">
+                  <i class="far fa-calendar-alt mr-1"></i>
+                  {{ timeFormatHelper.formatDate(post.publishedAt) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    <div class="col-span-1 w-full h-full ">
+      @for (
+        post of highlightPosts().slice(3, 4);
+        track post.id;
+        let i = $index
+      ) {
+        <div class="w-full h-full">
+          <app-item-post [post]="post" flexDireaction="flex-col" class="h-full"/>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="w-full h-item grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+    @for (post of highlightPosts().slice(4, 8); track post.id; let i = $index) {
+      <div class="h-full">
+        <app-item-post [post]="post" flexDireaction="flex-col" />
+      </div>
+    }
+  </div>
+}

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { SectionIntro } from "../section-intro/section-intro";
 import { BlogService } from '../../core/services/api/blog-serive';
 import { ItemPost } from '../item-post/item-post';
-import { PostListHomeStore } from '@/core/store/posts/post-list-featured.store';
+import { PostListFeaturedStore } from '@/core/store/posts/post-list-featured.store';
 
 @Component({
   selector: 'app-post-news-section',
@@ -15,7 +15,7 @@ import { PostListHomeStore } from '@/core/store/posts/post-list-featured.store';
 })
 export class PostNewsSection {
 
-  private readonly postStore = inject(PostListHomeStore);
+  private readonly postStore = inject(PostListFeaturedStore);
 
   // Expose featured posts as a getter for template
   readonly featuredPosts = computed(() => this.postStore.list());

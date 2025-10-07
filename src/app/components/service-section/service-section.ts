@@ -19,7 +19,7 @@ export class ServiceSection {
   constructor() {
     // Tải dữ liệu cho trang chủ (số lượng mặc định 4) trong microtask để tránh thay đổi view khi đang check
     Promise.resolve().then(() => {
-      this.productStore.loadHome(4).catch(() => {
+      this.productStore.loadHome(6).catch(() => {
         // lỗi load thì cứ để store hiển thị fallback empty list
       });
     });

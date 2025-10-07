@@ -27,7 +27,7 @@ interface PostHomeState {
 }
 
 @Injectable({ providedIn: 'root' })
-export class PostListHomeStore extends BaseStoreSignal<PostHomeState> {
+export class PostListFeaturedStore extends BaseStoreSignal<PostHomeState> {
   protected getInitialState(): PostHomeState {
     return { items: null, itemsHighLight: null };
   }
@@ -94,7 +94,7 @@ export class PostListHomeStore extends BaseStoreSignal<PostHomeState> {
   }
 
   // Public Observable version of loadPostHighLight with retry when result is empty
-  loadPostHighLight$(limit = 5) {
+  loadPostHighLight$(limit = 8) {
     return this.loadPosts$(limit, { isHighlighted: true });
   }
 
