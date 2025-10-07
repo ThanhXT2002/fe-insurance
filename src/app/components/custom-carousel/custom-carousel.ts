@@ -121,12 +121,12 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
 
   goToNextSlide() {
     if (this.isTransitioning) return;
-    
+
     const nextIndex = this.currentIndex() + 1;
     this.currentIndex.set(nextIndex);
     this.setPositionByIndex();
     this.isTransitioning = true;
-    
+
     // Wait for CSS transition to complete (300ms)
     setTimeout(() => {
       this.checkAndResetPosition();
@@ -136,12 +136,12 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
 
   goToPrevSlide() {
     if (this.isTransitioning) return;
-    
+
     const prevIndex = this.currentIndex() - 1;
     this.currentIndex.set(prevIndex);
     this.setPositionByIndex();
     this.isTransitioning = true;
-    
+
     // Wait for CSS transition to complete (300ms)
     setTimeout(() => {
       this.checkAndResetPosition();
@@ -158,7 +158,7 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
     // We have 3 sets of items: [0-3][4-7][8-11] for 4 items
     // Start at set 1 (index 4), allow movement to set 0 or set 2
     // When reaching boundaries, instantly jump back to set 1
-    
+
     // Reached or passed the third set - jump back to start of second set
     if (currentIdx >= itemsLength * 2) {
       this.disableTransition();
@@ -168,8 +168,8 @@ export class CustomCarousel implements AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
       setTimeout(() => this.enableTransition(), 50);
     }
-    
-    // Went before the first set - jump to end of second set  
+
+    // Went before the first set - jump to end of second set
     else if (currentIdx < itemsLength) {
       this.disableTransition();
       const newIndex = itemsLength * 2 - 1;
