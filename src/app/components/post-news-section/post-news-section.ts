@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { SectionIntro } from "../section-intro/section-intro";
 import { BlogService } from '../../core/services/api/blog-serive';
 import { ItemPost } from '../item-post/item-post';
-import { PostListHomeStore } from '@/core/store/posts/post-list-home.store';
+import { PostListHomeStore } from '@/core/store/posts/post-list-featured.store';
 
 @Component({
   selector: 'app-post-news-section',
