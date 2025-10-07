@@ -1,26 +1,29 @@
+<p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase ">
+  Bài viết Nổi bật
+</p>
 @if (loading()) {
   <div class="h-full w-full">
     <div class="grid grid-rows-1 lg:grid-cols-3 gap-10">
       <div
-        class=" lg:col-span-2 w-full h-item rounded-common overflow-hidden animate-pulse bg-gray-200"
+        class="lg:col-span-2 w-full h-item rounded-common overflow-hidden animate-pulse bg-gray-200"
       >
-       <div class="relative w-full h-full">
-         <div
-          class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-secondary to-transparent text-white z-50"
-        >
+        <div class="relative w-full h-full">
           <div
-            class="h-full w-full flex flex-col justify-end px-3 md:px-10 pb-14"
+            class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-secondary to-transparent text-white z-50"
           >
             <div
-              class="flex flex-col justify-end gap-6  transition-transform duration-300 cursor-pointer"
+              class="h-full w-full flex flex-col justify-end px-3 md:px-10 pb-14"
             >
-              <div class="h-3 w-40 bg-gray-200 rounded animate-pulse"></div>
-              <div class="h-8 w-full bg-gray-200 rounded animate-pulse"></div>
-              <div class="h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
+              <div
+                class="flex flex-col justify-end gap-6 transition-transform duration-300 cursor-pointer"
+              >
+                <div class="h-3 w-40 bg-gray-200 rounded animate-pulse"></div>
+                <div class="h-8 w-full bg-gray-200 rounded animate-pulse"></div>
+                <div class="h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
+              </div>
             </div>
           </div>
         </div>
-       </div>
       </div>
       <div class="lg:col-span-1 w-full h-full hidden lg:block">
         <app-post-item-skeleton />
@@ -73,7 +76,10 @@
                       ></i>
                       {{ post.category.name }}
                     </p>
-                    <h3 class="font-bold hover:text-primary">
+                    <h3
+                      routerLink="/post/{{ post.slug }}"
+                      class="font-bold hover:text-primary"
+                    >
                       {{ post.title }}
                     </h3>
                     <div class="mb-2">
@@ -117,7 +123,6 @@
           <app-item-post
             [post]="post"
             flexDirection="flex-col"
-            [isPostPage]="true"
             [isPostPage]="true"
             class="h-item"
           />

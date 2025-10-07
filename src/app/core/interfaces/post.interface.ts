@@ -28,18 +28,6 @@ export interface PostItem {
 }
 
 
-export enum PostType {
-  ARTICLE = 'article', // Bài viết thông thường
-  GUIDE = 'guide', // Hướng dẫn
-  NEWS = 'news', // Tin tức
-  PRODUCT = 'product', // Giới thiệu sản phẩm bảo hiểm
-  FAQ = 'faq' // Câu hỏi thường gặp
-}
-
-// Enums
-export enum PostStatus {
-  DRAFT = 'draft',
-  PUBLISHED = 'published',
-  ARCHIVED = 'archived'
-}
+export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+export type PostType = 'ARTICLE' | 'GUIDE' | 'NEWS' | 'PRODUCT' | 'FAQ';
 

@@ -1,7 +1,15 @@
 <app-breadcrumb-img title="Tin tức - Bài viết"/>
 <div class="py-10 lg:py-20 bg-gray-50">
-  <div class="container-layer">
+  <div class="container-layer flex flex-col gap-10">
     <app-post-high-light-section/>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="col-span-1 md:col-span-2">
+<app-post-new-section />
+      </div>
+      <div class="col-span-1">
+        <app-post-item-skeleton />
+      </div>
+    </div>
     </div>
 
 </div>

@@ -5,10 +5,11 @@ import { Component, computed, inject, ViewChild } from '@angular/core';
 import { ItemPost } from '../item-post/item-post';
 import { CustomCarousel } from '../custom-carousel/custom-carousel';
 import { PostItemSkeleton } from "../post-item-skeleton/post-item-skeleton";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post-high-light-section',
-  imports: [CommonModule, ItemPost, CustomCarousel, PostItemSkeleton],
+  imports: [CommonModule, ItemPost, CustomCarousel, PostItemSkeleton, RouterLink],
   templateUrl: './post-high-light-section.html',
   styleUrl: './post-high-light-section.scss',
 })
@@ -35,12 +36,5 @@ export class PostHighLightSection {
     });
   }
 
-  goToPrevSlide() {
-    this.carousel?.goToPrevSlide();
-  }
-
-  goToNextSlide() {
-    this.carousel?.goToNextSlide();
-  }
 
 }

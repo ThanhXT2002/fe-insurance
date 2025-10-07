@@ -1,0 +1,36 @@
+<p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase ">
+  Bài viết Mới - Gần đây
+</p>
+<div class="space-y-4 w-full">
+  <!-- Loading skeletons -->
+  @if (loading()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      @for (s of skeletonArray(); track $index) {
+        <app-post-item-skeleton></app-post-item-skeleton>
+      }
+    </div>
+  }
+
+  <!-- Posts list -->
+  @if (!loading() && posts().length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      @for (post of posts(); track post.id) {
+        <app-item-post
+          [post]="post"
+          flexDirection="flex-col"
+          [isPostPage]="true"
+        ></app-item-post>
+      }
+    </div>
+    <!-- Paginator -->
+    <div class=" mt-6">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first()"
+        [rows]="limit()"
+        [totalRecords]="total() ?? 0"
+        [rowsPerPageOptions]="[4, 6, 8, 12]"
+      />
+    </div>
+  }
+</div>
