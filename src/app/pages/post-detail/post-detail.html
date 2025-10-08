@@ -1,1 +1,116 @@
-<p>post-detail works!</p>
+@if (data(); as post) {
+  <app-breadcrumb-img
+    [title]="post.title || ''"
+    [pageBeforeTitle]="'Tin tức - Bài viết'"
+    [pageBeforeLink]="'/posts'"
+    [bgUrl]="post.featuredImage || 'assets/images/banners/page-header-bg.jpg'"
+  />
+
+  <div class="w-full bg-gray-50">
+    <div class="container-layer">
+      <div class="main-content">
+        <div class="content-grid">
+          <div class="sidebar">
+            <div class="sticky-toc">
+              <app-menu-product></app-menu-product>
+              <app-info-extra-phone class="hidden lg:block" />
+            </div>
+          </div>
+
+          <div class="content-area">
+            <h1
+              class="text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10"
+            >
+              {{ post.title }}
+            </h1>
+
+            @if (post.excerpt) {
+              <div class="text-gray-700 text-lg mb-5 italic">
+                {{ post.excerpt }}
+              </div>
+            }
+
+            @if (post.shortContent) {
+              <div
+                class="text-gray-950 mb-5"
+                [innerHTML]="post.shortContent"
+              ></div>
+            }
+
+            @if (imgThumbnail().length > 0) {
+              <div
+                class="rounded-common overflow-hidden image-hover-effect max-h-[450px] my-5 md:my-8"
+              >
+                <p-galleria
+                  [value]="imgThumbnail()"
+                  [responsiveOptions]="responsiveOptions"
+                  [showThumbnails]="false"
+                  [autoPlay]="true"
+                  [circular]="true"
+                  [showItemNavigators]="true"
+                >
+                  <ng-template #item let-item>
+                    <img
+                      [src]="item.itemImageSrc"
+                      class="object-cover w-full h-full"
+                      [alt]="post.title"
+                    />
+                  </ng-template>
+                </p-galleria>
+              </div>
+            }
+
+            <div class="text-gray-950" [innerHTML]="post.content"></div>
+
+            @if (tagsList().length > 0) {
+              <div class="my-5 md:my-10">
+                <h2
+                  class="text-2xl md:text-3xl lg:text-4xl text-secondary font-medium text-left mb-5"
+                >
+                  Thông tin nổi bật
+                </h2>
+
+                <div
+                  class="flex__between flex-col md:flex-row gap-1 md:gap-5 mt-5"
+                >
+                  <app-check-item [features]="tagsList()" />
+                  @if (post.albumImages && post.albumImages.length > 0) {
+                    <div
+                      class="md:w-1/2 max-w-[350px] h-full rounded-common overflow-hidden image-hover-effect"
+                    >
+                      <img
+                        [src]="post.albumImages[post.albumImages.length - 1]"
+                        [alt]="post.title"
+                        class="w-full"
+                      />
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <div class="my-5 md:my-8">
+              <app-why-our-policy />
+            </div>
+
+            <div class="my-5 md:my-8">
+              <app-section-intro
+                title="FAQs"
+                firstText="Những"
+                highlightText="Câu hỏi"
+                lastText="thường gặp"
+              />
+              <app-faqs-items class="lg:mt-10" />
+            </div>
+
+            <div class="lg:hidden max-w-[400px]">
+              <app-info-extra-phone class="lg:hidden" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<app-loading-in-page class="h-screen w-full" />
