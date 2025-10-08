@@ -1,11 +1,12 @@
 import { PostListFeaturedStore } from '@/core/store/posts/post-list-featured.store';
 import { TimeFormatHelper } from '@/core/utils/time-format.helper';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Component, computed, inject, ViewChild, signal } from '@angular/core';
 import { ItemPost } from '../item-post/item-post';
 import { CustomCarousel } from '../custom-carousel/custom-carousel';
 import { PostItemSkeleton } from "../post-item-skeleton/post-item-skeleton";
 import { RouterLink } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-post-high-light-section',
