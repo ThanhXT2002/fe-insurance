@@ -4,13 +4,19 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, ViewChild, signal } from '@angular/core';
 import { ItemPost } from '../item-post/item-post';
 import { CustomCarousel } from '../custom-carousel/custom-carousel';
-import { PostItemSkeleton } from "../post-item-skeleton/post-item-skeleton";
+import { PostItemSkeleton } from '../post-item-skeleton/post-item-skeleton';
 import { RouterLink } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-post-high-light-section',
-  imports: [CommonModule, ItemPost, CustomCarousel, PostItemSkeleton, RouterLink],
+  imports: [
+    CommonModule,
+    ItemPost,
+    CustomCarousel,
+    PostItemSkeleton,
+    RouterLink,
+  ],
   templateUrl: './post-high-light-section.html',
   styleUrl: './post-high-light-section.scss',
 })
@@ -32,7 +38,7 @@ export class PostHighLightSection {
   readonly bottomPostsSlice = computed(() => {
     const posts = this.highlightPosts();
     if (!posts) return [];
-    
+
     // Nếu là tablet (md): lấy từ index 4-8 (4 bài viết)
     // Nếu là mobile hoặc desktop: lấy từ index 5-8 (3 bài viết)
     const startIndex = this.isTablet() ? 4 : 5;

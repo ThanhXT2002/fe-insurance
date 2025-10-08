@@ -1,4 +1,4 @@
-<p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase ">
+<p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase">
   Bài viết Nổi bật
 </p>
 @if (loading()) {
@@ -114,11 +114,7 @@
     <div
       class="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10"
     >
-      @for (
-        post of bottomPostsSlice();
-        track post.id;
-        let i = $index
-      ) {
+      @for (post of bottomPostsSlice(); track post.id; let i = $index) {
         <div class="h-full">
           <app-item-post
             [post]="post"
