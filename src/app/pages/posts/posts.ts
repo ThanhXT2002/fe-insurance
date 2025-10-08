@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { BreadcrumbImg } from "@/components/breadcrumb-img/breadcrumb-img";
 import { PostHighLightSection } from "@/components/post-high-light-section/post-high-light-section";
 import { PostNewSection } from "@/components/post-new-section/post-new-section";
-import { PostItemSkeleton } from "@/components/post-item-skeleton/post-item-skeleton";
+import { ServiceUsSection } from "@/components/service-us-section/service-us-section";
+
 
 @Component({
   selector: 'app-posts',
-  imports: [BreadcrumbImg, PostHighLightSection, PostNewSection, PostItemSkeleton],
+  imports: [BreadcrumbImg, PostHighLightSection, PostNewSection, ServiceUsSection],
   templateUrl: './posts.html',
   styleUrl: './posts.scss'
 })

@@ -1,0 +1,72 @@
+<div class="w-full h-full">
+  @if (products().length > 0) {
+    <p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase">
+      sản phẩm dịch vụ của chúng tôi
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+      @for (item of products(); track $index) {
+        <div
+          routerLink="/product/{{ item.slug }}"
+          class="border border-gray-300 rounded-e-2xl rounded-t-2xl px-6 py-5 hover:shadow-lg hover:drop-shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105"
+        >
+          <app-icon-box-wrapper
+            flexBoxContainer="flex__start  !flex-row gap-x-7"
+            [iconSrc]="item.icon || ''"
+            [bgColor]="'bg-primary'"
+            bgWidth="w-[70px]"
+            [iconColor]="'text-white'"
+            [iconSize]="'text-2xl'"
+            [hoverBgColor]="'secondary'"
+            [isShowText]="false"
+          >
+            <div class="text-left">
+              <h6 class="text-gray-800 font-bold text-sm mb-1">
+                {{ item.name }}
+              </h6>
+              <p class="text-fourth text-sm line-clamp-2">
+                {{ item.description }}
+              </p>
+            </div>
+          </app-icon-box-wrapper>
+        </div>
+      }
+    </div>
+  } @else {
+    <app-menu-product></app-menu-product>
+  }
+
+  @if (loading()) {
+    <p class="font-medium text-xl mb-3 ml-5 text-gray-600 uppercase">
+      sản phẩm dịch vụ của chúng tôi
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+      @for (item of skeletonArray; track $index) {
+        <div
+          class="border border-gray-300 rounded-e-2xl rounded-t-2xl px-6 py-5 ng-gray-200 animate-pulse"
+        >
+          <div class="flex__start !flex-row gap-x-7">
+            <div>
+              <div
+                class="w-[70px] h-[70px] bg-gray-200 rounded-full mb-3 animate-pulse"
+              ></div>
+            </div>
+            <div class="flex-1">
+              <div
+                class="h-4 w-40 bg-gray-200 rounded mb-4 animate-pulse"
+              ></div>
+              <div class="h-3 w-full bg-gray-200 rounded animate-pulse"></div>
+              <div
+                class="h-3 w-full bg-gray-200 rounded animate-pulse mt-1"
+              ></div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+  <div class="!mt-4">
+    <app-info-extra-phone />
+  </div>
+</div>

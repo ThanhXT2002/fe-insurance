@@ -1,31 +1,31 @@
-    <div class="bg-secondary text-white rounded-common p-5 md:p-10">
-                <h3 class="text-lg font-bold">Thông tin thêm</h3>
-                <p class="text-sm my-3">
-                  Tiếp cận sự hỗ trợ bảo hiểm chuyên nghiệp và các giải pháp cá
-                  nhân hóa.
-                </p>
-                <div class="rounded-e-xl rounded-t-xl bg-white/30 py-3 cursor-pointer" (click)="callPhone()">
-                  <app-icon-box-wrapper
-                    flexBoxContainer="flex__middle  !flex-row gap-x-7"
-                    [icon]="'fa-solid fa-phone-volume'"
-                    [bgColor]="'bg-white'"
-                    [bgWidth]="'w-16'"
-                    [iconColor]="'text-secondary group-hover:text-white'"
-                    [iconSize]="'text-2xl'"
-                    [hoverBgColor]="'primary'"
-                    [isShowText]="false"
-                  >
-                    <div class="text-left">
-                      <p class="text-white text-lg font-semibold mb-1">
-                        Hotline:
-                      </p>
-                      <a
-                        href="tel:{{ numberPhone }}"
-                        class="text-lg font-bold text-white transition-colors duration-300"
-                      >
-                        {{ numberPhone }}
-                      </a>
-                    </div>
-                  </app-icon-box-wrapper>
-                </div>
-              </div>
+<div class="bg-secondary text-white rounded-common p-5 md:p-10">
+  <h3 class="text-lg font-bold">Thông tin thêm</h3>
+  <p class="text-sm my-3">
+    Tiếp cận sự hỗ trợ bảo hiểm chuyên nghiệp và các giải pháp cá nhân hóa.
+  </p>
+  <div
+    class="rounded-e-xl rounded-t-xl bg-white/30 py-3 cursor-pointer"
+    (click)="callPhone()"
+  >
+    <app-icon-box-wrapper
+      flexBoxContainer="flex__middle  !flex-row gap-x-7"
+      [icon]="'fa-solid fa-phone-volume'"
+      [bgColor]="'bg-white'"
+      [bgWidth]="'w-16'"
+      [iconColor]="'text-secondary group-hover:text-white'"
+      [iconSize]="'text-2xl'"
+      [hoverBgColor]="'primary'"
+      [isShowText]="false"
+    >
+      <div class="text-left">
+        <p class="text-white text-lg font-semibold mb-1">Hotline:</p>
+        <a
+          href="tel:{{ numberPhone }}"
+          class="text-lg font-bold text-white transition-colors duration-300"
+        >
+          {{ numberPhone }}
+        </a>
+      </div>
+    </app-icon-box-wrapper>
+  </div>
+</div>
