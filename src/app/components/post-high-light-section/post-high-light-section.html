@@ -93,7 +93,7 @@
           </ng-template>
         </app-custom-carousel>
       </div>
-      <div class="lg:col-span-1 w-full h-full hidden lg:block">
+      <div class="lg:col-span-1 w-full h-full block md:hidden lg:block">
         @for (
           post of highlightPosts().slice(3, 4);
           track post.id;
@@ -115,7 +115,7 @@
       class="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10"
     >
       @for (
-        post of highlightPosts().slice(5, 8);
+        post of bottomPostsSlice();
         track post.id;
         let i = $index
       ) {

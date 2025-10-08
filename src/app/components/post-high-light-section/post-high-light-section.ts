@@ -17,6 +17,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 export class PostHighLightSection {
   @ViewChild('carousel') carousel?: CustomCarousel;
   private readonly postStore = inject(PostListFeaturedStore);
+  private breakpointObserver = inject(BreakpointObserver);
   readonly timeFormatHelper = new TimeFormatHelper();
 
   readonly highlightPosts = computed(() => this.postStore.listHighLight());
@@ -24,7 +25,28 @@ export class PostHighLightSection {
 
   skeletonArray = Array(3);
 
+  // Signal để theo dõi loại màn hình
+  isTablet = signal(false);
+
+  // Computed signal để tính toán slice range cho bottom posts
+  readonly bottomPostsSlice = computed(() => {
+    const posts = this.highlightPosts();
+    if (!posts) return [];
+    
+    // Nếu là tablet (md): lấy từ index 4-8 (4 bài viết)
+    // Nếu là mobile hoặc desktop: lấy từ index 5-8 (3 bài viết)
+    const startIndex = this.isTablet() ? 4 : 5;
+    return posts.slice(startIndex, 8);
+  });
+
   constructor() {
+    // Theo dõi breakpoint cho tablet (md: 768px - 1023px)
+    this.breakpointObserver
+      .observe(['(min-width: 768px) and (max-width: 1023px)'])
+      .subscribe((screenSize) => {
+        this.isTablet.set(screenSize.matches);
+      });
+
     Promise.resolve().then(() => {
       this.postStore
         .loadPostHighlight(8)
@@ -36,6 +58,4 @@ export class PostHighLightSection {
         });
     });
   }
-
-
 }
