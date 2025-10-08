@@ -23,14 +23,15 @@
       }
     </div>
     <!-- Paginator -->
-    <div class=" mt-6">
+    <div class=" mt-6 ">
       <p-paginator
         (onPageChange)="onPageChange($event)"
         [first]="first()"
         [rows]="limit()"
         [totalRecords]="total() ?? 0"
-        [rowsPerPageOptions]="[4, 6, 8, 12]"
+        styleClass="!bg-opacity-0 !bg-gray-50"
       />
+      <!-- [rowsPerPageOptions]="[4, 6, 8, 12]" -->
     </div>
   }
 </div>
