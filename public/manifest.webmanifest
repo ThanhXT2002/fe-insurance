@@ -42,9 +42,9 @@
       "purpose": "any"
     },
     {
-      "src": "icons/favicon-196.png",
-      "sizes": "196x196",
-      "type": "image/png",
+      "src": "favicon.ico",
+      "sizes": "36x36",
+      "type": "image/x-icon",
       "purpose": "any"
     }
   ]
