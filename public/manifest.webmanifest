@@ -9,7 +9,11 @@
   "start_url": "./",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "categories": ["business", "finance", "insurance"],
+  "categories": [
+    "business",
+    "finance",
+    "insurance"
+  ],
   "icons": [
     {
       "src": "icons/manifest-icon-192.maskable.png",
