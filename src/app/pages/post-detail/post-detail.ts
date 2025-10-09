@@ -33,8 +33,6 @@ import { PostRelated } from "@/components/post-related/post-related";
   selector: 'app-post-detail',
   imports: [
     BreadcrumbImg,
-    MenuProduct,
-    BtnCommon,
     InfoExtraPhone,
     GalleriaModule,
     WhyOurPolicy,
