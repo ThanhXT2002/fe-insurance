@@ -41,7 +41,6 @@ export class PostRelatedStore extends BaseStoreSignal<PostRelatedState> {
     postId: number;
     limit: number;
     categoryId: number;
-    postType?: PostType;
   }) {
     return defer(() =>
       this.postsService.getRelatedPosts(query).pipe(
@@ -61,7 +60,6 @@ export class PostRelatedStore extends BaseStoreSignal<PostRelatedState> {
     postId: number;
     limit: number;
     categoryId: number;
-    postType?: PostType;
   }) {
     const maxRetries = 2;
     return this.relatedPostsRequest$(query).pipe(
@@ -77,60 +75,36 @@ export class PostRelatedStore extends BaseStoreSignal<PostRelatedState> {
     );
   }
 
-  // Load related posts with caching and TransferState support
+  // Load related posts - CLIENT SIDE ONLY (no caching, no TransferState)
   async loadRelatedPosts(query: {
     postId: number;
     limit: number;
     categoryId: number;
-    postType?: PostType;
   }): Promise<PostItem[]> {
-    const currentItems = this.snapshot().items;
+    const isBrowser = isPlatformBrowser(this.platformId);
 
-    // Return cached items if available
-    if (currentItems && Array.isArray(currentItems) && currentItems.length > 0)
-      return currentItems;
+    // Only run on client side
+    if (!isBrowser) {
+      return [];
+    }
 
     // Return existing promise if already loading
     if (this._loadPromise) return this._loadPromise;
-
-    const isBrowser = isPlatformBrowser(this.platformId);
-    const stateKey = `posts-related-${query.postId}-${query.categoryId}-${query.limit}-${query.postType || 'all'}`;
-    const transferStateKey = makeStateKey<PostItem[]>(stateKey);
-
-    // CLIENT: Check TransferState first
-    if (isBrowser) {
-      const serverData = this.transferState.get(transferStateKey, null);
-      if (serverData && Array.isArray(serverData) && serverData.length > 0) {
-        this.set({ ...this.snapshot(), items: serverData });
-        this.transferState.remove(transferStateKey);
-        return serverData;
-      }
-    }
 
     const fetcher = async (): Promise<PostItem[]> => {
       try {
         const resp = await firstValueFrom(this.loadRelatedPosts$(query));
         return (resp as PostItem[]) || [];
       } catch (err) {
+        console.error('Error fetching related posts:', err);
         return [];
       }
     };
 
     const promise = (async () => {
       try {
-        const res = await this.fetchWithRetry<PostItem[]>(
-          fetcher,
-          2,
-          (v) => !v || (Array.isArray(v) && v.length === 0),
-        );
-
+        const res = await fetcher();
         this.set({ ...this.snapshot(), items: res });
-
-        // SERVER: Save to TransferState
-        if (!isBrowser && res && res.length > 0) {
-          this.transferState.set(transferStateKey, res);
-        }
-
         return res;
       } finally {
         this._loadPromise = null;

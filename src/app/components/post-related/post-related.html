@@ -1,1 +1,80 @@
-<p>post-related works!</p>
+<div class="w-full h-full">
+  @if (hasPosts() && !loading()) {
+    <p class="font-medium text-xl mb-3 text-gray-600 uppercase">
+      Bài viết liên quan
+    </p>
+
+    <div class="grid grid-cols-1 gap-4">
+      @for (item of posts(); track item.id) {
+        <a
+          [routerLink]="'/posts/' + item.slug"
+          class="post-card border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg hover:drop-shadow-2xl transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+        >
+          <div class="relative w-full h-48 overflow-hidden">
+            <img
+              [src]="
+                item.featuredImage || 'assets/images/banners/page-header-bg.jpg'
+              "
+              [alt]="item.title"
+              class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+            />
+            @if (item.category) {
+              <span
+                class="absolute top-2 left-2 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full"
+              >
+                {{ item.category.name }}
+              </span>
+            }
+          </div>
+          <div class="p-4">
+            <h6
+              class="text-gray-800 font-bold text-base mb-2 line-clamp-2 hover:text-primary transition-colors"
+            >
+              {{ item.title }}
+            </h6>
+            <p class="text-fourth text-sm line-clamp-3">
+              {{ item.excerpt }}
+            </p>
+            @if (item.publishedAt) {
+              <p class="text-xs text-gray-500 mt-2">
+                {{ item.publishedAt | date: "dd/MM/yyyy" }}
+              </p>
+            }
+          </div>
+        </a>
+      }
+    </div>
+  }
+
+  @if (loading()) {
+    <p class="font-medium text-xl mb-3 text-gray-600 uppercase">
+      Bài viết liên quan
+    </p>
+
+    <div class="grid grid-cols-1 gap-4">
+      @for (item of skeletonArray; track $index) {
+        <div
+          class="border border-gray-300 rounded-lg overflow-hidden animate-pulse"
+        >
+          <div class="w-full h-48 bg-gray-200"></div>
+          <div class="p-4">
+            <div class="h-4 w-3/4 bg-gray-200 rounded mb-3"></div>
+            <div class="h-3 w-full bg-gray-200 rounded mb-2"></div>
+            <div class="h-3 w-full bg-gray-200 rounded mb-2"></div>
+            <div class="h-3 w-2/3 bg-gray-200 rounded"></div>
+            <div class="h-3 w-1/3 bg-gray-200 rounded mt-2"></div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (!hasPosts() && !loading()) {
+    <p class="font-medium text-xl mb-3 text-gray-600 uppercase">
+      Bài viết liên quan
+    </p>
+    <div class="text-center py-8 text-gray-500">
+      <p>Không có bài viết liên quan</p>
+    </div>
+  }
+</div>

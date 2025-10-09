@@ -10,13 +10,6 @@
     <div class="container-layer">
       <div class="main-content">
         <div class="content-grid">
-          <div class="sidebar">
-            <div class="sticky-toc">
-              <app-menu-product></app-menu-product>
-              <app-info-extra-phone class="hidden lg:block" />
-            </div>
-          </div>
-
           <div class="content-area">
             <h1
               class="text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10"
@@ -105,6 +98,16 @@
 
             <div class="lg:hidden max-w-[400px]">
               <app-info-extra-phone class="lg:hidden" />
+            </div>
+          </div>
+
+          <div class="sidebar">
+            <div class="sticky-toc">
+              <app-post-related
+                [postId]="post.id"
+                [categoryId]="post.categoryId || 0"
+              />
+              <app-info-extra-phone class="hidden lg:block" />
             </div>
           </div>
         </div>

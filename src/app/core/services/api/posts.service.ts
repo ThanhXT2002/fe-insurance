@@ -59,16 +59,18 @@ export class PostsService {
   getRelatedPosts(query: {
     postId: number;
     limit: number;
-    categoryId: number;
+    categoryId?: number;
     postType?: PostType;
   }): Observable<ApiResponse<PostItem[]>> {
     const params: any = {};
-    if (query?.postId != null) params.postId = query.postId;
     if (query?.limit != null) params.limit = query.limit;
     if (query?.categoryId != null) params.categoryId = query.categoryId;
     if (query?.postType != null) params.postType = query.postType;
-    return this.http.get<ApiResponse<PostItem[]>>(`${this.apiUrl}/related`, {
-      params,
-    });
+
+    // Endpoint format: /posts/{postId}/related?limit=6&categoryId=x
+    return this.http.get<ApiResponse<PostItem[]>>(
+      `${this.apiUrl}/${query.postId}/related`,
+      { params },
+    );
   }
 }

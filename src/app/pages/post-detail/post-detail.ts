@@ -27,6 +27,7 @@ import { FAQSItems } from '@/components/faqs-items/faqs-items';
 import { SectionIntro } from '@/components/section-intro/section-intro';
 import { CheckItem } from '@/components/check-item/check-item';
 import { LoadingInPage } from '@/components/loading-in-page/loading-in-page';
+import { PostRelated } from "@/components/post-related/post-related";
 
 @Component({
   selector: 'app-post-detail',
@@ -41,7 +42,8 @@ import { LoadingInPage } from '@/components/loading-in-page/loading-in-page';
     SectionIntro,
     CheckItem,
     LoadingInPage,
-  ],
+    PostRelated
+],
   templateUrl: './post-detail.html',
   styleUrl: './post-detail.scss',
 })
