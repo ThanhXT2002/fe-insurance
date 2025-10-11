@@ -33,6 +33,7 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { MessageService } from 'primeng/api';
 import { AuthStore } from './core/store/auth/auth.store';
 import { AuthService } from './core/services/auth.service';
+import { ScrollRestorationService } from './core/services/scroll-restoration.service';
 
 registerSwiperElements();
 export const appConfig: ApplicationConfig = {
@@ -43,7 +44,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withViewTransitions(),
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top',
+        scrollPositionRestoration: 'disabled', // Disable default scroll restoration
         anchorScrolling: 'enabled',
       }),
     ),
@@ -69,6 +70,9 @@ export const appConfig: ApplicationConfig = {
     }),
     provideClientHydration(withEventReplay()),
     provideAppInitializer(() => {
+      // Initialize scroll restoration service
+      const scrollService = inject(ScrollRestorationService);
+
       // Make profile loading non-blocking to avoid delaying app bootstrap.
       // If a token exists, trigger loadProfile but don't await it here.
       const authStore = inject(AuthStore);
