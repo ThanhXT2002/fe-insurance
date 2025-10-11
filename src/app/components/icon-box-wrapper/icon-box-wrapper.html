@@ -24,9 +24,9 @@
     @if (title || description) {
       <div>
         @if (title) {
-          <h3 class="" [class]="titleFont + ' ' + titleColor + ' ' + titleSize">
+          <p class="" [class]="titleFont + ' ' + titleColor + ' ' + titleSize">
             {{ title }}
-          </h3>
+          </p>
         }
         @if (description) {
           <p [class]="descriptionClass">{{ description }}</p>

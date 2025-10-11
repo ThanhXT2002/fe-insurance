@@ -1,47 +1,53 @@
 @if (data(); as product) {
-  <app-breadcrumb-img
-    [title]="product.name || ''"
-    [pageBeforeTitle]="'Dịch vụ - Sản phẩm'"
-    [pageBeforeLink]="'/products'"
-    [bgUrl]="product.imgs?.[0] || 'assets/images/banners/page-header-bg.jpg'"
-  />
+  <app-breadcrumb-img title="Dịch vụ - Sản phẩm" [bgUrl]="product.imgs?.[0] || 'assets/images/banners/page-header-bg.jpg'"/>
 
   <div class="w-full bg-gray-50">
     <div class="container-layer">
       <div class="main-content">
-        <div class="content-grid">
+        <div class="content-grid flex-col">
           <div class="sidebar">
             <div class="sticky-toc">
-              <app-menu-product></app-menu-product>
-              @if (product.isSaleOnline && product.targetLink) {
-                <app-btn-common
-                  text="Mua ngay"
-                  type="primary"
-                  extraClass="!p-3 w-full flex__middle  animate-pulse"
-                  (click)="onClickBuyNow(product.targetLink)"
-                ></app-btn-common>
-              }
-              @if (product.price) {
-                <div class="flex__between font-bold md:text-xl text-secondary">
-                  <p class="">Giá chỉ từ:</p>
-                  <p>{{ product.price }} VNĐ / {{ product.priority }} năm</p>
-                </div>
-              }
+              <div class="flex flex-col lg:flex-col-reverse space-y-5">
+                <div class="flex flex-col space-y-5 mt-5">
+                  @if (product.isSaleOnline && product.targetLink) {
+                    <app-btn-common
+                      text="Mua ngay"
+                      type="primary"
+                      extraClass="!p-3 w-full flex__middle  animate-pulse"
+                      (click)="onClickBuyNow(product.targetLink)"
+                    ></app-btn-common>
+                  }
 
-              @if (product.isPromotion) {
-                <div class="">
-                  <p class="text-primary italic mt-2">
-                    {{ product.promotionDetails }}
-                  </p>
+                  @if (product.price) {
+                    <div
+                      class="flex__between font-bold md:text-xl text-secondary"
+                    >
+                      <p class="">Giá chỉ từ:</p>
+                      <p>
+                        {{ product.price }} VNĐ / {{ product.priority }} năm
+                      </p>
+                    </div>
+                  }
+
+                  @if (product.isPromotion) {
+                    <div class="">
+                      <p class="text-primary italic">
+                        {{ product.promotionDetails }}
+                      </p>
+                    </div>
+                  }
                 </div>
-              }
-              <app-info-extra-phone class="hidden lg:block" />
+
+                <app-menu-product></app-menu-product>
+              </div>
+
+              <app-info-extra-phone  />
             </div>
           </div>
 
           <div class="content-area">
             <h1
-              class="text-3xl md:text-4xl lg:text-6xl text-secondary font-bold text-left mb-5 md:mb-10"
+              class="text-3xl md:text-4xl lg:text-5xl text-secondary font-bold text-left mb-5 md:mb-10"
             >
               {{ product.name }}
             </h1>
@@ -69,8 +75,7 @@
 
             <div class="text-gray-950" [innerHTML]="product.content"></div>
 
-            @if ((product.tags?.length ?? 0) > 2) {
-
+            <!-- @if ((product.tags?.length ?? 0) > 2) {
               <div class="my-5 md:my-10">
                 <h2
                   class="text-2xl md:text-3xl lg:text-4xl text-secondary font-medium text-left mb-5"
@@ -89,7 +94,6 @@
                   <div
                     class="md:w-1/2 max-w-[350px] h-full rounded-common overflow-hidden image-hover-effect"
                   >
-                    <!-- {{product.imgs?.at(-1)}} -->
                     <img
                       [src]="product.imgs?.at(-1)"
                       [alt]="product.name"
@@ -98,9 +102,10 @@
                   </div>
                 </div>
               </div>
-            }
+            } -->
 
-            <div class="my-5 md:my-8">
+            <div class="hidden lg:block">
+              <div class="my-5 md:my-8">
               <app-why-our-policy />
             </div>
 
@@ -113,17 +118,27 @@
               />
               <app-faqs-items class="lg:mt-10" />
             </div>
-
-            <div class="lg:hidden max-w-[400px]">
-              <app-info-extra-phone class="lg:hidden" />
             </div>
           </div>
         </div>
+        <div class="lg:hidden">
+              <div class="">
+              <app-why-our-policy />
+            </div>
+
+            <div class="my-5 md:my-8">
+              <app-section-intro
+                title="FAQs"
+                firstText="Những"
+                highlightText="Câu hỏi"
+                lastText="thường gặp"
+              />
+              <app-faqs-items class="lg:mt-10" />
+            </div>
+            </div>
       </div>
     </div>
   </div>
 }
 
-<app-loading-in-page class="h-screen  w-full"/>
-
-
+<app-loading-in-page class="h-screen w-full" />

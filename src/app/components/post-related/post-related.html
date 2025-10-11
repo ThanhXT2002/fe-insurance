@@ -7,39 +7,38 @@
     <div class="grid grid-cols-1 gap-4">
       @for (item of posts(); track item.id) {
         <a
-          [routerLink]="'/posts/' + item.slug"
-          class="post-card border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg hover:drop-shadow-2xl transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+          [routerLink]="'/post/' + item.slug"
+          class="border border-gray-300 rounded-t-2xl rounded-e-2xl overflow-hidden hover:shadow-lg hover:drop-shadow-2xl transition-all duration-300 cursor-pointer hover:scale-[1.02]"
         >
-          <div class="relative w-full h-48 overflow-hidden">
-            <img
-              [src]="
-                item.featuredImage || 'assets/images/banners/page-header-bg.jpg'
-              "
-              [alt]="item.title"
-              class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-            />
-            @if (item.category) {
-              <span
-                class="absolute top-2 left-2 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full"
-              >
-                {{ item.category.name }}
-              </span>
-            }
-          </div>
-          <div class="p-4">
-            <h6
-              class="text-gray-800 font-bold text-base mb-2 line-clamp-2 hover:text-primary transition-colors"
-            >
-              {{ item.title }}
-            </h6>
-            <p class="text-fourth text-sm line-clamp-3">
-              {{ item.excerpt }}
-            </p>
-            @if (item.publishedAt) {
-              <p class="text-xs text-gray-500 mt-2">
-                {{ item.publishedAt | date: "dd/MM/yyyy" }}
-              </p>
-            }
+          <div class="w-full h-[130px] flex__between p-5 gap-x-2">
+            <div class="flex-1">
+              <p class="text-sm font-bold text-secondary">{{ item.title }}</p>
+              <div class="flex__start mt-2">
+                @if (item.category) {
+                  <i
+                    class="fa-solid fa-circle text-primary text-[6px] lg:text-[8px]"
+                  ></i>
+                  <span class="text-primary text-xs font-semibold px-3">
+                    {{ item.category.name }}
+                  </span>
+                }
+              </div>
+              @if (item.publishedAt) {
+                <p class="text-xs text-gray-500 mt-2">
+                  {{ item.publishedAt | date: "dd/MM/yyyy" }}
+                </p>
+              }
+            </div>
+            <div class="h-24 w-24 rounded-e-xl rounded-t-xl overflow-hidden">
+              <img
+                [src]="
+                  item.featuredImage ||
+                  'assets/images/banners/page-header-bg.jpg'
+                "
+                [alt]="item.title"
+                class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              />
+            </div>
           </div>
         </a>
       }
@@ -54,15 +53,25 @@
     <div class="grid grid-cols-1 gap-4">
       @for (item of skeletonArray; track $index) {
         <div
-          class="border border-gray-300 rounded-lg overflow-hidden animate-pulse"
+          class="border border-gray-300 rounded-t-2xl rounded-e-2xl overflow-hidden animate-pulse"
         >
-          <div class="w-full h-48 bg-gray-200"></div>
-          <div class="p-4">
-            <div class="h-4 w-3/4 bg-gray-200 rounded mb-3"></div>
-            <div class="h-3 w-full bg-gray-200 rounded mb-2"></div>
-            <div class="h-3 w-full bg-gray-200 rounded mb-2"></div>
-            <div class="h-3 w-2/3 bg-gray-200 rounded"></div>
-            <div class="h-3 w-1/3 bg-gray-200 rounded mt-2"></div>
+          <div class="w-full h-[130px] flex__between p-5 gap-x-2">
+            <div class="flex-1">
+              <!-- Title skeleton -->
+              <div class="h-4 w-4/5 bg-gray-200 rounded mb-2"></div>
+
+              <!-- Category section skeleton -->
+              <div class="flex__start mt-2">
+                <div class="w-2 h-2 bg-gray-200 rounded-full"></div>
+                <div class="h-3 w-20 bg-gray-200 rounded ml-3"></div>
+              </div>
+
+              <!-- Date skeleton -->
+              <div class="h-3 w-24 bg-gray-200 rounded mt-2"></div>
+            </div>
+
+            <!-- Image skeleton -->
+            <div class="h-24 w-24 rounded-e-xl rounded-t-xl bg-gray-200"></div>
           </div>
         </div>
       }

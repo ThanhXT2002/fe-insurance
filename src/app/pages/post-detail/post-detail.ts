@@ -38,7 +38,6 @@ import { PostRelated } from "@/components/post-related/post-related";
     WhyOurPolicy,
     FAQSItems,
     SectionIntro,
-    CheckItem,
     LoadingInPage,
     PostRelated
 ],

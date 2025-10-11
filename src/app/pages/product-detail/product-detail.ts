@@ -39,7 +39,6 @@ import { LoadingInPage } from '@/components/loading-in-page/loading-in-page';
     WhyOurPolicy,
     FAQSItems,
     SectionIntro,
-    CheckItem,
     LoadingInPage,
   ],
   templateUrl: './product-detail.html',

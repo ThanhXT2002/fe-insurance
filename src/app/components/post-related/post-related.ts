@@ -62,9 +62,7 @@ export class PostRelated implements OnDestroy {
       })
       .subscribe({
         next: (response) => {
-          console.log(' API Response:', response);
           const posts = response?.data || [];
-          console.log(' Related posts loaded:', posts);
           this.posts.set(posts);
           this.loading.set(false);
         },

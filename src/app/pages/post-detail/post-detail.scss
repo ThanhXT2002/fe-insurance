@@ -25,3 +25,7 @@
 .content-card {
   @apply bg-white rounded-lg shadow-md p-6 md:p-8;
 }
+
+h1,h2,h3,h4,h5,h6 > strong > span >span {
+  @apply text-secondary ;
+}

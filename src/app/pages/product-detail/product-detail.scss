@@ -4,7 +4,7 @@
 }
 
 .content-grid {
-  @apply lg:flex lg:space-x-8;
+  @apply flex flex-col lg:flex-row flex-col-reverse lg:space-x-8 ;
 }
 
 // Sidebar
@@ -24,4 +24,8 @@
 
 .content-card {
   @apply bg-white rounded-lg shadow-md p-6 md:p-8;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  @apply text-secondary ;
 }
